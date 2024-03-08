@@ -1,0 +1,3 @@
+[submodule "CraneEngine/vendor/spdlog"]
+	path = CraneEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog

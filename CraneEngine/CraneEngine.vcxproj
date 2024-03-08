@@ -57,6 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CR_PLATFORM_WINDOWS;CR_BUILD_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)CraneEngine\vendor\spdlog\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -71,6 +72,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CR_PLATFORM_WINDOWS;CR_BUILD_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)CraneEngine\vendor\spdlog\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,12 +83,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp" />
+    <ClCompile Include="src\Crane\Log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crane.h" />
     <ClInclude Include="src\Crane\Application.h" />
     <ClInclude Include="src\Crane\Core.h" />
     <ClInclude Include="src\Crane\EntryPoint.h" />
+    <ClInclude Include="src\Crane\Log.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
