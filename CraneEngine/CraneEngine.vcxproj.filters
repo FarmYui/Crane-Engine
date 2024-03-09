@@ -4,6 +4,9 @@
     <Filter Include="Crane">
       <UniqueIdentifier>{4E98FB0C-BAAC-23BE-832E-C71DEF0120EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crane\Events">
+      <UniqueIdentifier>{72208522-5E83-14C7-0709-4D7DF34AE049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crane.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\Crane\EntryPoint.h">
       <Filter>Crane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Events\ApplicationEvent.h">
+      <Filter>Crane\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Events\Event.h">
+      <Filter>Crane\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Events\KeyEvent.h">
+      <Filter>Crane\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Events\MouseEvent.h">
+      <Filter>Crane\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Log.h">
       <Filter>Crane</Filter>

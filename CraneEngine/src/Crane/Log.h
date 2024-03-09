@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/fmt/ostr.h"
 
 #include <memory>
 
@@ -26,6 +27,8 @@ namespace Crane
 #define CR_CORE_WARN(...)     ::Crane::Log::GetCoreLogger()->warn(__VA_ARGS__)
 #define CR_CORE_ERROR(...)    ::Crane::Log::GetCoreLogger()->error(__VA_ARGS__)
 #define CR_CORE_CRITICAL(...) ::Crane::Log::GetCoreLogger()->critical(__VA_ARGS__)
+
+//_____________TRACE NOT WORKING IN CLIENT____________________________
 
 //Client logger macros
 #define CR_INFO(...)     ::Crane::Log::GetClientLogger()->info(__VA_ARGS__)

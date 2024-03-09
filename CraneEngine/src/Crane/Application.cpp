@@ -1,5 +1,8 @@
 #include "Application.h"
 
+#include "Crane/Events/ApplicationEvent.h"
+#include "Crane/Log.h"
+
 namespace Crane
 {
 	Application::Application()
@@ -14,6 +17,9 @@ namespace Crane
 
 	void Application::Run()
 	{
+		WindowResizeEvent e(1280, 720);
+		CR_INFO(e);
+
 		while (true);
 	}
 

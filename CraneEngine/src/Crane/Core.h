@@ -9,3 +9,5 @@
 #else 
 	#error Crane only supports windows
 #endif // CR_PLATFORM_WINDOWS
+
+#define BIT(x) (1 << x)
