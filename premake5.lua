@@ -10,6 +10,11 @@ workspace "CraneEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "CraneEngine/vendor/GLFW/include"
+
+include "CraneEngine/vendor/GLFW"
+
 project "CraneEngine"
     location "CraneEngine"
     kind "SharedLib"
@@ -30,12 +35,19 @@ project "CraneEngine"
     includedirs
     {
         "%{prj.name}/src",
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        staticruntime "off"
         systemversion "latest"
         
         defines
