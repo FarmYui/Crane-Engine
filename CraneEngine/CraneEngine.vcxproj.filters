@@ -7,6 +7,12 @@
     <Filter Include="Crane\Events">
       <UniqueIdentifier>{72208522-5E83-14C7-0709-4D7DF34AE049}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platforms">
+      <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platforms\Windows">
+      <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crane.h" />
@@ -34,6 +40,12 @@
     <ClInclude Include="src\Crane\Log.h">
       <Filter>Crane</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Window.h">
+      <Filter>Crane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
+      <Filter>Platforms\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="src\Crane\Log.cpp">
       <Filter>Crane</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
+      <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
   </ItemGroup>
