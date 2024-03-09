@@ -1,3 +1,5 @@
+#include "crpch.h"
+
 #include "Log.h"
 
 namespace Crane

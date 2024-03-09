@@ -1,9 +1,8 @@
 #pragma once
+#include "crpch.h"
 
-#include "../Core.h"
+#include "Crane/Core.h"
 
-#include <string>
-#include <functional>
 
 namespace Crane
 {

@@ -2,7 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
 
 namespace Crane
 {
@@ -38,6 +37,9 @@ namespace Crane
 		MouseScolledEvent(float xOffset, float yOffset)
 			: m_XOffset(xOffset), m_YOffset(yOffset)
 		{}
+
+		inline float GetXOffset() const { return m_XOffset; }
+		inline float GetYOffset() const { return m_YOffset; }
 
 		std::string ToString() const override
 		{

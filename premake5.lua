@@ -18,6 +18,9 @@ project "CraneEngine"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "crpch.h"
+    pchsource "CraneEngine/src/crpch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",

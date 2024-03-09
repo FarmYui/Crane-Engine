@@ -1,3 +1,5 @@
+#include "crpch.h"
+
 #include "Application.h"
 
 #include "Crane/Events/ApplicationEvent.h"
