@@ -47,7 +47,7 @@ project "CraneEngine"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "off"
+        staticruntime "On"
         systemversion "latest"
         
         defines
@@ -63,14 +63,17 @@ project "CraneEngine"
     
     filter "configurations:Debug"
         defines "CR_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Relase"
         defines "CR_RELASE"
+        buildoptions "/MD"
         optimize "On"
     
     filter "configurations:Dist"
         defines "CR_DIST"
+        buildoptions "/MD"
         optimize "On"
 
 
@@ -112,12 +115,15 @@ project "Sandbox"
     
     filter "configurations:Debug"
         defines "CR_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Relase"
         defines "CR_RELASE"
+        buildoptions "/MD"
         optimize "On"
     
     filter "configurations:Dist"
         defines "CR_DIST"
+        buildoptions "/MD"
         optimize "On"
