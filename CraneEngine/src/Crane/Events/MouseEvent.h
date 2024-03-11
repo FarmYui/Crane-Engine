@@ -31,10 +31,10 @@ namespace Crane
 		float m_MouseY;
 	};
 
-	class MouseScolledEvent : public Event
+	class CRANE_API MouseScrolledEvent : public Event
 	{
 	public: 
-		MouseScolledEvent(float xOffset, float yOffset)
+		MouseScrolledEvent(float xOffset, float yOffset)
 			: m_XOffset(xOffset), m_YOffset(yOffset)
 		{}
 

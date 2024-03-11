@@ -100,7 +100,7 @@ namespace Crane
 			}
 			case GLFW_RELEASE:
 			{
-				KeyRelasedEvent e(key);
+				KeyReleasedEvent e(key);
 				data.EventCallback(e);
 				break;
 			}
@@ -146,7 +146,7 @@ namespace Crane
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			// create event
-			MouseScolledEvent e((float)xoffset, (float)yoffset);
+			MouseScrolledEvent e((float)xoffset, (float)yoffset);
 			data.EventCallback(e);
 		});
 

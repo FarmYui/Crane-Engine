@@ -41,10 +41,10 @@ namespace Crane
 		int m_RepeatedCount;
 	};
 
-	class CRANE_API KeyRelasedEvent : public KeyEvent
+	class CRANE_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyRelasedEvent(int keycode)
+		KeyReleasedEvent(int keycode)
 			: KeyEvent(keycode)
 		{}
 
