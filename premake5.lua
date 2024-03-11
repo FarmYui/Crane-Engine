@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "CraneEngine/vendor/GLFW/include"
+IncludeDir["Glad"] = "CraneEngine/vendor/Glad/include"
 
 include "CraneEngine/vendor/GLFW"
+include "CraneEngine/vendor/Glad"
 
 project "CraneEngine"
     location "CraneEngine"
@@ -36,12 +38,14 @@ project "CraneEngine"
     {
         "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}"
     }
 
     links
     {
         "GLFW",
+        "Glad",
         "opengl32.lib"
     }
 
@@ -53,7 +57,8 @@ project "CraneEngine"
         defines
         {
             "CR_PLATFORM_WINDOWS",
-            "CR_BUILD_DLL"
+            "CR_BUILD_DLL",
+            "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands

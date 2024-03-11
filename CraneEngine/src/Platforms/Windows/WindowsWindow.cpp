@@ -8,6 +8,7 @@
 #include "Crane/Events/KeyEvent.h"
 #include "Crane/Events/MouseEvent.h"
 
+#include <glad/glad.h>
 
 namespace Crane
 {
@@ -53,6 +54,8 @@ namespace Crane
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		CR_CORE_ASSERT(status, "Could not initialize Glad");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 

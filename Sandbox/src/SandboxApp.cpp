@@ -14,7 +14,7 @@ public:
 
 	void OnEvent(Crane::Event& e) override
 	{
-		CR_INFO("{0}", e);
+		CR_TRACE("{0}", e);
 	}
 
 };
