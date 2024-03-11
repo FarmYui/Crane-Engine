@@ -53,6 +53,8 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Crane\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Platforms\OpenGL\ImGuiOpenGLRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -71,5 +73,7 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Crane\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\ImGuiOpenGLRenderer.cpp" />
   </ItemGroup>
 </Project>
