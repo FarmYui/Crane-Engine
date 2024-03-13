@@ -116,6 +116,18 @@ namespace Crane
 			
 		});
 		
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int codepoint)
+		{
+			// get user ptr
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			// create the event
+			KeyTypedEvent e(codepoint);
+
+			// call event callback
+			data.EventCallback(e);
+		});
+
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			// get user ptr

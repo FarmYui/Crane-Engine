@@ -28,6 +28,7 @@ namespace Crane
 
 		bool OnKeyPressedEvent(KeyPressedEvent& e);
 		bool OnKeyReleasedEvent(KeyReleasedEvent& e);
+		bool OnKeyTypedEvent(KeyTypedEvent& e);
 
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
 
