@@ -8,6 +8,9 @@ workspace "CraneEngine"
         "Dist"
     }
 
+    startproject "Sandbox"
+
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
@@ -19,10 +22,12 @@ include "CraneEngine/vendor/GLFW"
 include "CraneEngine/vendor/Glad"
 include "CraneEngine/vendor/ImGui"
 
+
 project "CraneEngine"
     location "CraneEngine"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -55,7 +60,6 @@ project "CraneEngine"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
         
         defines
@@ -72,17 +76,17 @@ project "CraneEngine"
     
     filter "configurations:Debug"
         defines "CR_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Relase"
         defines "CR_RELASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
     
     filter "configurations:Dist"
         defines "CR_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
 
 
@@ -90,6 +94,7 @@ project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -124,15 +129,15 @@ project "Sandbox"
     
     filter "configurations:Debug"
         defines "CR_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Relase"
         defines "CR_RELASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
     
     filter "configurations:Dist"
         defines "CR_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
