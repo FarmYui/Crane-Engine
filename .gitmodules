@@ -7,3 +7,6 @@
 [submodule "CraneEngine/vendor/ImGui"]
 	path = CraneEngine/vendor/ImGui
 	url = https://github.com/TheCherno/imgui
+[submodule "CraneEngine/vendor/glm"]
+	path = CraneEngine/vendor/glm
+	url = https://github.com/g-truc/glm

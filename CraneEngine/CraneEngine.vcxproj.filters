@@ -46,6 +46,12 @@
     <ClInclude Include="src\Crane\ImGui\ImGuiLayer.h">
       <Filter>Crane\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Input.h">
+      <Filter>Crane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\KeyCodes.h">
+      <Filter>Crane</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crane\Layer.h">
       <Filter>Crane</Filter>
     </ClInclude>
@@ -55,20 +61,22 @@
     <ClInclude Include="src\Crane\Log.h">
       <Filter>Crane</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\MouseButtonCodes.h">
+      <Filter>Crane</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crane\Window.h">
       <Filter>Crane</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platforms\Windows\WindowsInput.h">
+      <Filter>Platforms\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Platforms\Windows\WindowsInput.h" />
-    <ClInclude Include="src\Crane\Input.h" />
-    <ClInclude Include="src\Crane\KeyCodes.h" />
-    <ClInclude Include="src\Crane\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -89,10 +97,12 @@
     <ClCompile Include="src\Platforms\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
+      <Filter>Platforms\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 
 #include <glad/glad.h>
 
+
 namespace Crane
 {
 	Application* Application::s_Instance = nullptr;
