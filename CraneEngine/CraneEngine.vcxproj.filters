@@ -67,6 +67,8 @@
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Platforms\Windows\WindowsInput.h" />
     <ClInclude Include="src\Crane\Input.h" />
+    <ClInclude Include="src\Crane\KeyCodes.h" />
+    <ClInclude Include="src\Crane\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">

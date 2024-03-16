@@ -9,12 +9,17 @@ public:
 
 	void OnUpdate() override
 	{
-		//CR_INFO("ExampleLayer::Update");
+		if (Crane::Input::IsKeyPressed(CR_KEY_SPACE))
+			CR_TRACE("Space key is Pressed");
 	}
 
 	void OnEvent(Crane::Event& e) override
 	{
-		//CR_TRACE("{0}", e);
+		if (e.GetEventType() == Crane::EventType::KeyPressed)
+		{
+			Crane::KeyPressedEvent& ev = (Crane::KeyPressedEvent&)e;
+			CR_TRACE("{0}", (char)ev.GetKeyCode());
+		}
 	}
 
 };
