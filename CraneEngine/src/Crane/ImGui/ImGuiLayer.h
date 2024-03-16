@@ -1,8 +1,6 @@
 #pragma once
 #include "Crane/Layer.h"
 
-#include "Crane/Application.h"
-
 #include "Crane/Events/ApplicationEvent.h"
 #include "Crane/Events/KeyEvent.h"
 #include "Crane/Events/MouseEvent.h"

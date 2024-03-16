@@ -10,7 +10,6 @@
 #include "Crane/Events/ApplicationEvent.h"
 #include "Crane/Events/KeyEvent.h"
 
-class ImGuiLayer;
 namespace Crane 
 {
 	class CRANE_API Application 
