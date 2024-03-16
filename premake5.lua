@@ -23,6 +23,7 @@ group "Dependencies"
     include "CraneEngine/vendor/GLFW"
     include "CraneEngine/vendor/Glad"
     include "CraneEngine/vendor/ImGui"
+
 group ""
 
 project "CraneEngine"
@@ -112,6 +113,7 @@ project "Sandbox"
     {
         "CraneEngine/vendor/spdlog/include",
         "CraneEngine/src",
+        "CraneEngine/vendor",
         "%{IncludeDir.glm}"
     }
 

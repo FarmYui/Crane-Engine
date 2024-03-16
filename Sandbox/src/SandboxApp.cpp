@@ -24,14 +24,12 @@ public:
 
 };
 
-
 class Sandbox : public Crane::Application
 {
 public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Crane::ImGuiLayer());
 	}
 	~Sandbox()
 	{

@@ -4,11 +4,13 @@
 
 #include "Window.h"
 #include "Crane/LayerStack.h"
+#include "Crane/ImGui/ImGuiLayer.h"
 
 #include "Crane/Events/Event.h"
 #include "Crane/Events/ApplicationEvent.h"
 #include "Crane/Events/KeyEvent.h"
 
+class ImGuiLayer;
 namespace Crane 
 {
 	class CRANE_API Application 
@@ -35,6 +37,8 @@ namespace Crane
 		bool m_Running = true;
 
 		LayerStack m_LayerStack;
+
+		ImGuiLayer* m_ImGuiLayer;
 	};
 
 	//To define in client
