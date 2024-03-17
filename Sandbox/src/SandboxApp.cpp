@@ -1,4 +1,5 @@
 #include <Crane.h>
+#include "imgui/imgui.h"
 
 class ExampleLayer : public Crane::Layer
 {
@@ -11,6 +12,13 @@ public:
 	{
 		if (Crane::Input::IsKeyPressed(CR_KEY_SPACE))
 			CR_TRACE("Space key is Pressed");
+	}
+
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello");
+		ImGui::End();
 	}
 
 	void OnEvent(Crane::Event& e) override

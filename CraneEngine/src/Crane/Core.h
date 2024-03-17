@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef CR_PLATFORM_WINDOWS
+#if CR_DYNAMIC_LINK
 	#ifdef CR_BUILD_DLL
 		#define CRANE_API __declspec(dllexport)
 	#else
 		#define CRANE_API __declspec(dllimport)
 	#endif
+#else
+	#define CRANE_API 
+#endif
 #else 
 	#error Crane only supports windows
 #endif // CR_PLATFORM_WINDOWS
