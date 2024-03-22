@@ -12,7 +12,7 @@
 
 namespace Crane 
 {
-	class CRANE_API Application 
+	class CRANE_API Application
 	{
 	public:
 		Application();
@@ -38,6 +38,10 @@ namespace Crane
 		LayerStack m_LayerStack;
 
 		ImGuiLayer* m_ImGuiLayer;
+
+		unsigned int m_VertexArray;
+		unsigned int m_VertexBuffer;
+		unsigned int m_IndexBuffer;
 	};
 
 	//To define in client
