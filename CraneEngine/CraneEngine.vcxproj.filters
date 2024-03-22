@@ -71,6 +71,8 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Crane\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -98,5 +100,6 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
   </ItemGroup>
 </Project>

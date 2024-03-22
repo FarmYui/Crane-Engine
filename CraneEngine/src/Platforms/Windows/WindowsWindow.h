@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Crane/Window.h"
-#include "GLFW/glfw3.h"
+#include "Crane/Renderer/GraphicsContext.h"
+
+#include <GLFW/glfw3.h>
 
 namespace Crane
 {
@@ -29,6 +31,7 @@ namespace Crane
 
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
