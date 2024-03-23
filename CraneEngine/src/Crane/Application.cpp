@@ -10,6 +10,26 @@ namespace Crane
 {
 	Application* Application::s_Instance = nullptr;
 
+	static GLenum GetOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::Float:    return GL_FLOAT;
+		case ShaderDataType::Float2:   return GL_FLOAT;
+		case ShaderDataType::Float3:   return GL_FLOAT;
+		case ShaderDataType::Float4:   return GL_FLOAT;
+		case ShaderDataType::Mat3:     return GL_FLOAT;
+		case ShaderDataType::Mat4:     return GL_FLOAT;
+		case ShaderDataType::Int:      return GL_INT;
+		case ShaderDataType::Int2:     return GL_INT;
+		case ShaderDataType::Int3:     return GL_INT;
+		case ShaderDataType::Int4:     return GL_INT;
+		case ShaderDataType::Bool:     return GL_BOOL;
+		}
+
+		CR_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
 
 	Application::Application()
 	{
@@ -28,9 +48,9 @@ namespace Crane
 		
 		float vertices[] = {
 			// vertex data     
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
+			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f
 		};
 
 		uint32_t indices[] = {
@@ -40,21 +60,34 @@ namespace Crane
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
-		//attribptrs
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		
+
+		BufferLayout layout = {
+			{ ShaderDataType::Float3 , "a_Position" },
+			{ ShaderDataType::Float3 , "a_Color"}
+		};
+
+		for (int i = 0; i < layout.GetElements().size(); i++)
+		{
+			const BufferElement& element = layout.GetElements().at(i);
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(i, element.GetComponentCount(), GetOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (void*)element.Offset);
+		}
+
+		//m_VertexBuffer->SetLayout(layout);
 
 		//shaders
 		std::string vertexSource = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec3 a_Color;
 
-			out vec3 v_Position;
+			out vec3 v_Color;
 
 			void main()
 			{
-				v_Position = a_Position * 0.5 + 0.5;
+				v_Color = a_Color;
 				gl_Position = vec4(a_Position ,1.0f);
 			})";
 
@@ -63,11 +96,11 @@ namespace Crane
 			
 			layout(location = 0) out vec4 color;
 
-			in vec3 v_Position;
+			in vec3 v_Color;
 
 			void main()
 			{
-				color = vec4(v_Position,1.0f);
+				color = vec4(v_Color,1.0f);
 			})";
 
 		m_Shader = std::make_unique<Shader>(vertexSource, fragmentSource);
