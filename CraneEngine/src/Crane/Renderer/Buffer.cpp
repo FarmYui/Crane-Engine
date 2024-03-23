@@ -23,7 +23,7 @@ namespace Crane
 	}
 
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size)
+	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -32,7 +32,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::OpenGL:
-			return new OpenGLIndexBuffer(indices, size);
+			return new OpenGLIndexBuffer(indices, count);
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");

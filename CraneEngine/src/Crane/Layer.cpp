@@ -9,7 +9,4 @@ namespace Crane
 	{
 	}
 
-	Crane::Layer::~Layer()
-	{
-	}
 }

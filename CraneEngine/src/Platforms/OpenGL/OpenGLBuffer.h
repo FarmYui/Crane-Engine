@@ -19,7 +19,7 @@ namespace Crane
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(uint32_t* indices, uint32_t size);
+		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
 
 		virtual void Bind() const;
 		virtual void Unbind() const;

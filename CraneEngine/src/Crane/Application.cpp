@@ -33,12 +33,12 @@ namespace Crane
 			 0.0f,  0.5f, 0.0f
 		};
 
-		unsigned int indices[] = {
+		uint32_t indices[] = {
 			0,1,2
 		};
 
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)));
+		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
 		//attribptrs
 		glEnableVertexAttribArray(0);
@@ -73,10 +73,6 @@ namespace Crane
 		m_Shader = std::make_unique<Shader>(vertexSource, fragmentSource);
 	}
 
-	Application::~Application()
-	{
-
-	}
 
 	void Application::PushLayer(Layer* layer)
 	{
