@@ -143,6 +143,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Crane\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Crane.h" />
     <ClInclude Include="src\Crane\Application.h" />
     <ClInclude Include="src\Crane\Core.h" />
@@ -151,6 +153,7 @@
     <ClInclude Include="src\Crane\Events\Event.h" />
     <ClInclude Include="src\Crane\Events\KeyEvent.h" />
     <ClInclude Include="src\Crane\Events\MouseEvent.h" />
+    <ClInclude Include="src\Crane\Renderer\Buffer.h" />
     <ClInclude Include="src\Crane\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Crane\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Crane\Input.h" />
@@ -167,12 +170,15 @@
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Crane\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Crane\Application.cpp" />
     <ClCompile Include="src\Crane\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Crane\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Crane\Layer.cpp" />
     <ClCompile Include="src\Crane\LayerStack.cpp" />
     <ClCompile Include="src\Crane\Log.cpp" />
+    <ClCompile Include="src\Crane\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Crane\Renderer\Shader.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp" />
