@@ -73,6 +73,7 @@
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Crane\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Crane\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -101,5 +102,6 @@
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Crane\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,8 @@
 #include "Crane/Events/ApplicationEvent.h"
 #include "Crane/Events/KeyEvent.h"
 
+#include "Crane/Renderer/Shader.h"
+
 namespace Crane 
 {
 	class CRANE_API Application
@@ -42,6 +44,8 @@ namespace Crane
 		unsigned int m_VertexArray;
 		unsigned int m_VertexBuffer;
 		unsigned int m_IndexBuffer;
+
+		std::unique_ptr<Shader> m_Shader;
 	};
 
 	//To define in client
