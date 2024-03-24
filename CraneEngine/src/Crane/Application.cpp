@@ -24,9 +24,9 @@ namespace Crane
 		// // // //// // // //// // // //// // // //// // // //
 
 		float vertices[] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.3f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.6f,
-			 0.0f,  0.5f, 0.0f, 0.1f, 1.0f, 1.0f
+			-0.4f, -0.55f, 0.0f, 1.0f, 0.3f, 1.0f,
+			 0.4f, -0.55f, 0.0f, 1.0f, 1.0f, 0.6f,
+			 0.0f,  0.55f, 0.0f, 0.1f, 1.0f, 1.0f
 		};
 
 		uint32_t indices[] = { 
@@ -51,25 +51,26 @@ namespace Crane
 
 
 		//square
-		//float squareVertices[] = {
-		//	-0.5f, -0.5f, 0.0f, 0.0f, 0.3f, 0.0f,
-		//	 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.6f,
-		//	 0.0f,  0.5f, 0.0f, 0.1f, 0.0f, 0.0f,
-		//	-0.5f,  0.5f, 0.0f, 0.1f, 0.0f, 0.0f,
-		//};
+		float squareVertices[] = {
+			-1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			-1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+		};
 
-		//uint32_t squareIndices[] = {
-		//	0,1,2,
-		//	0,2,3
-		//};
+		uint32_t squareIndices[] = {
+			0,1,2,
+			0,2,3
+		};
 
-		//std::shared_ptr<VertexBuffer> squareVB; squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		//std::shared_ptr<IndexBuffer> squareIB; squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		m_SquareVA.reset(VertexArray::Create()); 
+		std::shared_ptr<VertexBuffer> squareVB; squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		std::shared_ptr<IndexBuffer> squareIB; squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 
-		//squareVB->SetLayout(layout);
+		squareVB->SetLayout(layout);
 
-		//m_VertexArray->AddVertexBuffer(squareVB);
-		////m_VertexArray->SetIndexBuffer(squareIB);
+		m_SquareVA->AddVertexBuffer(squareVB);
+		m_SquareVA->SetIndexBuffer(squareIB);
 
 		// shaders
 		std::string vertexSource = R"(
@@ -132,9 +133,11 @@ namespace Crane
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			m_SquareVA->Bind();
+			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
 			m_Shader->Bind();
 			m_VertexArray->Bind();
-			m_VertexBuffer->Bind();
 			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			
