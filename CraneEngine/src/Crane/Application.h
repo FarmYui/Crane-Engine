@@ -11,6 +11,7 @@
 #include "Crane/Events/KeyEvent.h"
 
 #include "Crane/Renderer/Shader.h"
+#include "Crane/Renderer/VertexArray.h"
 #include "Crane/Renderer/Buffer.h"
 
 namespace Crane 
@@ -42,11 +43,10 @@ namespace Crane
 
 		ImGuiLayer* m_ImGuiLayer;
 
-		unsigned int m_VertexArray;
-
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 	};
 
 	//To define in client

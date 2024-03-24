@@ -77,6 +77,9 @@
     <ClInclude Include="src\Crane\Renderer\Buffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Crane\Renderer\Renderer.h" />
+    <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />
+    <ClInclude Include="src\Crane\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -109,5 +112,7 @@
     <ClCompile Include="src\Crane\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Crane\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Crane\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
   </ItemGroup>
 </Project>

@@ -10,27 +10,6 @@ namespace Crane
 {
 	Application* Application::s_Instance = nullptr;
 
-	static GLenum GetOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type)
-		{
-		case ShaderDataType::Float:    return GL_FLOAT;
-		case ShaderDataType::Float2:   return GL_FLOAT;
-		case ShaderDataType::Float3:   return GL_FLOAT;
-		case ShaderDataType::Float4:   return GL_FLOAT;
-		case ShaderDataType::Mat3:     return GL_FLOAT;
-		case ShaderDataType::Mat4:     return GL_FLOAT;
-		case ShaderDataType::Int:      return GL_INT;
-		case ShaderDataType::Int2:     return GL_INT;
-		case ShaderDataType::Int3:     return GL_INT;
-		case ShaderDataType::Int4:     return GL_INT;
-		case ShaderDataType::Bool:     return GL_BOOL;
-		}
-
-		CR_CORE_ASSERT(false, "Unknown ShaderDataType!");
-		return 0;
-	}
-
 	Application::Application()
 	{
 		CR_CORE_ASSERT(!s_Instance, "Application alredy exists!");
@@ -42,51 +21,57 @@ namespace Crane
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-		//vao
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
-		
+		// // // //// // // //// // // //// // // //// // // //
+
 		float vertices[] = {
-			// vertex data     
 			-0.5f, -0.5f, 0.0f, 1.0f, 0.3f, 1.0f,
 			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.6f,
 			 0.0f,  0.5f, 0.0f, 0.1f, 1.0f, 1.0f
 		};
 
-		uint32_t indices[] = {
-			0,1,2
+		uint32_t indices[] = { 
+			0,1,2 
 		};
 
+		// create buffers + varray
+		m_VertexArray.reset(VertexArray::Create());
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
+		// setting the layout of the vertex buffer
+		BufferLayout layout = {
+			{ ShaderDataType::Float3 , "a_Position" },
+			{ ShaderDataType::Float3 , "a_Color"}
+		};
+		m_VertexBuffer->SetLayout(layout);
 		
-		{
-			BufferLayout layout = {
-				{ ShaderDataType::Float3 , "a_Position" },
-				{ ShaderDataType::Float3 , "a_Color"}
-			};
+		// add both buffers into Vertex Array
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-			m_VertexBuffer->SetLayout(layout);
-		}
 
-		uint32_t i = 0;
-		const BufferLayout& layout = m_VertexBuffer->GetLayout();
-		for (const auto& element : layout)
-		{
-			glEnableVertexAttribArray(i);
-			glVertexAttribPointer(i, 
-				element.GetComponentCount(), 
-				GetOpenGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE, 
-				layout.GetStride(), 
-				(void*)element.Offset);
-			i++;
-		}
+		//square
+		//float squareVertices[] = {
+		//	-0.5f, -0.5f, 0.0f, 0.0f, 0.3f, 0.0f,
+		//	 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.6f,
+		//	 0.0f,  0.5f, 0.0f, 0.1f, 0.0f, 0.0f,
+		//	-0.5f,  0.5f, 0.0f, 0.1f, 0.0f, 0.0f,
+		//};
 
-		
+		//uint32_t squareIndices[] = {
+		//	0,1,2,
+		//	0,2,3
+		//};
 
-		//shaders
+		//std::shared_ptr<VertexBuffer> squareVB; squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		//std::shared_ptr<IndexBuffer> squareIB; squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+
+		//squareVB->SetLayout(layout);
+
+		//m_VertexArray->AddVertexBuffer(squareVB);
+		////m_VertexArray->SetIndexBuffer(squareIB);
+
+		// shaders
 		std::string vertexSource = R"(
 			#version 330 core
 
@@ -148,8 +133,11 @@ namespace Crane
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			m_Shader->Bind();
-			glBindVertexArray(m_VertexArray);
+			m_VertexArray->Bind();
+			m_VertexBuffer->Bind();
 			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+			
 			// layer update
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
