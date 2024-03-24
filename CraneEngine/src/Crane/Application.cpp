@@ -48,9 +48,9 @@ namespace Crane
 		
 		float vertices[] = {
 			// vertex data     
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f
+			-0.5f, -0.5f, 0.0f, 1.0f, 0.3f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.6f,
+			 0.0f,  0.5f, 0.0f, 0.1f, 1.0f, 1.0f
 		};
 
 		uint32_t indices[] = {
@@ -61,20 +61,30 @@ namespace Crane
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
 		
-
-		BufferLayout layout = {
-			{ ShaderDataType::Float3 , "a_Position" },
-			{ ShaderDataType::Float3 , "a_Color"}
-		};
-
-		for (int i = 0; i < layout.GetElements().size(); i++)
 		{
-			const BufferElement& element = layout.GetElements().at(i);
-			glEnableVertexAttribArray(i);
-			glVertexAttribPointer(i, element.GetComponentCount(), GetOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (void*)element.Offset);
+			BufferLayout layout = {
+				{ ShaderDataType::Float3 , "a_Position" },
+				{ ShaderDataType::Float3 , "a_Color"}
+			};
+
+			m_VertexBuffer->SetLayout(layout);
 		}
 
-		//m_VertexBuffer->SetLayout(layout);
+		uint32_t i = 0;
+		const BufferLayout& layout = m_VertexBuffer->GetLayout();
+		for (const auto& element : layout)
+		{
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(i, 
+				element.GetComponentCount(), 
+				GetOpenGLBaseType(element.Type),
+				element.Normalized ? GL_TRUE : GL_FALSE, 
+				layout.GetStride(), 
+				(void*)element.Offset);
+			i++;
+		}
+
+		
 
 		//shaders
 		std::string vertexSource = R"(

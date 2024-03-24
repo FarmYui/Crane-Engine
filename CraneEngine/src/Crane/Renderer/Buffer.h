@@ -81,8 +81,14 @@ namespace Crane
 		}
 
 		inline const std::vector<BufferElement>& GetElements() { return m_Elements; }
-		inline const uint32_t GetStride() { return m_Stride; }
-	
+		inline uint32_t GetStride() const { return m_Stride; }
+
+		inline std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
+		inline std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
+
+		inline std::vector<BufferElement>::const_iterator begin() const { return m_Elements.begin(); }
+		inline std::vector<BufferElement>::const_iterator end()   const { return m_Elements.end();   }
+		
 	private:
 		void CalculateOffsetsAndStride()
 		{
