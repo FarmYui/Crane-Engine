@@ -3,6 +3,8 @@
 #include "Application.h"
 #include "Platforms/Windows/WindowsInput.h"
 
+#include "Renderer/Renderer.h"
+
 #include <glad/glad.h>
 
 
@@ -24,13 +26,19 @@ namespace Crane
 		// // // //// // // //// // // //// // // //// // // //
 
 		float vertices[] = {
+			-1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			-1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
 			-0.4f, -0.55f, 0.0f, 1.0f, 0.3f, 1.0f,
 			 0.4f, -0.55f, 0.0f, 1.0f, 1.0f, 0.6f,
 			 0.0f,  0.55f, 0.0f, 0.1f, 1.0f, 1.0f
 		};
 
 		uint32_t indices[] = { 
-			0,1,2 
+			0,1,2,
+			0,2,3,
+			4,5,6,
 		};
 
 		// create buffers + varray
@@ -49,28 +57,6 @@ namespace Crane
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-
-		//square
-		float squareVertices[] = {
-			-1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			 1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			 1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			-1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-		};
-
-		uint32_t squareIndices[] = {
-			0,1,2,
-			0,2,3
-		};
-
-		m_SquareVA.reset(VertexArray::Create()); 
-		std::shared_ptr<VertexBuffer> squareVB; squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		std::shared_ptr<IndexBuffer> squareIB; squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
-
-		squareVB->SetLayout(layout);
-
-		m_SquareVA->AddVertexBuffer(squareVB);
-		m_SquareVA->SetIndexBuffer(squareIB);
 
 		// shaders
 		std::string vertexSource = R"(
@@ -130,16 +116,14 @@ namespace Crane
 	{
 		while (m_Running)
 		{
-			glClearColor(0.1f, 0.1f, 0.1f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RendererCommand::SetClearColor(0.1f, 0.1f, 0.1f, 1);
+			RendererCommand::Clear();
 
-			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-
+			Renderer::BeginScene();
 			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VertexArray);
 
+			Renderer::EndScene();
 			
 			// layer update
 			for (Layer* layer : m_LayerStack)

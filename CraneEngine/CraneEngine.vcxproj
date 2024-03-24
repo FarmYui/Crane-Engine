@@ -143,8 +143,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />
     <ClInclude Include="src\Crane\Renderer\Renderer.h" />
+    <ClInclude Include="src\Crane\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Crane\Renderer\RendererCommand.h" />
     <ClInclude Include="src\Crane\Renderer\VertexArray.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Crane.h" />
@@ -173,7 +176,10 @@
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Crane\Renderer\RendererCommand.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Crane\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Crane\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Crane\Application.cpp" />

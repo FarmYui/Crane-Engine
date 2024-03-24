@@ -80,6 +80,9 @@
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />
     <ClInclude Include="src\Crane\Renderer\VertexArray.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Crane\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Crane\Renderer\RendererCommand.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -114,5 +117,8 @@
     <ClCompile Include="src\Crane\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Crane\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Crane\Renderer\RendererCommand.cpp" />
   </ItemGroup>
 </Project>
