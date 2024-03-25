@@ -81,29 +81,29 @@ public:
 
 		if (Crane::Input::IsKeyPressed(CR_KEY_W))
 		{
-			m_CameraPosition.y += sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
-			m_CameraPosition.x += cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
 		}
 		if (Crane::Input::IsKeyPressed(CR_KEY_S))
 		{
-			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
-			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
 		}
 		if (Crane::Input::IsKeyPressed(CR_KEY_A))
 		{
-			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
-			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
 		}
 		if (Crane::Input::IsKeyPressed(CR_KEY_D))
 		{
-			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
-			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
 		}
 
 		if (Crane::Input::IsMouseButtonPressed(CR_MOUSE_BUTTON_3))
 		{
 			float currentMouseX = Crane::Input::GetMouseX();
-			m_CameraRotation += (m_PrevMouseX) ? ((currentMouseX - m_PrevMouseX) * m_CameraRotationSpeed * ts.GetSeconds()) : 0;
+			m_CameraRotation += (m_PrevMouseX) ? ((currentMouseX - m_PrevMouseX) * m_CameraRotationSpeed) : 0;
 			m_PrevMouseX = currentMouseX;
 		}
 		else
@@ -146,7 +146,7 @@ public:
 private:
 	float m_PrevMouseX = 0;
 
-	float m_CameraRotationSpeed = 15.0f;
+	float m_CameraRotationSpeed = 0.2f;
 	float m_CameraMovementSpeed = 3.0f;
 	
 	float m_CameraRotation = 0;
