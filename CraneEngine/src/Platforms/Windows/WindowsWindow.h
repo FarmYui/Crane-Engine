@@ -18,6 +18,8 @@ namespace Crane
 		inline unsigned int GetWidth() const override { return m_Data.Width; }
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
 
+		inline float GetTime() const override { return static_cast<float>(glfwGetTime()); }
+
 		//window attribs
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
 		virtual void SetVSync(bool On) override;

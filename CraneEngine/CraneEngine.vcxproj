@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Crane\Core\Timestep.h" />
     <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />

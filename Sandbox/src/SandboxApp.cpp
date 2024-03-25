@@ -1,10 +1,10 @@
 #include <Crane.h>
 #include "imgui/imgui.h"
 
-class ExampleLayer : public Crane::Layer
+class TriangleTest : public Crane::Layer
 {
 public:
-	ExampleLayer()
+	TriangleTest()
 		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
 		float vertices[] = {
@@ -75,33 +75,40 @@ public:
 		m_Shader = std::make_unique<Crane::Shader>(vertexSource, fragmentSource);
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Crane::Timestep ts) override
 	{
+		m_Timestep = ts;
+
 		if (Crane::Input::IsKeyPressed(CR_KEY_W))
-			m_CameraPosition.y += 0.02f;
-		if (Crane::Input::IsKeyPressed(CR_KEY_S))
-			m_CameraPosition.y += -0.02f;
-		if (Crane::Input::IsKeyPressed(CR_KEY_A))
-			m_CameraPosition.x += -0.02f;
-		if (Crane::Input::IsKeyPressed(CR_KEY_D))
-			m_CameraPosition.x += 0.02f;
-
-		if (Crane::Input::IsMouseButtonPressed(CR_MOUSE_BUTTON_1))
 		{
-			if (firstMouse)
-			{
-				prevMousePos = Crane::Input::GetMousePosition();
-				firstMouse = false;
-			}
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
+		}
+		if (Crane::Input::IsKeyPressed(CR_KEY_S))
+		{
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts.GetSeconds();
+		}
+		if (Crane::Input::IsKeyPressed(CR_KEY_A))
+		{
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
+		}
+		if (Crane::Input::IsKeyPressed(CR_KEY_D))
+		{
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts.GetSeconds();
+		}
 
-			glm::vec2 currentMousePos = Crane::Input::GetMousePosition();
-			m_CameraRotation += (currentMousePos.x - prevMousePos.x) / 10;
-			m_CameraRotation += (currentMousePos.y - prevMousePos.y) / 10;
-			prevMousePos = currentMousePos;
+		if (Crane::Input::IsMouseButtonPressed(CR_MOUSE_BUTTON_3))
+		{
+			float currentMouseX = Crane::Input::GetMouseX();
+			m_CameraRotation += (m_PrevMouseX) ? ((currentMouseX - m_PrevMouseX) * m_CameraRotationSpeed * ts.GetSeconds()) : 0;
+			m_PrevMouseX = currentMouseX;
 		}
 		else
 		{
-			firstMouse = true;
+			m_PrevMouseX = 0;
 		}
 		
 
@@ -126,6 +133,10 @@ public:
 
 	void OnImGuiRender() override
 	{
+		ImGui::Begin("Info");
+		ImGui::Text("FPS: %f", 1000.0f / m_Timestep.GetMilliseconds());
+		ImGui::Text("Last Frame: %.2fms", m_Timestep.GetMilliseconds());
+		ImGui::End();
 	}
 
 	void OnEvent(Crane::Event& e) override
@@ -133,12 +144,15 @@ public:
 	}
 
 private:
-	bool firstMouse = true;
-	glm::vec2 prevMousePos = {0,0};
+	float m_PrevMouseX = 0;
+
+	float m_CameraRotationSpeed = 15.0f;
+	float m_CameraMovementSpeed = 3.0f;
+	
 	float m_CameraRotation = 0;
 	glm::vec3 m_CameraPosition;
 
-
+	Crane::Timestep m_Timestep;
 	std::shared_ptr<Crane::Shader> m_Shader;
 	std::shared_ptr<Crane::VertexArray> m_VertexArray;
 	std::shared_ptr<Crane::VertexBuffer> m_VertexBuffer;
@@ -153,7 +167,7 @@ class Sandbox : public Crane::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(new TriangleTest());
 	}
 	~Sandbox()
 	{

@@ -3,6 +3,8 @@
 #include "Crane/Core.h"
 #include "Crane/Events/Event.h"
 
+#include "Core/Timestep.h"
+
 namespace Crane
 {
 	class CRANE_API Layer
@@ -13,7 +15,7 @@ namespace Crane
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) {}
 		

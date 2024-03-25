@@ -84,6 +84,7 @@
     <ClInclude Include="src\Crane\Renderer\RendererCommand.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Crane\Core\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">

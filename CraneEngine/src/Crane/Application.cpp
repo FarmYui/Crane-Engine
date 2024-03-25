@@ -5,8 +5,6 @@
 
 #include "Renderer/Renderer.h"
 
-#include <glad/glad.h>
-
 
 namespace Crane
 {
@@ -22,6 +20,8 @@ namespace Crane
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		//m_Window->SetVSync(false);
 
 		// // // //// // // //// // // //// // // //// // // //
 	}
@@ -52,11 +52,16 @@ namespace Crane
 
 	void Application::Run()
 	{
+		float currentTime;
 		while (m_Running)
 		{
+			currentTime = m_Window->GetTime();
+			Timestep timestep = currentTime - m_LastFrameTime;
+			m_LastFrameTime = m_Window->GetTime();
+
 			// layer update
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 			
 			// imgui update
 			m_ImGuiLayer->Begin();

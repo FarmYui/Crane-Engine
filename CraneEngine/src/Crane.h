@@ -11,6 +11,8 @@
 
 #include "Crane/ImGui/ImGuiLayer.h"
 
+#include "Crane/Core/Timestep.h"
+
 // ---Renderer------------------------
 #include "Crane/Renderer/Renderer.h"
 #include "Crane/Renderer/RendererCommand.h"

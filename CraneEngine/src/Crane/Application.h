@@ -10,11 +10,8 @@
 #include "Crane/Events/ApplicationEvent.h"
 #include "Crane/Events/KeyEvent.h"
 
-#include "Crane/Renderer/Shader.h"
-#include "Crane/Renderer/VertexArray.h"
-#include "Crane/Renderer/Buffer.h"
-
 #include "Crane/Renderer/OrthographicCamera.h"
+
 
 namespace Crane 
 {
@@ -38,6 +35,8 @@ namespace Crane
 	private:
 		static Application* s_Instance;
 	private:
+		float m_LastFrameTime = 0;
+
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 
