@@ -13,6 +13,7 @@ namespace Crane
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
+		: m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		CR_CORE_ASSERT(!s_Instance, "Application alredy exists!");
 		s_Instance = this;
@@ -26,13 +27,16 @@ namespace Crane
 		// // // //// // // //// // // //// // // //// // // //
 
 		float vertices[] = {
-			-1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			 1.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			 1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			-1.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			-0.4f, -0.55f, 0.0f, 1.0f, 0.3f, 1.0f,
-			 0.4f, -0.55f, 0.0f, 1.0f, 1.0f, 0.6f,
-			 0.0f,  0.55f, 0.0f, 0.1f, 1.0f, 1.0f
+			// quad
+			-2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			 2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			-2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+
+			// triangle
+			-0.6f, -0.5f, 0.0f, 1.0f, 0.3f, 1.0f,
+			 0.6f, -0.5f, 0.0f, 1.0f, 1.0f, 0.6f,
+			 0.0f,  0.5f, 0.0f, 0.1f, 1.0f, 1.0f
 		};
 
 		uint32_t indices[] = { 
@@ -57,7 +61,6 @@ namespace Crane
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-
 		// shaders
 		std::string vertexSource = R"(
 			#version 330 core
@@ -65,12 +68,15 @@ namespace Crane
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec3 a_Color;
 
+			uniform mat4 u_Model;
+			uniform mat4 u_ViewProjection;			
+
 			out vec3 v_Color;
 
 			void main()
 			{
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position ,1.0f);
+				gl_Position = u_ViewProjection * u_Model * vec4(a_Position ,1.0f);
 			})";
 
 		std::string fragmentSource = R"(
@@ -114,14 +120,22 @@ namespace Crane
 
 	void Application::Run()
 	{
+		glm::mat4 model(1.0f);
+
 		while (m_Running)
 		{
-			RendererCommand::SetClearColor(0.1f, 0.1f, 0.1f, 1);
+			model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+			m_Shader->SetUniformMat4("u_Model", model);
+
+			RendererCommand::SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			RendererCommand::Clear();
 
-			Renderer::BeginScene();
-			m_Shader->Bind();
-			Renderer::Submit(m_VertexArray);
+			//m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
+			//m_Camera.SetRotation(45.0f);
+
+			Renderer::BeginScene(m_Camera);
+			
+			Renderer::Submit(m_VertexArray, m_Shader);
 
 			Renderer::EndScene();
 			
@@ -139,12 +153,6 @@ namespace Crane
 			m_Window->OnUpdate();
 		}
 	}
-
-
-
-
-
-
 
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)

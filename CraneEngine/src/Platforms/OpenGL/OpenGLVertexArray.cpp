@@ -63,8 +63,8 @@ namespace Crane
 				GetOpenGLBaseType(element.Type),
 				element.Normalized ? GL_TRUE : GL_FALSE,
 				layout.GetStride(),
-				(const void*)element.Offset);
-			i++;
+				(const void*)(intptr_t)element.Offset);
+			i++; 
 		}
 
 		m_VertexBuffers.push_back(vertexBuffer);

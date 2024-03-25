@@ -14,6 +14,8 @@
 #include "Crane/Renderer/VertexArray.h"
 #include "Crane/Renderer/Buffer.h"
 
+#include "Crane/Renderer/OrthographicCamera.h"
+
 namespace Crane 
 {
 	class CRANE_API Application
@@ -48,6 +50,8 @@ namespace Crane
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 
+
+		OrthographicCamera m_Camera;
 	};
 
 	//To define in client
