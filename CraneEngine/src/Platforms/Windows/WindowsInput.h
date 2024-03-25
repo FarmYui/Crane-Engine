@@ -2,6 +2,8 @@
 
 #include "Crane/Input.h"
 
+#include <glm/glm.hpp>
+
 namespace Crane
 {
 	class CRANE_API WindowsInput : public Input
@@ -9,7 +11,7 @@ namespace Crane
 	private:
 		virtual bool IsKeyPressedImpl(int keycode) override;
 		virtual bool IsMouseButtonPressedImpl(int button) override;
-		virtual std::pair<float, float> GetMousePositionImpl() override;
+		virtual glm::vec2 GetMousePositionImpl() override;
 		virtual float GetMouseXImpl() override;
 		virtual float GetMouseYImpl() override;
 
