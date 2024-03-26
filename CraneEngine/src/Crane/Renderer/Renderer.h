@@ -15,7 +15,7 @@ namespace Crane
 
 		static void EndScene() {};
 
-		static void Submit(const std::shared_ptr<VertexArray>& VertexArray, const std::shared_ptr<Shader>& shader, const glm::mat4& transform);
+		static void Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& shader, const glm::mat4& transform);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 

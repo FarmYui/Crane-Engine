@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef CR_PLATFORM_WINDOWS
 #if CR_DYNAMIC_LINK
 	#ifdef CR_BUILD_DLL
@@ -29,3 +31,12 @@
 #define BIT(x) (1 << x)
 
 #define CR_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
+namespace Crane
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}

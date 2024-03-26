@@ -15,7 +15,7 @@ namespace Crane
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& VertexArray) 
+	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& VertexArray) 
 	{
 		glDrawElements(GL_TRIANGLES, VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}

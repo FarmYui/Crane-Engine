@@ -12,7 +12,7 @@ namespace Crane
 		s_SceneData->ViewProjMatrix = camera.GetViewProjMatrix();
 	}
 
-	void Renderer::Submit(const std::shared_ptr<VertexArray>& VertexArray, const std::shared_ptr<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f))
+	void Renderer::Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f))
 	{
 		shader->Bind();
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_ViewProjection", s_SceneData->ViewProjMatrix);

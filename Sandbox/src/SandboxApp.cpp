@@ -52,9 +52,9 @@ public:
 
 		m_QuadVA.reset(Crane::VertexArray::Create());
 
-		std::shared_ptr<Crane::VertexBuffer> vb;
+		Crane::Ref<Crane::VertexBuffer> vb;
 		vb.reset(Crane::VertexBuffer::Create(quadVertices, sizeof(quadVertices)));
-		std::shared_ptr<Crane::IndexBuffer> ib;
+		Crane::Ref<Crane::IndexBuffer> ib;
 		ib.reset(Crane::IndexBuffer::Create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t)));
 
 		vb->SetLayout(layout);
@@ -196,12 +196,12 @@ private:
 	glm::vec3 m_CameraPosition;
 
 	Crane::Timestep m_Timestep;
-	std::shared_ptr<Crane::Shader> m_Shader;
-	std::shared_ptr<Crane::VertexArray> m_VertexArray;
-	std::shared_ptr<Crane::VertexBuffer> m_VertexBuffer;
-	std::shared_ptr<Crane::IndexBuffer> m_IndexBuffer;
+	Crane::Ref<Crane::Shader> m_Shader;
+	Crane::Ref<Crane::VertexArray> m_VertexArray;
+	Crane::Ref<Crane::VertexBuffer> m_VertexBuffer;
+	Crane::Ref<Crane::IndexBuffer> m_IndexBuffer;
 
-	std::shared_ptr<Crane::VertexArray>m_QuadVA;
+	Crane::Ref<Crane::VertexArray>m_QuadVA;
 
 
 	Crane::OrthographicCamera m_Camera;
