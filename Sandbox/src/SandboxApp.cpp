@@ -1,6 +1,10 @@
 #include <Crane.h>
 #include "imgui/imgui.h"
 
+// temporary /////////////////////////////
+#include "Platforms/OpenGL/OpenGLShader.h"
+//////////////////////////////////////////
+
 class TriangleTest : public Crane::Layer
 {
 public:
@@ -9,9 +13,9 @@ public:
 	{
 		float vertices[] = {
 			// triangle
-			-0.6f, -0.5f, 0.0f, 1.0f, 0.3f, 1.0f,
-			 0.6f, -0.5f, 0.0f, 1.0f, 1.0f, 0.6f,
-			 0.0f,  0.5f, 0.0f, 0.1f, 1.0f, 1.0f
+			-0.6f, -0.5f, 0.0f,
+			 0.6f, -0.5f, 0.0f,
+			 0.0f,  0.5f, 0.0f
 		};
 
 		uint32_t indices[] = {
@@ -25,8 +29,7 @@ public:
 
 		// setting the layout of the vertex buffer
 		Crane::BufferLayout layout = {
-			{ Crane::ShaderDataType::Float3 , "a_Position" },
-			{ Crane::ShaderDataType::Float3 , "a_Color"}
+			{ Crane::ShaderDataType::Float3 , "a_Position" }
 		};
 		m_VertexBuffer->SetLayout(layout);
 
@@ -36,10 +39,10 @@ public:
 
 		float quadVertices[] = {
 			// quad
-		   -2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-		   	2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-	 	   -2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f
+		   -2.0f, -0.04f, 0.0f,
+			2.0f, -0.04f, 0.0f,
+		   	2.0f,  0.04f, 0.0f,
+	 	   -2.0f,  0.04f, 0.0f
 		};
 
 		uint32_t quadIndices[] = {
@@ -65,16 +68,12 @@ public:
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec3 a_Color;
 
 			uniform mat4 u_Model;
 			uniform mat4 u_ViewProjection;			
 
-			out vec3 v_Color;
-
 			void main()
 			{
-				v_Color = a_Color;
 				gl_Position = u_ViewProjection * u_Model * vec4(a_Position ,1.0f);
 			})";
 
@@ -83,14 +82,14 @@ public:
 			
 			layout(location = 0) out vec4 color;
 
-			in vec3 v_Color;
+			uniform vec3 u_Color;
 
 			void main()
 			{
-				color = vec4(v_Color,1.0f);
+				color = vec4(u_Color,1.0f);
 			})";
 
-		m_Shader = std::make_unique<Crane::Shader>(vertexSource, fragmentSource);
+		m_Shader.reset(Crane::Shader::Create(vertexSource, fragmentSource));
 	}
 
 	void OnUpdate(Crane::Timestep ts) override
@@ -129,6 +128,7 @@ public:
 			m_PrevMouseX = 0;
 		}
 		
+
 		m_QuadTransform = glm::translate(glm::mat4(1.0f), m_QuadPosition);
 		m_TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
 
@@ -141,7 +141,10 @@ public:
 		
 		Crane::Renderer::BeginScene(m_Camera);
 
+		m_Shader->Bind();
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformFloat3("u_Color", m_QuadColor);
 		Crane::Renderer::Submit(m_QuadVA, m_Shader, m_QuadTransform);
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformFloat3("u_Color", m_TriangleColor);
 		Crane::Renderer::Submit(m_VertexArray, m_Shader, m_TriangleTransform);
 
 		Crane::Renderer::EndScene();
@@ -151,13 +154,22 @@ public:
 	void OnImGuiRender() override
 	{
 		ImGui::Begin("Info");
+
 		ImGui::Text("FPS: %.1f", 1.0f/ m_Timestep);
 		ImGui::Text("Last Frame: %.2fms", m_Timestep.GetMilliseconds());
+		
 		ImGui::End();
 
+
+
 		ImGui::Begin("Attribs");
+
 		ImGui::DragFloat3("Quad Position", &m_QuadPosition[0], 0.01f);
+		ImGui::ColorEdit3("Quad Color", &m_QuadColor[0]);
+		ImGui::Separator();
 		ImGui::DragFloat3("Triangle Position", &m_TrianglePosition[0], 0.01f);
+		ImGui::ColorEdit3("Triangle Color", &m_TriangleColor[0]);
+
 		ImGui::End();
 	}
 
@@ -166,6 +178,9 @@ public:
 	}
 
 private:
+	glm::vec3 m_TriangleColor = { 0.9f,0.2f,0.5f };
+	glm::vec3 m_QuadColor = { 0.4f,0.7f,0.7f };
+
 	glm::vec3 m_TrianglePosition = { 0,0,0 };
 	glm::vec3 m_QuadPosition = { 0,0,0 };
 

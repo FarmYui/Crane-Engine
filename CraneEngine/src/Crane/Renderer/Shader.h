@@ -7,14 +7,12 @@ namespace Crane
 	class Shader
 	{
 	public:
-		Shader(const std::string& vertexSource, const std::string& fragmentSource);
-		~Shader();
+		virtual ~Shader() = default;
 		
-		void Bind() const;
-		void Unìbind() const;
+		virtual void Bind() const = 0;
+		virtual void Unìbind() const = 0;
 	
-		void SetUniformMat4(const std::string& name, const glm::mat4& mat4) const;
-	private:
-		uint32_t m_RendererID;
+		static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
+	
 	};
 }

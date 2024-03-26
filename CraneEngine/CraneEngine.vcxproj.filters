@@ -85,6 +85,7 @@
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Crane\Core\Timestep.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -123,5 +124,6 @@
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Crane\Renderer\RendererCommand.cpp" />
     <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
   </ItemGroup>
 </Project>
