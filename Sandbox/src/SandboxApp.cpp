@@ -5,15 +5,9 @@ class TriangleTest : public Crane::Layer
 {
 public:
 	TriangleTest()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+		: Layer("Triangle Test"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
 		float vertices[] = {
-			// quad
-			-2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			 2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			 2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-			-2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
-
 			// triangle
 			-0.6f, -0.5f, 0.0f, 1.0f, 0.3f, 1.0f,
 			 0.6f, -0.5f, 0.0f, 1.0f, 1.0f, 0.6f,
@@ -22,8 +16,6 @@ public:
 
 		uint32_t indices[] = {
 			0,1,2,
-			0,2,3,
-			4,5,6,
 		};
 
 		// create buffers + varray
@@ -41,6 +33,32 @@ public:
 		// add both buffers into Vertex Array
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+		float quadVertices[] = {
+			// quad
+		   -2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+			2.0f, -0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+		   	2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f,
+	 	   -2.0f,  0.04f, 0.0f, 1.0f, 1.0f, 1.0f
+		};
+
+		uint32_t quadIndices[] = {
+			0,1,2,
+			0,2,3
+		};
+
+		m_QuadVA.reset(Crane::VertexArray::Create());
+
+		std::shared_ptr<Crane::VertexBuffer> vb;
+		vb.reset(Crane::VertexBuffer::Create(quadVertices, sizeof(quadVertices)));
+		std::shared_ptr<Crane::IndexBuffer> ib;
+		ib.reset(Crane::IndexBuffer::Create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t)));
+
+		vb->SetLayout(layout);
+
+		// add both buffers into Vertex Array
+		m_QuadVA->AddVertexBuffer(vb);
+		m_QuadVA->SetIndexBuffer(ib);
 
 		// shaders
 		std::string vertexSource = R"(
@@ -111,21 +129,20 @@ public:
 			m_PrevMouseX = 0;
 		}
 		
-
+		m_QuadTransform = glm::translate(glm::mat4(1.0f), m_QuadPosition);
+		m_TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
 
 		m_Camera.SetPosition(m_CameraPosition);
 		m_Camera.SetRotation(m_CameraRotation);
 
-		glm::mat4 model(1.0f);
-		//model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_Shader->SetUniformMat4("u_Model", model);
-
+	
 		Crane::RendererCommand::SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		Crane::RendererCommand::Clear();
 		
 		Crane::Renderer::BeginScene(m_Camera);
 
-		Crane::Renderer::Submit(m_VertexArray, m_Shader);
+		Crane::Renderer::Submit(m_QuadVA, m_Shader, m_QuadTransform);
+		Crane::Renderer::Submit(m_VertexArray, m_Shader, m_TriangleTransform);
 
 		Crane::Renderer::EndScene();
 
@@ -134,8 +151,13 @@ public:
 	void OnImGuiRender() override
 	{
 		ImGui::Begin("Info");
-		ImGui::Text("FPS: %f", 1000.0f / m_Timestep.GetMilliseconds());
+		ImGui::Text("FPS: %.1f", 1.0f/ m_Timestep);
 		ImGui::Text("Last Frame: %.2fms", m_Timestep.GetMilliseconds());
+		ImGui::End();
+
+		ImGui::Begin("Attribs");
+		ImGui::DragFloat3("Quad Position", &m_QuadPosition[0], 0.01f);
+		ImGui::DragFloat3("Triangle Position", &m_TrianglePosition[0], 0.01f);
 		ImGui::End();
 	}
 
@@ -144,6 +166,12 @@ public:
 	}
 
 private:
+	glm::vec3 m_TrianglePosition = { 0,0,0 };
+	glm::vec3 m_QuadPosition = { 0,0,0 };
+
+	glm::mat4 m_TriangleTransform;
+	glm::mat4 m_QuadTransform;
+
 	float m_PrevMouseX = 0;
 
 	float m_CameraRotationSpeed = 0.2f;
@@ -157,6 +185,8 @@ private:
 	std::shared_ptr<Crane::VertexArray> m_VertexArray;
 	std::shared_ptr<Crane::VertexBuffer> m_VertexBuffer;
 	std::shared_ptr<Crane::IndexBuffer> m_IndexBuffer;
+
+	std::shared_ptr<Crane::VertexArray>m_QuadVA;
 
 
 	Crane::OrthographicCamera m_Camera;
