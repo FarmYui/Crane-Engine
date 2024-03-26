@@ -90,6 +90,8 @@ public:
 			})";
 
 		m_Shader.reset(Crane::Shader::Create(vertexSource, fragmentSource));
+
+		//m_Texture = Crane::Texture2D::Create("gg.png");
 	}
 
 	void OnUpdate(Crane::Timestep ts) override
@@ -196,6 +198,8 @@ private:
 	glm::vec3 m_CameraPosition;
 
 	Crane::Timestep m_Timestep;
+
+	Crane::Ref<Crane::Texture2D> m_Texture;
 	Crane::Ref<Crane::Shader> m_Shader;
 	Crane::Ref<Crane::VertexArray> m_VertexArray;
 	Crane::Ref<Crane::VertexBuffer> m_VertexBuffer;

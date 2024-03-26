@@ -4,14 +4,23 @@
     <Filter Include="Crane">
       <UniqueIdentifier>{4E98FB0C-BAAC-23BE-832E-C71DEF0120EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crane\Core">
+      <UniqueIdentifier>{661D66AB-52D5-A7F8-BBDC-8054A7B342E9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Crane\Events">
       <UniqueIdentifier>{72208522-5E83-14C7-0709-4D7DF34AE049}</UniqueIdentifier>
     </Filter>
     <Filter Include="Crane\ImGui">
       <UniqueIdentifier>{F88F9418-6445-0D0E-ED39-07E559EE0312}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crane\Renderer">
+      <UniqueIdentifier>{B4134ACF-A0E1-3DD5-8975-AEFB75E2193A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platforms">
       <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platforms\OpenGL">
+      <UniqueIdentifier>{719BB998-5D94-D8EA-86C6-BD6F721EB8F6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platforms\Windows">
       <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
@@ -24,6 +33,9 @@
     </ClInclude>
     <ClInclude Include="src\Crane\Core.h">
       <Filter>Crane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\Timestep.h">
+      <Filter>Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\EntryPoint.h">
       <Filter>Crane</Filter>
@@ -61,8 +73,56 @@
     <ClInclude Include="src\Crane\MouseButtonCodes.h">
       <Filter>Crane</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\Buffer.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\BufferLayout.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\GraphicsContext.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\Renderer.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\RendererAPI.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\RendererCommand.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\Shader.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\Texture.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\VertexArray.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crane\Window.h">
       <Filter>Crane</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
+      <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\Windows\WindowsInput.h">
       <Filter>Platforms\Windows</Filter>
@@ -71,21 +131,6 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Crane\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Crane\Renderer\Shader.h" />
-    <ClInclude Include="src\Crane\Renderer\Buffer.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Crane\Renderer\Renderer.h" />
-    <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />
-    <ClInclude Include="src\Crane\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Crane\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Crane\Renderer\RendererCommand.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h" />
-    <ClInclude Include="src\Crane\Core\Timestep.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -106,6 +151,48 @@
     <ClCompile Include="src\Crane\Log.cpp">
       <Filter>Crane</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\Buffer.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\Renderer.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\RendererCommand.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\Shader.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\Texture.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\VertexArray.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
@@ -113,17 +200,5 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Crane\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Crane\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Crane\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Crane\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Crane\Renderer\RendererCommand.cpp" />
-    <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
   </ItemGroup>
 </Project>
