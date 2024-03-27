@@ -2,11 +2,18 @@
 
 #include "RendererAPI.h"
 
+#include <glm/glm.hpp>
+
 namespace Crane
 {
 	class RendererCommand
 	{
 	public:
+		inline static void SetClearColor(const glm::vec4& color)
+		{
+			s_RendererAPI->SetClearColor(color.r, color.g, color.b, color.a);
+		}
+
 		inline static void SetClearColor(float r, float g, float b, float a)
 		{
 			s_RendererAPI->SetClearColor(r, g, b, a);

@@ -147,7 +147,7 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 
 	
-		Crane::RendererCommand::SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		Crane::RendererCommand::SetClearColor(m_ClearColor);
 		Crane::RendererCommand::Clear();
 		
 		Crane::Renderer::BeginScene(m_Camera);
@@ -166,22 +166,25 @@ public:
 	void OnImGuiRender() override
 	{
 		ImGui::Begin("Info");
-
 		ImGui::Text("FPS: %.1f", 1.0f/ m_Timestep);
 		ImGui::Text("Last Frame: %.2fms", m_Timestep.GetMilliseconds());
-		
 		ImGui::End();
 
-
-
-		ImGui::Begin("Attribs");
-
+		ImGui::Begin("Camera");
+		ImGui::DragFloat3("Camera Position", &m_CameraPosition[0], 0.01f);
+		ImGui::DragFloat("Camera Rotation", &m_CameraRotation, 0.01f);
+		ImGui::End();
+		
+		ImGui::Begin("Scene");
 		ImGui::DragFloat3("Quad Position", &m_QuadPosition[0], 0.01f);
 		ImGui::ColorEdit3("Quad Color", &m_QuadColor[0]);
 		ImGui::Separator();
 		ImGui::DragFloat3("Triangle Position", &m_TrianglePosition[0], 0.01f);
 		ImGui::ColorEdit3("Triangle Color", &m_TriangleColor[0]);
+		ImGui::End();
 
+		ImGui::Begin("Ambient");
+		ImGui::ColorEdit3("Clear Color", &m_ClearColor[0]);
 		ImGui::End();
 	}
 
@@ -190,6 +193,7 @@ public:
 	}
 
 private:
+	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 	glm::vec3 m_TriangleColor = { 0.9f,0.2f,0.5f };
 	glm::vec3 m_QuadColor = { 0.4f,0.7f,0.7f };
 
