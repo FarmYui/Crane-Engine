@@ -13,8 +13,8 @@ public:
 	{
 		float vertices[] = {
 			// triangle
-			-0.6f, -0.5f, 0.0f, 0.0f, 0.0f,
-			 0.6f, -0.5f, 0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
 			 0.0f,  0.5f, 0.0f, 0.5f, 1.0f
 		};
 
@@ -23,9 +23,9 @@ public:
 		};
 
 		// create buffers + varray
-		m_VertexArray.reset(Crane::VertexArray::Create());
-		m_VertexBuffer.reset(Crane::VertexBuffer::Create(vertices, sizeof(vertices)));
-		m_IndexBuffer.reset(Crane::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray = Crane::VertexArray::Create();
+		m_VertexBuffer = Crane::VertexBuffer::Create(vertices, sizeof(vertices));
+		m_IndexBuffer = Crane::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 
 		// setting the layout of the vertex buffer
 		Crane::BufferLayout layout = {
@@ -52,12 +52,10 @@ public:
 			0,2,3
 		};
 
-		m_QuadVA.reset(Crane::VertexArray::Create());
+		m_QuadVA = Crane::VertexArray::Create();
 
-		Crane::Ref<Crane::VertexBuffer> vb;
-		vb.reset(Crane::VertexBuffer::Create(quadVertices, sizeof(quadVertices)));
-		Crane::Ref<Crane::IndexBuffer> ib;
-		ib.reset(Crane::IndexBuffer::Create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t)));
+		Crane::Ref<Crane::VertexBuffer> vb = Crane::VertexBuffer::Create(quadVertices, sizeof(quadVertices));
+		Crane::Ref<Crane::IndexBuffer> ib = Crane::IndexBuffer::Create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t));
 
 		vb->SetLayout(layout);
 
@@ -98,9 +96,12 @@ public:
 				color = texture(u_Texture, v_TextureCoordinate) * vec4(u_Color,1.0f);
 			})";
 
-		m_Shader.reset(Crane::Shader::Create(vertexSource, fragmentSource));
+		m_Shader = Crane::Shader::Create(vertexSource, fragmentSource);
 
 		m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		m_Shader->Bind();
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Crane::Timestep ts) override
