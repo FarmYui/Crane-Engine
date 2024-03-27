@@ -7,6 +7,11 @@ namespace Crane
 {
 	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData();
 
+	void Renderer::Init()
+	{
+		RenderCommand::Init();
+	}
+
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		s_SceneData->ViewProjMatrix = camera.GetViewProjMatrix();
@@ -19,6 +24,6 @@ namespace Crane
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_Model", transform);
 
 		VertexArray->Bind();
-		RendererCommand::DrawIndexed(VertexArray);
+		RenderCommand::DrawIndexed(VertexArray);
 	}
 }

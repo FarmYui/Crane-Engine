@@ -91,7 +91,7 @@
     <ClInclude Include="src\Crane\Renderer\RendererAPI.h">
       <Filter>Crane\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\Renderer\RendererCommand.h">
+    <ClInclude Include="src\Crane\Renderer\RenderCommand.h">
       <Filter>Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Shader.h">
@@ -163,7 +163,7 @@
     <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp">
       <Filter>Crane\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crane\Renderer\RendererCommand.cpp">
+    <ClCompile Include="src\Crane\Renderer\RenderCommand.cpp">
       <Filter>Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Shader.cpp">

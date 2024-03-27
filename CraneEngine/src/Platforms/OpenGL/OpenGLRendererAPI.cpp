@@ -5,6 +5,12 @@
 
 namespace Crane
 {
+	void OpenGLRendererAPI::Init()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
 	void OpenGLRendererAPI::SetClearColor(float r, float g, float b, float a)
 	{
 		glClearColor(r,g,b,a);

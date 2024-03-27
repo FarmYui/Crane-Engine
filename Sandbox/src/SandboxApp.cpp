@@ -23,7 +23,7 @@ public:
 		};
 
 		// create buffers + varray
-		m_VertexArray = Crane::VertexArray::Create();
+		m_TriangleVA = Crane::VertexArray::Create();
 		m_VertexBuffer = Crane::VertexBuffer::Create(vertices, sizeof(vertices));
 		m_IndexBuffer = Crane::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 
@@ -36,8 +36,8 @@ public:
 		m_VertexBuffer->SetLayout(layout);
 
 		// add both buffers into Vertex Array
-		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+		m_TriangleVA->AddVertexBuffer(m_VertexBuffer);
+		m_TriangleVA->SetIndexBuffer(m_IndexBuffer);
 
 		float quadVertices[] = {
 			// quad
@@ -96,12 +96,15 @@ public:
 				color = texture(u_Texture, v_TextureCoordinate) * vec4(u_Color,1.0f);
 			})";
 
-		m_Shader = Crane::Shader::Create(vertexSource, fragmentSource);
+		m_TextureShader = Crane::Shader::Create(vertexSource, fragmentSource);
 
 		m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_ChernoLogo = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
 
-		m_Shader->Bind();
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformInt("u_Texture", 0);
+		m_TextureShader->Bind();
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_TextureShader)->SetUniformInt("u_Texture", 0);
+		
+
 	}
 
 	void OnUpdate(Crane::Timestep ts) override
@@ -148,17 +151,23 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 
 	
-		Crane::RendererCommand::SetClearColor(m_ClearColor);
-		Crane::RendererCommand::Clear();
+		Crane::RenderCommand::SetClearColor(m_ClearColor);
+		Crane::RenderCommand::Clear();
 		
 		Crane::Renderer::BeginScene(m_Camera);
 
-		m_Shader->Bind();
+		m_TextureShader->Bind();
+		
 		m_Texture->Bind();
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformFloat3("u_Color", m_QuadColor);
-		Crane::Renderer::Submit(m_QuadVA, m_Shader, m_QuadTransform);
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformFloat3("u_Color", m_TriangleColor);
-		Crane::Renderer::Submit(m_VertexArray, m_Shader, m_TriangleTransform);
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_TextureShader)->SetUniformFloat3("u_Color", m_TriangleColor);
+		Crane::Renderer::Submit(m_TriangleVA, m_TextureShader, m_TriangleTransform);
+		
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_TextureShader)->SetUniformFloat3("u_Color", m_QuadColor);
+		Crane::Renderer::Submit(m_QuadVA, m_TextureShader, m_QuadTransform);
+
+
+		m_ChernoLogo->Bind();
+		Crane::Renderer::Submit(m_QuadVA, m_TextureShader, m_QuadTransform);
 
 		Crane::Renderer::EndScene();
 
@@ -173,7 +182,7 @@ public:
 
 		ImGui::Begin("Camera");
 		ImGui::DragFloat3("Camera Position", &m_CameraPosition[0], 0.01f);
-		ImGui::DragFloat("Camera Rotation", &m_CameraRotation, 0.01f);
+		ImGui::DragFloat("Camera Rotation", &m_CameraRotation, 1.0f);
 		ImGui::End();
 		
 		ImGui::Begin("Scene");
@@ -196,9 +205,9 @@ public:
 private:
 	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 	glm::vec3 m_TriangleColor = { 0.9f,0.2f,0.5f };
-	glm::vec3 m_QuadColor = { 0.4f,0.7f,0.7f };
+	glm::vec3 m_QuadColor = { 1.0f,1.0f,1.0f };
 
-	glm::vec3 m_TrianglePosition = { 0,0,0 };
+	glm::vec3 m_TrianglePosition = { 0,1.0f,0 };
 	glm::vec3 m_QuadPosition = { 0,0,0 };
 
 	glm::mat4 m_TriangleTransform;
@@ -215,13 +224,14 @@ private:
 	Crane::Timestep m_Timestep;
 
 	Crane::Ref<Crane::Texture2D> m_Texture;
-	Crane::Ref<Crane::Shader> m_Shader;
-	Crane::Ref<Crane::VertexArray> m_VertexArray;
+	Crane::Ref<Crane::Texture2D> m_ChernoLogo;
+
+	Crane::Ref<Crane::Shader> m_TextureShader;
+	Crane::Ref<Crane::VertexArray> m_TriangleVA;
 	Crane::Ref<Crane::VertexBuffer> m_VertexBuffer;
 	Crane::Ref<Crane::IndexBuffer> m_IndexBuffer;
 
 	Crane::Ref<Crane::VertexArray>m_QuadVA;
-
 
 	Crane::OrthographicCamera m_Camera;
 };

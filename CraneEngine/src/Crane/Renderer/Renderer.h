@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RendererAPI.h"
-#include "RendererCommand.h"
+#include "RenderCommand.h"
 
 #include "Shader.h"
 #include "OrthographicCamera.h"
@@ -11,6 +11,8 @@ namespace Crane
 	class Renderer
 	{
 	public:
+		static void Init();
+
 		static void BeginScene(OrthographicCamera& camera);
 
 		static void EndScene() {};
