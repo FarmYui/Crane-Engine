@@ -13,9 +13,9 @@ public:
 	{
 		float vertices[] = {
 			// triangle
-			-0.6f, -0.5f, 0.0f,
-			 0.6f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
+			-0.6f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.6f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.0f,  0.5f, 0.0f, 0.5f, 1.0f
 		};
 
 		uint32_t indices[] = {
@@ -29,8 +29,10 @@ public:
 
 		// setting the layout of the vertex buffer
 		Crane::BufferLayout layout = {
-			{ Crane::ShaderDataType::Float3 , "a_Position" }
+			{ Crane::ShaderDataType::Float3 , "a_Position" },
+			{ Crane::ShaderDataType::Float2 , "a_TextureCoordinate"}
 		};
+
 		m_VertexBuffer->SetLayout(layout);
 
 		// add both buffers into Vertex Array
@@ -39,10 +41,10 @@ public:
 
 		float quadVertices[] = {
 			// quad
-		   -2.0f, -0.04f, 0.0f,
-			2.0f, -0.04f, 0.0f,
-		   	2.0f,  0.04f, 0.0f,
-	 	   -2.0f,  0.04f, 0.0f
+		   -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+		   	0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+	 	   -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		uint32_t quadIndices[] = {
@@ -68,12 +70,16 @@ public:
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TextureCoordinate;
+
+			out vec2 v_TextureCoordinate;
 
 			uniform mat4 u_Model;
 			uniform mat4 u_ViewProjection;			
 
 			void main()
 			{
+				v_TextureCoordinate = a_TextureCoordinate;
 				gl_Position = u_ViewProjection * u_Model * vec4(a_Position ,1.0f);
 			})";
 
@@ -82,16 +88,19 @@ public:
 			
 			layout(location = 0) out vec4 color;
 
+			in vec2 v_TextureCoordinate;
+
 			uniform vec3 u_Color;
+			uniform sampler2D u_Texture;
 
 			void main()
 			{
-				color = vec4(u_Color,1.0f);
+				color = texture(u_Texture, v_TextureCoordinate) * vec4(u_Color,1.0f);
 			})";
 
 		m_Shader.reset(Crane::Shader::Create(vertexSource, fragmentSource));
 
-		//m_Texture = Crane::Texture2D::Create("gg.png");
+		m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 	}
 
 	void OnUpdate(Crane::Timestep ts) override
@@ -144,6 +153,7 @@ public:
 		Crane::Renderer::BeginScene(m_Camera);
 
 		m_Shader->Bind();
+		m_Texture->Bind();
 		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformFloat3("u_Color", m_QuadColor);
 		Crane::Renderer::Submit(m_QuadVA, m_Shader, m_QuadTransform);
 		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_Shader)->SetUniformFloat3("u_Color", m_TriangleColor);
