@@ -53,18 +53,18 @@ namespace Crane
 
 		CR_CORE_ASSERT(vertexBuffer->GetLayout().GetStride(), "Vertex buffer has no layout, please make sure to set the layout first!");
 
-		uint32_t i = 0;
+
 		const BufferLayout& layout = vertexBuffer->GetLayout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(i);
-			glVertexAttribPointer(i,
+			glEnableVertexAttribArray(m_VertexBufferIndex);
+			glVertexAttribPointer(m_VertexBufferIndex,
 				element.GetComponentCount(),
 				GetOpenGLBaseType(element.Type),
 				element.Normalized ? GL_TRUE : GL_FALSE,
 				layout.GetStride(),
 				(const void*)(intptr_t)element.Offset);
-			i++; 
+			m_VertexBufferIndex++; 
 		}
 
 		m_VertexBuffers.push_back(vertexBuffer);
