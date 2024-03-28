@@ -61,16 +61,18 @@ namespace Crane
 			Timestep timestep = currentTime - m_LastFrameTime;
 			m_LastFrameTime = m_Window->GetTime();
 
-			// layer update
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(timestep);
-			
+			if (!m_Minimized)
+			{ 
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+			}
+
 			// imgui update
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
 			m_ImGuiLayer->End();
-				
+
 			// window update
 			m_Window->OnUpdate();
 		}
@@ -85,7 +87,15 @@ namespace Crane
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
-		RenderCommand::ResizeScreen(e.GetWidth(), e.GetHeight());
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
 		return false;
 	}
 }

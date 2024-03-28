@@ -35,15 +35,17 @@ namespace Crane
 	private:
 		static Application* s_Instance;
 	private:
-		float m_LastFrameTime = 0;
-
 		std::unique_ptr<Window> m_Window;
+		
 		bool m_Running = true;
 
 		LayerStack m_LayerStack;
 
 		ImGuiLayer* m_ImGuiLayer;
 
+		bool m_Minimized = false;
+
+		float m_LastFrameTime = 0;
 		
 	};
 

@@ -17,6 +17,9 @@ namespace Crane
 		void OnEvent(Event& e);
 		void OnUpdate(Timestep ts);
 
+		inline float GetZoomLevel() const { return m_ZoomLevel; }
+		inline void SetZoomLevel(float level) { m_ZoomLevel = level; }
+
 		inline OrthographicCamera& GetCamera() { return m_Camera; }
 		inline const OrthographicCamera& GetCamera() const { return m_Camera; }
 		
