@@ -15,7 +15,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLVertexArray>();
+			return CreateRef<OpenGLVertexArray>();
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");

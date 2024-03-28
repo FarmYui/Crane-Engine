@@ -1,14 +1,16 @@
-#include <Crane.h>
-#include "imgui/imgui.h"
+#include "Crane.h"
+#include "Crane/Core/EntryPoint.h"
 
+#include "imgui/imgui.h"
 // temporary /////////////////////////////
 #include "Platforms/OpenGL/OpenGLShader.h"
 //////////////////////////////////////////
+#include "Sandbox2D.h"
 
-class TriangleTest : public Crane::Layer
+class ExampleLayer : public Crane::Layer
 {
 public:
-	TriangleTest()
+	ExampleLayer()
 		: Layer("Triangle Test"), m_CameraController(1.78f,true)
 	{
 		float vertices[] = {
@@ -142,8 +144,6 @@ public:
 		ImGui::End();
 	}
 
-	
-
 private:
 	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 	glm::vec3 m_TriangleColor = { 0.9f,0.2f,0.5f };
@@ -175,7 +175,8 @@ class Sandbox : public Crane::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new TriangleTest());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 	~Sandbox()
 	{

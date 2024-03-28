@@ -27,6 +27,3 @@
 #include "Crane/Renderer/OrthographicCamera.h"
 // -----------------------------------
 
-//entry point---------------
-#include "Crane/Core/EntryPoint.h"
-//--------------------------
