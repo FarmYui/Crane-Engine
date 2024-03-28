@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Crane/Input.h"
+#include "Crane/Core/Input.h"
 
 #include <glm/glm.hpp>
 

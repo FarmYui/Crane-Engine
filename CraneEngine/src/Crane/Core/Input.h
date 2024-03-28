@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Crane/Core.h"
+#include "Crane/Core/Core.h"
 #include <glm/glm.hpp>
 
 namespace Crane

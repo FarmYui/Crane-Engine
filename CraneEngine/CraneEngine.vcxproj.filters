@@ -28,17 +28,38 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crane.h" />
-    <ClInclude Include="src\Crane\Application.h">
-      <Filter>Crane</Filter>
+    <ClInclude Include="src\Crane\Core\Application.h">
+      <Filter>Crane\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\Core.h">
-      <Filter>Crane</Filter>
+    <ClInclude Include="src\Crane\Core\Core.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\EntryPoint.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\Input.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\KeyCodes.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\Layer.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\LayerStack.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\Log.h">
+      <Filter>Crane\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Core\MouseButtonCodes.h">
+      <Filter>Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Timestep.h">
       <Filter>Crane\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\EntryPoint.h">
-      <Filter>Crane</Filter>
+    <ClInclude Include="src\Crane\Core\Window.h">
+      <Filter>Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Events\ApplicationEvent.h">
       <Filter>Crane\Events</Filter>
@@ -55,24 +76,6 @@
     <ClInclude Include="src\Crane\ImGui\ImGuiLayer.h">
       <Filter>Crane\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\Input.h">
-      <Filter>Crane</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\KeyCodes.h">
-      <Filter>Crane</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\Layer.h">
-      <Filter>Crane</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\LayerStack.h">
-      <Filter>Crane</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\Log.h">
-      <Filter>Crane</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\MouseButtonCodes.h">
-      <Filter>Crane</Filter>
-    </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Buffer.h">
       <Filter>Crane\Renderer</Filter>
     </ClInclude>
@@ -85,13 +88,16 @@
     <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h">
       <Filter>Crane\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\OrthographicCameraController.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\RenderCommand.h">
+      <Filter>Crane\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Renderer.h">
       <Filter>Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\RendererAPI.h">
-      <Filter>Crane\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\Renderer\RenderCommand.h">
       <Filter>Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Shader.h">
@@ -102,9 +108,6 @@
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\VertexArray.h">
       <Filter>Crane\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crane\Window.h">
-      <Filter>Crane</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
       <Filter>Platforms\OpenGL</Filter>
@@ -131,11 +134,19 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Crane\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Crane\Application.cpp">
-      <Filter>Crane</Filter>
+    <ClCompile Include="src\Crane\Core\Application.cpp">
+      <Filter>Crane\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Core\Layer.cpp">
+      <Filter>Crane\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Core\LayerStack.cpp">
+      <Filter>Crane\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Core\Log.cpp">
+      <Filter>Crane\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\ImGui\ImGuiBuild.cpp">
       <Filter>Crane\ImGui</Filter>
@@ -143,28 +154,22 @@
     <ClCompile Include="src\Crane\ImGui\ImGuiLayer.cpp">
       <Filter>Crane\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crane\Layer.cpp">
-      <Filter>Crane</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crane\LayerStack.cpp">
-      <Filter>Crane</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crane\Log.cpp">
-      <Filter>Crane</Filter>
-    </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Buffer.cpp">
       <Filter>Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp">
       <Filter>Crane\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\OrthographicCameraController.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Renderer\RenderCommand.cpp">
+      <Filter>Crane\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Renderer.cpp">
       <Filter>Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp">
-      <Filter>Crane\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crane\Renderer\RenderCommand.cpp">
       <Filter>Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Shader.cpp">
@@ -201,7 +206,5 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
-    <ClCompile Include="src\Crane\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

@@ -1,19 +1,19 @@
 #pragma once
 
 //for use by crane apps
-#include "Crane/Application.h"
-#include "Crane/Layer.h"
-#include "Crane/Log.h"
-
-#include "Crane/Input.h"
-#include "Crane/KeyCodes.h"
-#include "Crane/MouseButtonCodes.h"
+#include "Crane/Core/Application.h"
+#include "Crane/Core/Layer.h"
+#include "Crane/Core/Log.h"
+			   
+#include "Crane/Core/Input.h"
+#include "Crane/Core/KeyCodes.h"
+#include "Crane/Core/MouseButtonCodes.h"
 
 #include "Crane/ImGui/ImGuiLayer.h"
 
 #include "Crane/Core/Timestep.h"
 
-#include "Crane/OrthographicCameraController.h"
+#include "Crane/Renderer/OrthographicCameraController.h"
 
 // ---Renderer------------------------
 #include "Crane/Renderer/Renderer.h"
@@ -28,5 +28,5 @@
 // -----------------------------------
 
 //entry point---------------
-#include "Crane/EntryPoint.h"
+#include "Crane/Core/EntryPoint.h"
 //--------------------------

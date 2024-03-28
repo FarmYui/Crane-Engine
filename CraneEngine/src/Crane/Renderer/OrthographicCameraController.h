@@ -4,8 +4,8 @@
 
 #include "Crane/Core/Timestep.h"
 
-#include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
+#include "Crane/Events/ApplicationEvent.h"
+#include "Crane/Events/MouseEvent.h"
 
 namespace Crane
 {

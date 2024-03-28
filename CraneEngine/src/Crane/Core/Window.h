@@ -1,7 +1,7 @@
 #pragma once
 #include "crpch.h"
 
-#include "Crane/Core.h"
+#include "Crane/Core/Core.h"
 #include "Crane/Events/Event.h"
 #include "Crane/Renderer/GraphicsContext.h"
 

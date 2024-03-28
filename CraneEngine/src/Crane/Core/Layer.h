@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Crane/Core.h"
+#include "Crane/Core/Core.h"
 #include "Crane/Events/Event.h"
-
-#include "Core/Timestep.h"
+			   
+#include "Crane/Core/Timestep.h"
 
 namespace Crane
 {

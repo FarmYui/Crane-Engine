@@ -1,10 +1,10 @@
 #include "crpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Crane/Core.h"
-#include "Crane/Input.h"
-#include "Crane/KeyCodes.h"
-#include "Crane/MouseButtonCodes.h"
+#include "Crane/Core/Core.h"
+#include "Crane/Core/Input.h"
+#include "Crane/Core/KeyCodes.h"
+#include "Crane/Core/MouseButtonCodes.h"
 
 namespace Crane
 {

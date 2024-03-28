@@ -1,7 +1,7 @@
 #include "crpch.h"
 #include "WindowsInput.h"
 
-#include "Crane/Application.h"
+#include "Crane/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 
