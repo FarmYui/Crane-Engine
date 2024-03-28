@@ -13,6 +13,8 @@
 
 #include "Crane/Core/Timestep.h"
 
+#include "Crane/OrthographicCameraController.h"
+
 // ---Renderer------------------------
 #include "Crane/Renderer/Renderer.h"
 #include "Crane/Renderer/RenderCommand.h"

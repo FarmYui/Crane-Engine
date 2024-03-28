@@ -11,6 +11,11 @@ namespace Crane
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
+	void OpenGLRendererAPI::ResizeScreen(float width, float height)
+	{
+		glViewport(0, 0, width, height);
+	}
+
 	void OpenGLRendererAPI::SetClearColor(float r, float g, float b, float a)
 	{
 		glClearColor(r,g,b,a);

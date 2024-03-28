@@ -131,6 +131,7 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Crane\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Application.cpp">
@@ -201,5 +202,6 @@
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Crane\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

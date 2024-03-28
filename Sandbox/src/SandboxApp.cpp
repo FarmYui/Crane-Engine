@@ -9,7 +9,7 @@ class TriangleTest : public Crane::Layer
 {
 public:
 	TriangleTest()
-		: Layer("Triangle Test"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+		: Layer("Triangle Test"), m_CameraController(1.78f,true)
 	{
 		float vertices[] = {
 			// triangle
@@ -75,54 +75,24 @@ public:
 
 	}
 
+	void OnEvent(Crane::Event& e) override
+	{
+		m_CameraController.OnEvent(e);
+	}
+
 	void OnUpdate(Crane::Timestep ts) override
 	{
 		m_Timestep = ts;
 
-		if (Crane::Input::IsKeyPressed(CR_KEY_W))
-		{
-			m_CameraPosition.y += sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
-			m_CameraPosition.x += cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
-		}
-		if (Crane::Input::IsKeyPressed(CR_KEY_S))
-		{
-			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
-			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation + 90)) * m_CameraMovementSpeed * ts;
-		}
-		if (Crane::Input::IsKeyPressed(CR_KEY_A))
-		{
-			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
-			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
-		}
-		if (Crane::Input::IsKeyPressed(CR_KEY_D))
-		{
-			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
-			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMovementSpeed * ts;
-		}
-
-		if (Crane::Input::IsMouseButtonPressed(CR_MOUSE_BUTTON_3))
-		{
-			float currentMouseX = Crane::Input::GetMouseX();
-			m_CameraRotation += (m_PrevMouseX) ? ((currentMouseX - m_PrevMouseX) * m_CameraRotationSpeed) : 0;
-			m_PrevMouseX = currentMouseX;
-		}
-		else
-		{
-			m_PrevMouseX = 0;
-		}
-		
-
 		m_QuadTransform = glm::translate(glm::mat4(1.0f), m_QuadPosition);
 		m_TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
 
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
+		m_CameraController.OnUpdate(ts);
 
-	
 		Crane::RenderCommand::SetClearColor(m_ClearColor);
 		Crane::RenderCommand::Clear();
 		
-		Crane::Renderer::BeginScene(m_Camera);
+		Crane::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		auto& textureShader = m_ShaderLib.Get("Texture");
 		textureShader->Bind();
@@ -155,8 +125,8 @@ public:
 		ImGui::End();
 
 		ImGui::Begin("Camera");
-		ImGui::DragFloat3("Camera Position", &m_CameraPosition[0], 0.01f);
-		ImGui::DragFloat("Camera Rotation", &m_CameraRotation, 1.0f);
+		//ImGui::DragFloat3("Camera Position", m_CameraController.GetCamera().GetPosition()[0], 0.01f);
+		//ImGui::DragFloat("Camera Rotation", &m_CameraController.GetCamera().GetRotation(), 1.0f);
 		ImGui::End();
 		
 		ImGui::Begin("Scene");
@@ -172,9 +142,7 @@ public:
 		ImGui::End();
 	}
 
-	void OnEvent(Crane::Event& e) override
-	{
-	}
+	
 
 private:
 	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
@@ -186,14 +154,6 @@ private:
 
 	glm::mat4 m_TriangleTransform;
 	glm::mat4 m_QuadTransform;
-
-	float m_PrevMouseX = 0;
-
-	float m_CameraRotationSpeed = 0.2f;
-	float m_CameraMovementSpeed = 3.0f;
-	
-	float m_CameraRotation = 0;
-	glm::vec3 m_CameraPosition;
 
 	Crane::Timestep m_Timestep;
 
@@ -207,7 +167,7 @@ private:
 
 	Crane::Ref<Crane::VertexArray>m_QuadVA;
 
-	Crane::OrthographicCamera m_Camera;
+	Crane::OrthographicCameraController m_CameraController;
 };
 
 class Sandbox : public Crane::Application

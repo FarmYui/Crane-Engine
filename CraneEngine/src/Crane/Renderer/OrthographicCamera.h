@@ -12,6 +12,7 @@ namespace Crane
 
 		void SetPosition(const glm::vec3& position) { m_Position = position; CalculateViewMatrix(); }
 		void SetRotation(float rotation) { m_Rotation = rotation; CalculateViewMatrix(); }
+		void SetProjMatrix(float left, float right, float bottom, float top);
 
 		const glm::vec3& GetPosition() const { return m_Position; }
 		float GetRotation() const { return m_Rotation; }
@@ -20,6 +21,7 @@ namespace Crane
 	
 	private:
 		void CalculateViewMatrix();
+		void CalculateViewProjMatrix();
 
 	private:
 		glm::mat4 m_ViewProjMatrix;

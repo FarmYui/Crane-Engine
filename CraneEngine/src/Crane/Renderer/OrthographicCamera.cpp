@@ -9,6 +9,12 @@ namespace Crane
 		m_ViewProjMatrix = m_ProjMatrix * m_ViewMatrix;
 	}
 
+	void OrthographicCamera::SetProjMatrix(float left, float right, float bottom, float top)
+	{
+		m_ProjMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+		CalculateViewProjMatrix();
+	}
+
 	void OrthographicCamera::CalculateViewMatrix()
 	{
 		//translate
@@ -18,6 +24,11 @@ namespace Crane
 
 
 		m_ViewMatrix = glm::inverse(transform);
+		CalculateViewProjMatrix();
+	}
+
+	void OrthographicCamera::CalculateViewProjMatrix()
+	{
 		m_ViewProjMatrix = m_ProjMatrix * m_ViewMatrix;
 	}
 }

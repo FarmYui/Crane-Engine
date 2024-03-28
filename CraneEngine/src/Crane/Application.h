@@ -31,7 +31,7 @@ namespace Crane
 		inline Window& GetWindow() const { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-
+		bool OnWindowResize(WindowResizeEvent& e);
 	private:
 		static Application* s_Instance;
 	private:

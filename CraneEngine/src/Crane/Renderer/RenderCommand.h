@@ -14,6 +14,11 @@ namespace Crane
 			s_RendererAPI->Init();
 		}
 
+		inline static void ResizeScreen(float width, float height)
+		{
+			s_RendererAPI->ResizeScreen(width, height);
+		}
+
 		inline static void SetClearColor(const glm::vec4& color)
 		{
 			s_RendererAPI->SetClearColor(color.r, color.g, color.b, color.a);
