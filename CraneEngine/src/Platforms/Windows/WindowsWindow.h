@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Crane/Window.h"
-#include "Crane/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -19,6 +18,8 @@ namespace Crane
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
 
 		inline float GetTime() const override { return static_cast<float>(glfwGetTime()); }
+
+		inline virtual GraphicsContext* GetContext() const override { return m_Context; }
 
 		//window attribs
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };

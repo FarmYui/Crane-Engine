@@ -64,13 +64,13 @@ public:
 		m_QuadVA->SetIndexBuffer(ib);
 
 		//shaders
-		m_TextureShader = Crane::Shader::Create("assets/shaders/Texture.glsl");
+		auto& textureShader = m_ShaderLib.Load("assets/shaders/Texture.glsl");
 
 		m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_ChernoLogo = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
 
-		m_TextureShader->Bind();
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_TextureShader)->SetUniformInt("u_Texture", 0);
+		textureShader->Bind();
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(textureShader)->SetUniformInt("u_Texture", 0);
 		
 
 	}
@@ -124,18 +124,19 @@ public:
 		
 		Crane::Renderer::BeginScene(m_Camera);
 
-		m_TextureShader->Bind();
+		auto& textureShader = m_ShaderLib.Get("Texture");
+		textureShader->Bind();
 		
 		m_Texture->Bind();
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_TextureShader)->SetUniformFloat3("u_Color", m_TriangleColor);
-		Crane::Renderer::Submit(m_TriangleVA, m_TextureShader, m_TriangleTransform);
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(textureShader)->SetUniformFloat3("u_Color", m_TriangleColor);
+		Crane::Renderer::Submit(m_TriangleVA, textureShader, m_TriangleTransform);
 		
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(m_TextureShader)->SetUniformFloat3("u_Color", m_QuadColor);
-		Crane::Renderer::Submit(m_QuadVA, m_TextureShader, m_QuadTransform);
+		std::dynamic_pointer_cast<Crane::OpenGLShader>(textureShader)->SetUniformFloat3("u_Color", m_QuadColor);
+		Crane::Renderer::Submit(m_QuadVA, textureShader, m_QuadTransform);
 
 
 		m_ChernoLogo->Bind();
-		Crane::Renderer::Submit(m_QuadVA, m_TextureShader, m_QuadTransform);
+		Crane::Renderer::Submit(m_QuadVA, textureShader, m_QuadTransform);
 
 		Crane::Renderer::EndScene();
 
@@ -143,6 +144,11 @@ public:
 
 	void OnImGuiRender() override
 	{
+		ImGui::Begin("Graphics Context");
+		ImGui::Text("%s", Crane::Application::Get().GetWindow().GetContext()->GetInfo().c_str());
+		ImGui::End();
+
+
 		ImGui::Begin("Info");
 		ImGui::Text("FPS: %.1f", 1.0f/ m_Timestep);
 		ImGui::Text("Last Frame: %.2fms", m_Timestep.GetMilliseconds());
@@ -194,7 +200,7 @@ private:
 	Crane::Ref<Crane::Texture2D> m_Texture;
 	Crane::Ref<Crane::Texture2D> m_ChernoLogo;
 
-	Crane::Ref<Crane::Shader> m_TextureShader;
+	Crane::ShaderLibrary m_ShaderLib;
 	Crane::Ref<Crane::VertexArray> m_TriangleVA;
 	Crane::Ref<Crane::VertexBuffer> m_VertexBuffer;
 	Crane::Ref<Crane::IndexBuffer> m_IndexBuffer;

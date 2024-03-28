@@ -13,6 +13,7 @@ namespace Crane
 
 		virtual void Init() override;
 		virtual void SwapBuffers() override;
+		virtual std::string GetInfo() const override;
 	private:
 		GLFWwindow* m_WindowHandle;
 

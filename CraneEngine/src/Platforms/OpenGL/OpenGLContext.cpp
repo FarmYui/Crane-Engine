@@ -19,13 +19,22 @@ namespace Crane
 		CR_CORE_ASSERT(status, "Could not initialize Glad");
 		
 		CR_CORE_INFO("OpenGL Info:");
-		CR_CORE_INFO("    Vendor   : {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
+		CR_CORE_INFO("    Vendor   : {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR))  );
 		CR_CORE_INFO("    Renderer : {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
-		CR_CORE_INFO("    Version  : {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+		CR_CORE_INFO("    Version  : {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)) );
 	}
 
 	void OpenGLContext::SwapBuffers()
 	{
 		glfwSwapBuffers(m_WindowHandle);
+	}
+	std::string OpenGLContext::GetInfo() const 
+	{
+		std::stringstream ss;
+		ss << "OpenGL Info:";
+		ss << "\nVendor   : " << reinterpret_cast<const char*>(glGetString(GL_VENDOR));
+		ss << "\nRenderer : " << reinterpret_cast<const char*>(glGetString(GL_RENDERER));
+		ss << "\nVersion  : " << reinterpret_cast<const char*>(glGetString(GL_VERSION));
+		return ss.str();
 	}
 }

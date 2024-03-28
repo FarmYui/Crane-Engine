@@ -1,6 +1,8 @@
 #include "crpch.h"
 #include "OpenGLShader.h"
 
+#include <filesystem>
+
 #include <glm/gtc/type_ptr.hpp>
 
 #include <glad/glad.h>
@@ -23,7 +25,7 @@ namespace Crane
 	{
 		std::string result;
 
-		std::ifstream in(filepath, std::ios::in, std::ios::binary);
+		std::ifstream in(filepath, std::ios::in | std::ios::binary);
 		if (in)
 		{
 			in.seekg(0, std::ios::end);
@@ -69,8 +71,10 @@ namespace Crane
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
 		GLuint program = glCreateProgram();
+		CR_CORE_ASSERT(shaderSources.size() <= 2, "Too many shaders!");
+		std::array<GLuint,2> shaderIDs;
 
-		std::vector<GLuint> shaderIDs(shaderSources.size());
+		int glShaderIdIndex = 0;
 		for (auto& kv : shaderSources)
 		{
 			GLenum type = kv.first;
@@ -101,8 +105,7 @@ namespace Crane
 				CR_CORE_ASSERT(false, "Shader compilation failed");
 				return;
 			}
-
-			shaderIDs.push_back(shader);
+			shaderIDs.at(glShaderIdIndex++) = shader;
 			glAttachShader(program, shader);
 
 		}
@@ -139,9 +142,13 @@ namespace Crane
 		std::string sources = ReadFile(filepath);
 		auto shaderSources = PreProcess(sources);
 		Compile(shaderSources);
+	
+		std::filesystem::path path = filepath;
+		m_Name = path.stem().string();
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
+	OpenGLShader::OpenGLShader(const std::string& name ,const std::string& vertexSource, const std::string& fragmentSource)
+		: m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> shaderSources;
 		shaderSources[GL_VERTEX_SHADER] = vertexSource;
@@ -160,7 +167,7 @@ namespace Crane
 		glUseProgram(m_RendererID);
 	}
 
-	void OpenGLShader::Unìbind() const
+	void OpenGLShader::Unbind() const
 	{
 		glUseProgram(0);
 	}
