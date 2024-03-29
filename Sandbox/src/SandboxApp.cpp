@@ -1,6 +1,7 @@
 #include "Sandbox2D.h"
 #include "Crane/Core/EntryPoint.h"
 
+#ifdef EXAMPLE_LAYER
 class ExampleLayer : public Crane::Layer
 {
 public:
@@ -66,7 +67,7 @@ public:
 		m_ChernoLogo = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
 
 		textureShader->Bind();
-		textureShader->SetUniformInt("u_Texture", 0);
+		textureShader->SetInt("u_Texture", 0);
 		
 
 	}
@@ -94,10 +95,10 @@ public:
 		textureShader->Bind();
 		
 		m_Texture->Bind();
-		textureShader->SetUniformFloat3("u_Color", m_TriangleColor);
+		textureShader->SetFloat3("u_Color", m_TriangleColor);
 		Crane::Renderer::Submit(m_TriangleVA, textureShader, m_TriangleTransform);
 		
-		textureShader->SetUniformFloat3("u_Color", m_QuadColor);
+		textureShader->SetFloat3("u_Color", m_QuadColor);
 		Crane::Renderer::Submit(m_QuadVA, textureShader, m_QuadTransform);
 
 
@@ -163,6 +164,7 @@ private:
 
 	Crane::OrthographicCameraController m_CameraController;
 };
+#endif
 
 class Sandbox : public Crane::Application
 {

@@ -7,7 +7,7 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
-
+	m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -31,7 +31,8 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 	
 	Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-	Crane::Renderer2D::DrawQuad(m_QuadPosition, m_QuadSize, m_QuadColor);
+	Crane::Renderer2D::DrawQuad(m_QuadPosition, m_QuadSize, m_QuadColor, m_QuadRotation);
+	Crane::Renderer2D::DrawQuad(glm::vec3(0.0f,0.0f, -0.1f), glm::vec3(10.0f), m_Texture);
 
 	Crane::Renderer2D::EndScene();
 }
@@ -51,6 +52,7 @@ void Sandbox2D::OnImGuiRender()
 
 	ImGui::Begin("Scene");
 	ImGui::DragFloat3("Quad Position", &m_QuadPosition[0], 0.01f);
+	ImGui::DragFloat("Quad Rotation", &m_QuadRotation);
 	ImGui::DragFloat3("Quad Size", &m_QuadSize[0], 0.01f);
 	ImGui::ColorEdit3("Quad Color", &m_QuadColor[0]);
 	ImGui::End();

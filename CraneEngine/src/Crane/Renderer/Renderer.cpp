@@ -32,8 +32,8 @@ namespace Crane
 	void Renderer::Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f))
 	{
 		shader->Bind();
-		shader->SetUniformMat4("u_ViewProjection", s_SceneData->ViewProjMatrix);
-		shader->SetUniformMat4("u_Model", transform);
+		shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjMatrix);
+		shader->SetMat4("u_Model", transform);
 
 		VertexArray->Bind();
 		RenderCommand::DrawIndexed(VertexArray);

@@ -18,15 +18,26 @@ namespace Crane
 
 		virtual const std::string& GetName() const override { return m_Name; }
 
-		virtual void SetUniformInt(const std::string& name, int value) override;
-		
-		virtual void SetUniformFloat(const std::string& name, float value) override;
-		virtual void SetUniformFloat2(const std::string& name, const glm::vec2& value) override;
-		virtual void SetUniformFloat3(const std::string& name, const glm::vec3& value) override;
-		virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) override;
-		
-		virtual void SetUniformMat3(const std::string& name, const glm::mat3& matrix) override;
-		virtual void SetUniformMat4(const std::string& name, const glm::mat4& matrix) override;
+		virtual void SetInt(const std::string& name, int value) override;
+
+		virtual void SetFloat(const std::string& name, float value) override;
+		virtual void SetFloat2(const std::string& name, const glm::vec2& value) override;
+		virtual void SetFloat3(const std::string& name, const glm::vec3& value) override;
+		virtual void SetFloat4(const std::string& name, const glm::vec4& value) override;
+
+		virtual void SetMat3(const std::string& name, const glm::mat3& matrix) override;
+		virtual void SetMat4(const std::string& name, const glm::mat4& matrix) override;
+
+
+		void UploadUniformInt(const std::string& name, int value);
+
+		void UploadUniformFloat(const std::string& name, float value);
+		void UploadUniformFloat2(const std::string& name, const glm::vec2& value);
+		void UploadUniformFloat3(const std::string& name, const glm::vec3& value);
+		void UploadUniformFloat4(const std::string& name, const glm::vec4& value);
+
+		void UploadUniformMat3(const std::string& name, const glm::mat3& matrix);
+		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 
 	private:
 		std::string ReadFile(const std::string& filepath);
