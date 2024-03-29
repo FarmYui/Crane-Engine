@@ -166,6 +166,7 @@
     <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Crane\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Crane\Renderer\Renderer.h" />
+    <ClInclude Include="src\Crane\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Crane\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Crane\Renderer\Shader.h" />
     <ClInclude Include="src\Crane\Renderer\Texture.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crane\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Crane\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Crane\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Crane\Renderer\Shader.cpp" />
     <ClCompile Include="src\Crane\Renderer\Texture.cpp" />

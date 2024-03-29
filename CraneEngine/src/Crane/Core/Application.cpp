@@ -27,6 +27,10 @@ namespace Crane
 
 	}
 
+	Application::~Application()
+	{
+		Renderer::Shutdown();
+	}
 
 	void Application::PushLayer(Layer* layer)
 	{

@@ -17,6 +17,7 @@
 
 // ---Renderer------------------------
 #include "Crane/Renderer/Renderer.h"
+#include "Crane/Renderer/Renderer2D.h"
 #include "Crane/Renderer/RenderCommand.h"
 
 #include "Crane/Renderer/Buffer.h"

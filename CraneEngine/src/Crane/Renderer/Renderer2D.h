@@ -1,0 +1,27 @@
+#pragma once
+
+#include "Crane/Renderer/OrthographicCamera.h"
+
+namespace Crane
+{
+	class Renderer2D
+	{
+	public:
+		static void Init();
+		static void Shutdown();
+
+		static void BeginScene(const OrthographicCamera& camera);
+		static void EndScene();
+
+
+		// primitives
+		// pos vec2
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color);
+		// pos vec3
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		
+
+	};
+}

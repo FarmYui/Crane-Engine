@@ -1,5 +1,6 @@
 #include "crpch.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 #include "Platforms/OpenGL/OpenGLShader.h"
 
@@ -10,6 +11,12 @@ namespace Crane
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
+	}
+
+	void Renderer::Shutdown()
+	{
+		Renderer2D::Shutdown();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
@@ -17,7 +24,7 @@ namespace Crane
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(OrthographicCamera& camera)
+	void Renderer::BeginScene(const OrthographicCamera& camera)
 	{
 		s_SceneData->ViewProjMatrix = camera.GetViewProjMatrix();
 	}
@@ -25,8 +32,8 @@ namespace Crane
 	void Renderer::Submit(const Ref<VertexArray>& VertexArray, const Ref<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f))
 	{
 		shader->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_ViewProjection", s_SceneData->ViewProjMatrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_Model", transform);
+		shader->SetUniformMat4("u_ViewProjection", s_SceneData->ViewProjMatrix);
+		shader->SetUniformMat4("u_Model", transform);
 
 		VertexArray->Bind();
 		RenderCommand::DrawIndexed(VertexArray);

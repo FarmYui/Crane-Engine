@@ -1,11 +1,5 @@
-#include "Crane.h"
-#include "Crane/Core/EntryPoint.h"
-
-#include "imgui/imgui.h"
-// temporary /////////////////////////////
-#include "Platforms/OpenGL/OpenGLShader.h"
-//////////////////////////////////////////
 #include "Sandbox2D.h"
+#include "Crane/Core/EntryPoint.h"
 
 class ExampleLayer : public Crane::Layer
 {
@@ -72,7 +66,7 @@ public:
 		m_ChernoLogo = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
 
 		textureShader->Bind();
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(textureShader)->SetUniformInt("u_Texture", 0);
+		textureShader->SetUniformInt("u_Texture", 0);
 		
 
 	}
@@ -100,10 +94,10 @@ public:
 		textureShader->Bind();
 		
 		m_Texture->Bind();
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(textureShader)->SetUniformFloat3("u_Color", m_TriangleColor);
+		textureShader->SetUniformFloat3("u_Color", m_TriangleColor);
 		Crane::Renderer::Submit(m_TriangleVA, textureShader, m_TriangleTransform);
 		
-		std::dynamic_pointer_cast<Crane::OpenGLShader>(textureShader)->SetUniformFloat3("u_Color", m_QuadColor);
+		textureShader->SetUniformFloat3("u_Color", m_QuadColor);
 		Crane::Renderer::Submit(m_QuadVA, textureShader, m_QuadTransform);
 
 
