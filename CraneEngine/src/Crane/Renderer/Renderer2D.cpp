@@ -7,9 +7,9 @@ namespace Crane
 {
 	struct Renderer2DStorage
 	{
-		Ref<VertexArray> VertexArray;
-		Ref<Shader> FlatColorShader;
-		Ref<Shader> TextureShader;
+		Ref<VertexArray> VertexArray; 
+		Ref<Texture2D> WhiteTexture;
+		Ref<Shader> ColorTextureShader;
 	};
 
 	static Renderer2DStorage* s_Data;
@@ -21,7 +21,7 @@ namespace Crane
 		s_Data->VertexArray = VertexArray::Create();
 		
 		float quadVertices[] = {
-			// quad	
+			// quad				//t coords
 			-0.5f, -0.5f, 0.0f,  0.0f, 0.0f,
 			 0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
 			 0.5f,  0.5f, 0.0f,  1.0f, 1.0f,
@@ -50,11 +50,11 @@ namespace Crane
 		s_Data->VertexArray->AddVertexBuffer(quadVertexBuffer);
 		s_Data->VertexArray->SetIndexBuffer(quadIndexBuffer);
 
-		//shaders
-		s_Data->FlatColorShader = Crane::Shader::Create("assets/shaders/FlatColorShader.glsl");
-		s_Data->TextureShader = Crane::Shader::Create("assets/shaders/TextureShader.glsl");
-		s_Data->TextureShader->Bind();
-		s_Data->TextureShader->SetInt("u_Texture",0);
+		s_Data->WhiteTexture = Texture2D::Create(1,1,4);
+		uint32_t whiteTextureData = 0xffffffff;
+		s_Data->WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
+
+		s_Data->ColorTextureShader = Crane::Shader::Create("assets/shaders/ColorTextureShader.glsl");
 	}
 
 	void Renderer2D::Shutdown()
@@ -64,11 +64,8 @@ namespace Crane
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		s_Data->FlatColorShader->Bind();
-		s_Data->FlatColorShader->SetMat4("u_ViewProjection", camera.GetViewProjMatrix());
-	
-		s_Data->TextureShader->Bind();
-		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjMatrix());
+		s_Data->ColorTextureShader->Bind();
+		s_Data->ColorTextureShader->SetMat4("u_ViewProjection", camera.GetViewProjMatrix());
 	}
 
 	void Renderer2D::EndScene()
@@ -101,14 +98,17 @@ namespace Crane
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float rotation)
 	{
-		s_Data->FlatColorShader->Bind();
-		s_Data->FlatColorShader->SetFloat4("u_Color", color);
+		s_Data->ColorTextureShader->SetFloat4("u_Color", color);
+
+		//bind white texture here
+		s_Data->WhiteTexture->Bind();
+		//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
-		s_Data->FlatColorShader->SetMat4("u_Model", transform);
+		s_Data->ColorTextureShader->SetMat4("u_Model", transform);
 
 		s_Data->VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
@@ -116,16 +116,22 @@ namespace Crane
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation)
 	{
-		s_Data->TextureShader->Bind();
+		//set color to white
+		s_Data->ColorTextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
+
+		texture->Bind();
+		//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
-		s_Data->TextureShader->SetMat4("u_Model", transform);
+		s_Data->ColorTextureShader->SetMat4("u_Model", transform);
 
-		texture->Bind();
+		texture->Bind(1);
 		s_Data->VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
+
+
 }
