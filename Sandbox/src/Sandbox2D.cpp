@@ -31,7 +31,7 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 	
 	Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-	Crane::Renderer2D::DrawQuad(m_QuadPosition, m_QuadSize, m_QuadColor, m_QuadRotation);
+	Crane::Renderer2D::DrawQuad(m_QuadPosition, m_QuadSize, m_QuadColor, 1.0f, m_QuadRotation);
 	Crane::Renderer2D::DrawQuad(glm::vec3(0.0f,0.0f, -0.1f), glm::vec3(10.0f), m_Texture);
 
 	Crane::Renderer2D::EndScene();

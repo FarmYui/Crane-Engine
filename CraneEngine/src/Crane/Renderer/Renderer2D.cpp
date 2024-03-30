@@ -73,32 +73,20 @@ namespace Crane
 	}
 
 	// pos vec2
-
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float rotation)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color, float alpha ,float rotation)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, color, rotation);
+		DrawQuad({ position.x, position.y, 0.0f }, size,  color, alpha , rotation);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color, float rotation)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha, float rotation)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, { color, 1.0f }, rotation);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation)
-	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture, rotation);
+		DrawQuad({ position.x, position.y, 0.0f }, size, texture, color, alpha, rotation);
 	}
 
 	// pos vec3
-
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float rotation)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha, float rotation)
 	{
-		DrawQuad(position, size, { color, 1.0f }, rotation);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float rotation)
-	{
-		s_Data->ColorTextureShader->SetFloat4("u_Color", color);
+		s_Data->ColorTextureShader->SetFloat4("u_Color", { color,alpha });
 
 		//bind white texture here
 		s_Data->WhiteTexture->Bind();
@@ -114,10 +102,10 @@ namespace Crane
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float rotation)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color ,float alpha,float rotation)
 	{
 		//set color to white
-		s_Data->ColorTextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
+		s_Data->ColorTextureShader->SetFloat4("u_Color", glm::vec4(color.r, color.g, color.b, alpha));
 
 		texture->Bind();
 		//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
