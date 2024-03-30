@@ -19,8 +19,6 @@ namespace Crane
 
 		inline float GetTime() const override { return static_cast<float>(glfwGetTime()); }
 
-		inline virtual GraphicsContext* GetContext() const override { return m_Context.get(); }
-
 		//window attribs
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
 		virtual void SetVSync(bool On) override;

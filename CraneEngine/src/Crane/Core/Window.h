@@ -33,7 +33,6 @@ namespace Crane
 		virtual unsigned int GetHeight() const = 0;
 
 		virtual float GetTime() const = 0;
-		virtual GraphicsContext* GetContext() const = 0;
 
 		//window attribs
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;

@@ -37,7 +37,8 @@ namespace Crane
 	{
 		glfwSwapBuffers(m_WindowHandle);
 	}
-	std::string OpenGLContext::GetInfo() const 
+
+	/*std::string OpenGLContext::GetInfo() const 
 	{
 		std::stringstream ss;
 		ss << "OpenGL Info:";
@@ -45,5 +46,5 @@ namespace Crane
 		ss << "\nRenderer : " << reinterpret_cast<const char*>(glGetString(GL_RENDERER));
 		ss << "\nVersion  : " << reinterpret_cast<const char*>(glGetString(GL_VERSION));
 		return ss.str();
-	}
+	}*/
 }

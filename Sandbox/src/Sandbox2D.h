@@ -15,13 +15,6 @@ public:
 	void OnImGuiRender() override;
 
 private:
-	struct ProfileResult
-	{
-		const char* Name;
-		float Time;
-	};
-	std::vector<ProfileResult> m_ProfileResults;
-
 	glm::vec3 m_QuadPosition = { 0.0f, 0.0f, 0.0f };
 	float m_QuadRotation = 0.0f;
 	glm::vec3 m_QuadSize = { 1.0f, 1.0f, 1.0f };

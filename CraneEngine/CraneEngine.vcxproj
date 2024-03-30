@@ -148,6 +148,7 @@
     <ClInclude Include="src\Crane\Core\Core.h" />
     <ClInclude Include="src\Crane\Core\Timestep.h" />
     <ClInclude Include="src\Crane\Core\EntryPoint.h" />
+    <ClInclude Include="src\Crane\Debug\Instrumentor.h" />
     <ClInclude Include="src\Crane\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Crane\Events\Event.h" />
     <ClInclude Include="src\Crane\Events\KeyEvent.h" />
