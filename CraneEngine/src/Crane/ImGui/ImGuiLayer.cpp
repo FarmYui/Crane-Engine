@@ -76,7 +76,4 @@ namespace Crane
 		}
 	}
 
-	void ImGuiLayer::OnImGuiRender()
-	{
-	}
 }
