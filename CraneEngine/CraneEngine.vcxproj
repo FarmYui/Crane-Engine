@@ -189,6 +189,7 @@
     <ClCompile Include="src\Crane\Core\Layer.cpp" />
     <ClCompile Include="src\Crane\Core\LayerStack.cpp" />
     <ClCompile Include="src\Crane\Core\Log.cpp" />
+    <ClCompile Include="src\Crane\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Crane\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Crane\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp" />

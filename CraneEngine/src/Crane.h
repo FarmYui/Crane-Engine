@@ -1,6 +1,7 @@
 #pragma once
 
 //for use by crane apps
+#include "Crane/Core/Core.h"
 #include "Crane/Core/Application.h"
 #include "Crane/Core/Layer.h"
 #include "Crane/Core/Log.h"

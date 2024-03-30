@@ -35,7 +35,7 @@ namespace Crane
 	#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
 
-	class CRANE_API Event
+	class Event
 	{
 	public:
 		virtual EventType GetEventType() const = 0;

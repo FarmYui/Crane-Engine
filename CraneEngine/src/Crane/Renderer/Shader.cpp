@@ -1,7 +1,7 @@
 #include "crpch.h"
 #include "Shader.h"
 
-#include "Renderer.h"
+#include "Crane/Renderer/Renderer.h"
 
 #include "Platforms/OpenGL/OpenGLShader.h"
 
@@ -17,7 +17,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLShader>(filepath);
+			return CreateRef<OpenGLShader>(filepath);
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");
@@ -34,7 +34,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLShader>(name, vertexSource, fragmentSource);
+			return CreateRef<OpenGLShader>(name, vertexSource, fragmentSource);
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");

@@ -12,16 +12,16 @@
 
 namespace Crane
 {
-	static bool s_GLFWInitialized = false;
+	static uint8_t s_GLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error_code, const char* description)
 	{
 		CR_CORE_ERROR("GLFW Error ({0}): {1}", error_code, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
+	Scope<Window> Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return CreateScope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -42,20 +42,18 @@ namespace Crane
 
 		CR_CORE_INFO("Creating window '{0}' ({1}, {2})", m_Data.Title, m_Data.Width, m_Data.Height);
 		
-		if (!s_GLFWInitialized)
+		if (s_GLFWWindowCount == 0)
 		{
 			int success = glfwInit();
-			CR_CORE_ASSERT(success, "Could not initialize GLFW");
-
+			CR_CORE_ASSERT(success, "Could not intialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
-			
-			s_GLFWInitialized = true;
 		}
 		
 	
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		
-		m_Context = new OpenGLContext(m_Window);
+		++s_GLFWWindowCount;
+
+		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -177,8 +175,14 @@ namespace Crane
 
 	void WindowsWindow::Shutdown()
 	{
-		delete m_Context;
 		glfwDestroyWindow(m_Window);
+		--s_GLFWWindowCount;
+
+
+		if (s_GLFWWindowCount == 0)
+		{
+			glfwTerminate();
+		}
 	}
 
 	void WindowsWindow::OnUpdate()

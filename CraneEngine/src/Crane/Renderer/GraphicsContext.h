@@ -9,5 +9,7 @@ namespace Crane
 		virtual void SwapBuffers() = 0;
 
 		virtual std::string GetInfo() const = 0;
+
+		static Scope<GraphicsContext> Create(void* window);
 	};
 }

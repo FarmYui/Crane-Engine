@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core.h"
+#include "Crane/Core/Core.h"
 
-#include "Window.h"
+#include "Crane/Core/Window.h"
 #include "Crane/Core/LayerStack.h"
 #include "Crane/ImGui/ImGuiLayer.h"
 
@@ -15,7 +15,7 @@
 
 namespace Crane 
 {
-	class CRANE_API Application
+	class Application
 	{
 	public:
 		Application();

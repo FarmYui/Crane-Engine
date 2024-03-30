@@ -1,6 +1,6 @@
 #include "crpch.h"
-#include "Renderer2D.h"
 
+#include "Renderer2D.h"
 #include "Renderer.h"
 
 namespace Crane
@@ -35,11 +35,11 @@ namespace Crane
 
 		// create buffers + varray
 		s_Data->VertexArray = Crane::VertexArray::Create();
-		Crane::Ref<Crane::VertexBuffer> quadVertexBuffer = Crane::VertexBuffer::Create(quadVertices, sizeof(quadVertices));
-		Crane::Ref<Crane::IndexBuffer> quadIndexBuffer = Crane::IndexBuffer::Create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t));
+		Ref<VertexBuffer> quadVertexBuffer = VertexBuffer::Create(quadVertices, sizeof(quadVertices));
+		Ref<IndexBuffer> quadIndexBuffer = IndexBuffer::Create(quadIndices, sizeof(quadIndices) / sizeof(uint32_t));
 
 		// setting the layout of the vertex buffer
-		Crane::BufferLayout layout = {
+		BufferLayout layout = {
 			{ Crane::ShaderDataType::Float3 , "a_Position" },
 			{ Crane::ShaderDataType::Float2 , "a_TextureCoordinate" }
 		};

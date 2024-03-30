@@ -209,5 +209,6 @@
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Crane\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\Crane\Renderer\GraphicsContext.cpp" />
   </ItemGroup>
 </Project>

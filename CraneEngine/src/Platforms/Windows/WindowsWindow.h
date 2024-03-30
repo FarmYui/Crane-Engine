@@ -6,7 +6,7 @@
 
 namespace Crane
 {
-	class CRANE_API WindowsWindow : public Window
+	class WindowsWindow : public Window
 	{
 	public:
 		WindowsWindow(const WindowProps& props);
@@ -19,7 +19,7 @@ namespace Crane
 
 		inline float GetTime() const override { return static_cast<float>(glfwGetTime()); }
 
-		inline virtual GraphicsContext* GetContext() const override { return m_Context; }
+		inline virtual GraphicsContext* GetContext() const override { return m_Context.get(); }
 
 		//window attribs
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
@@ -34,7 +34,7 @@ namespace Crane
 
 	private:
 		GLFWwindow* m_Window;
-		GraphicsContext* m_Context;
+		Scope<GraphicsContext> m_Context;
 
 		struct WindowData
 		{

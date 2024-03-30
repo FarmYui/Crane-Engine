@@ -1,5 +1,6 @@
 #pragma once
-#include "Application.h"
+#include "Crane/Core/Core.h"
+
 
 #ifdef CR_PLATFORM_WINDOWS
 

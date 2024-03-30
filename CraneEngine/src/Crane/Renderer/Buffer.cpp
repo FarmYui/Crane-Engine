@@ -1,6 +1,6 @@
 #include "crpch.h"
 
-#include "Renderer.h"
+#include "Crane/Renderer/Renderer.h"
 #include "Platforms/OpenGL/OpenGLBuffer.h"
 
 namespace Crane
@@ -14,7 +14,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+			return CreateRef<OpenGLVertexBuffer>(vertices, size);
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");
@@ -32,7 +32,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLIndexBuffer>(indices, count);
+			return CreateRef<OpenGLIndexBuffer>(indices, count);
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");

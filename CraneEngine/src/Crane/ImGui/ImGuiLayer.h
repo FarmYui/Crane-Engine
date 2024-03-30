@@ -7,7 +7,7 @@
 
 namespace Crane
 {
-	class CRANE_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();

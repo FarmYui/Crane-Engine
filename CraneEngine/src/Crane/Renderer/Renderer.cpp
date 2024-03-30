@@ -1,8 +1,8 @@
 #include "crpch.h"
+
 #include "Renderer.h"
 #include "Renderer2D.h"
 
-#include "Platforms/OpenGL/OpenGLShader.h"
 
 namespace Crane
 {

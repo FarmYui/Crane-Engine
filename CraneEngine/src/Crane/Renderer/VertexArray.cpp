@@ -1,7 +1,7 @@
 #include "crpch.h"
 #include "VertexArray.h"
 
-#include "Renderer.h"
+#include "Crane/Renderer/Renderer.h"
 #include "Platforms/OpenGL/OpenGLVertexArray.h"
 
 namespace Crane

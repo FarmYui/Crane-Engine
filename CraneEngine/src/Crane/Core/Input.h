@@ -5,7 +5,7 @@
 
 namespace Crane
 {
-	class CRANE_API Input
+	class Input
 	{
 	protected:
 		Input() = default;

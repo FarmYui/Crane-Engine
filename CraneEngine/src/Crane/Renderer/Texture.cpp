@@ -1,7 +1,7 @@
 #include "crpch.h"
 #include "Texture.h"
 
-#include "Renderer.h"
+#include "Crane/Renderer/Renderer.h"
 
 #include "Platforms/OpenGL/OpenGLTexture.h"
 

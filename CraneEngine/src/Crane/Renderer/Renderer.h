@@ -1,10 +1,9 @@
 #pragma once
 
-#include "RendererAPI.h"
-#include "RenderCommand.h"
+#include "Crane/Renderer/RenderCommand.h"
 
-#include "Shader.h"
-#include "OrthographicCamera.h"
+#include "Crane/Renderer/Shader.h"
+#include "Crane/Renderer/OrthographicCamera.h"
 
 namespace Crane
 {
@@ -13,6 +12,7 @@ namespace Crane
 	public:
 		static void Init();
 		static void Shutdown();
+
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
 		static void BeginScene(const OrthographicCamera& camera);

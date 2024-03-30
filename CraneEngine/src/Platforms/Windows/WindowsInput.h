@@ -6,7 +6,7 @@
 
 namespace Crane
 {
-	class CRANE_API WindowsInput : public Input
+	class WindowsInput : public Input
 	{
 	private:
 		virtual bool IsKeyPressedImpl(int keycode) override;

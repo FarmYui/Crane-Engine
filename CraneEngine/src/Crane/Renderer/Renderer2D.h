@@ -2,7 +2,7 @@
 
 #include "Crane/Renderer/OrthographicCamera.h"
 
-#include "Texture.h"
+#include "Crane/Renderer/Texture.h"
 
 namespace Crane
 {
