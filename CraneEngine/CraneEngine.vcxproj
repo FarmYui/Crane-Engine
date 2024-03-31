@@ -159,7 +159,7 @@
     <ClInclude Include="src\Crane\Core\Layer.h" />
     <ClInclude Include="src\Crane\Core\LayerStack.h" />
     <ClInclude Include="src\Crane\Core\Log.h" />
-    <ClInclude Include="src\Crane\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Crane\Core\MouseCodes.h" />
     <ClInclude Include="src\Crane\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Crane\Renderer\Buffer.h" />
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />

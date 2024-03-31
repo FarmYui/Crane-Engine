@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Event.h"
-
+#include "Crane/Core/Input.h"
 
 
 namespace Crane
@@ -9,21 +9,21 @@ namespace Crane
 	class KeyEvent : public Event
 	{
 	public:
-		inline int GetKeyCode() const { return m_KeyCode; }
+		inline KeyCode GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode)
+		KeyEvent(KeyCode keycode)
 			: m_KeyCode(keycode) 
 		{}
 		
-		int m_KeyCode;
+		KeyCode m_KeyCode;
 	};
 
 	class KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(int keycode)
+		KeyTypedEvent(KeyCode keycode)
 			: KeyEvent(keycode)
 		{}
 
@@ -40,7 +40,7 @@ namespace Crane
 	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeatedCount)
+		KeyPressedEvent(KeyCode keycode, int repeatedCount)
 			: KeyEvent(keycode), m_RepeatedCount(repeatedCount)
 		{}
 
@@ -61,7 +61,7 @@ namespace Crane
 	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode)
+		KeyReleasedEvent(KeyCode keycode)
 			: KeyEvent(keycode)
 		{}
 

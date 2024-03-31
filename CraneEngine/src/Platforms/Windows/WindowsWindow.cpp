@@ -109,19 +109,19 @@ namespace Crane
 			{
 			case GLFW_PRESS:
 			{
-				KeyPressedEvent e(key, 0);
+				KeyPressedEvent e(static_cast<KeyCode>(key), 0);
 				data.EventCallback(e);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				KeyReleasedEvent e(key);
+				KeyReleasedEvent e(static_cast<KeyCode>(key));
 				data.EventCallback(e);
 				break;
 			}
 			case GLFW_REPEAT:
 			{
-				KeyPressedEvent e(key, 1);
+				KeyPressedEvent e(static_cast<KeyCode>(key), 1);
 				data.EventCallback(e);
 				break;
 			}
@@ -137,7 +137,7 @@ namespace Crane
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			// create the event
-			KeyTypedEvent e(codepoint);
+			KeyTypedEvent e(static_cast<KeyCode>(codepoint));
 
 			// call event callback
 			data.EventCallback(e);
@@ -152,13 +152,13 @@ namespace Crane
 			{
 			case GLFW_PRESS:
 			{
-				MouseButtonPressedEvent e(button);
+				MouseButtonPressedEvent e(static_cast<MouseCode>(button));
 				data.EventCallback(e);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				MouseButtonReleasedEvent e(button);
+				MouseButtonReleasedEvent e(static_cast<MouseCode>(button));
 				data.EventCallback(e);
 				break;
 			}

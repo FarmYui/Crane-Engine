@@ -8,7 +8,7 @@
 			   
 #include "Crane/Core/Input.h"
 #include "Crane/Core/KeyCodes.h"
-#include "Crane/Core/MouseButtonCodes.h"
+#include "Crane/Core/MouseCodes.h"
 
 #include "Crane/ImGui/ImGuiLayer.h"
 

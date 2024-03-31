@@ -52,7 +52,7 @@
     <ClInclude Include="src\Crane\Core\Log.h">
       <Filter>Crane\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\Core\MouseButtonCodes.h">
+    <ClInclude Include="src\Crane\Core\MouseCodes.h">
       <Filter>Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Timestep.h">
