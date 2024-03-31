@@ -77,18 +77,95 @@ namespace Crane
 	}
 
 	// pos vec2
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color, float alpha ,float rotation)
+	//void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color, float alpha ,float rotation)
+	//{
+	//	DrawQuad({ position.x, position.y, 0.0f }, size,  color, alpha , rotation);
+	//}
+
+	//void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha, float rotation)
+	//{
+	//	DrawQuad({ position.x, position.y, 0.0f }, size, texture, color, alpha, rotation);
+	//}
+
+	//// pos vec3
+	//void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha, float rotation)
+	//{
+	//	CR_PROFILE_FUNCTION();
+	//	s_Data->ColorTextureShader->SetFloat4("u_Color", { color,alpha });
+
+	//	//bind white texture here
+	//	s_Data->WhiteTexture->Bind();
+	//	//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
+
+	//	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+	//	transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+	//	transform = glm::scale(transform, glm::vec3(size, 1.0f));
+
+	//	s_Data->ColorTextureShader->SetMat4("u_Model", transform);
+
+	//	s_Data->VertexArray->Bind();
+	//	RenderCommand::DrawIndexed(s_Data->VertexArray);
+	//}
+
+	//void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color ,float alpha,float rotation)
+	//{
+	//	CR_PROFILE_FUNCTION();
+	//	//set color to white
+	//	s_Data->ColorTextureShader->SetFloat4("u_Color", glm::vec4(color.r, color.g, color.b, alpha));
+
+	//	texture->Bind();
+	//	//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
+
+	//	glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+	//	transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+	//	transform = glm::scale(transform, glm::vec3(size, 1.0f));
+
+	//	s_Data->ColorTextureShader->SetMat4("u_Model", transform);
+
+	//	texture->Bind(1);
+	//	s_Data->VertexArray->Bind();
+	//	RenderCommand::DrawIndexed(s_Data->VertexArray);
+	//}
+
+
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size,  color, alpha , rotation);
+		CR_PROFILE_FUNCTION();
+		s_Data->ColorTextureShader->SetFloat4("u_Color", { color,alpha });
+
+		//bind white texture here
+		s_Data->WhiteTexture->Bind();
+		//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
+
+		s_Data->ColorTextureShader->SetMat4("u_Model", transform);
+
+		s_Data->VertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha, float rotation)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture, color, alpha, rotation);
+		CR_PROFILE_FUNCTION();
+		//set color 
+		s_Data->ColorTextureShader->SetFloat4("u_Color", { color, alpha });
+
+		texture->Bind();
+		//s_Data->ColorTextureShader->SetInt("u_Texture", 0);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
+
+		s_Data->ColorTextureShader->SetMat4("u_Model", transform);
+
+		texture->Bind(1);
+		s_Data->VertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
 
-	// pos vec3
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha, float rotation)
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 		s_Data->ColorTextureShader->SetFloat4("u_Color", { color,alpha });
@@ -107,10 +184,10 @@ namespace Crane
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color ,float alpha,float rotation)
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
-		//set color to white
+		//set color 
 		s_Data->ColorTextureShader->SetFloat4("u_Color", glm::vec4(color.r, color.g, color.b, alpha));
 
 		texture->Bind();
@@ -122,10 +199,10 @@ namespace Crane
 
 		s_Data->ColorTextureShader->SetMat4("u_Model", transform);
 
-		texture->Bind(1);
+		texture->Bind();
 		s_Data->VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
-	}
 
+	}
 
 }
