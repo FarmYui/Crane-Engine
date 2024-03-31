@@ -23,6 +23,7 @@ namespace Crane
 
 	std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
+		CR_PROFILE_FUNCTION();
 		std::string result;
 
 		std::ifstream in(filepath, std::ios::in | std::ios::binary);
@@ -52,6 +53,7 @@ namespace Crane
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
 	{
+		CR_PROFILE_FUNCTION();
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -80,6 +82,7 @@ namespace Crane
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
+		CR_PROFILE_FUNCTION();
 		GLuint program = glCreateProgram();
 		CR_CORE_ASSERT(shaderSources.size() <= 2, "Too many shaders!");
 		std::array<GLuint,2> shaderIDs;
@@ -152,6 +155,7 @@ namespace Crane
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		CR_PROFILE_FUNCTION();
 		std::string sources = ReadFile(filepath);
 		auto shaderSources = PreProcess(sources);
 		Compile(shaderSources);
@@ -163,6 +167,7 @@ namespace Crane
 	OpenGLShader::OpenGLShader(const std::string& name ,const std::string& vertexSource, const std::string& fragmentSource)
 		: m_Name(name)
 	{
+		CR_PROFILE_FUNCTION();
 		std::unordered_map<GLenum, std::string> shaderSources;
 		shaderSources[GL_VERTEX_SHADER] = vertexSource;
 		shaderSources[GL_FRAGMENT_SHADER] = fragmentSource;
@@ -172,52 +177,62 @@ namespace Crane
 	
 	OpenGLShader::~OpenGLShader()
 	{
+		CR_PROFILE_FUNCTION();
 		glDeleteProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Bind() const
 	{
+		CR_PROFILE_FUNCTION();
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		CR_PROFILE_FUNCTION();
 		glUseProgram(0);
 	}
 
 
 	void OpenGLShader::SetInt(const std::string& name, int value)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformInt(name, value);
 	}
 
 	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformFloat(name, value);
 	}
 
 	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& value)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformFloat2(name, value);
 	}
 
 	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformFloat3(name, value);
 	}
 
 	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformFloat4(name, value);
 	}
 
 	void OpenGLShader::SetMat3(const std::string& name, const glm::mat3& matrix)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformMat3(name, matrix);
 	}
 
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& matrix)
 	{
+		CR_PROFILE_FUNCTION();
 		UploadUniformMat4(name, matrix);
 	}
 

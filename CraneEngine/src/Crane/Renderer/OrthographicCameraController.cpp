@@ -15,6 +15,7 @@ namespace Crane
 
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
+		CR_PROFILE_FUNCTION();
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowResizeEvent>(CR_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
 		dispatcher.Dispatch<MouseScrolledEvent>(CR_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
@@ -22,6 +23,7 @@ namespace Crane
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		CR_PROFILE_FUNCTION();
 		if (Input::IsKeyPressed(CR_KEY_W))
 		{
 			m_CameraPosition.y += sin(glm::radians(m_CameraRotation + 90)) * m_CameraTranslationSpeed * ts;
@@ -66,6 +68,7 @@ namespace Crane
 
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
+		CR_PROFILE_FUNCTION();
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		m_Camera.SetProjMatrix(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;
@@ -73,6 +76,7 @@ namespace Crane
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		CR_PROFILE_FUNCTION();
 		m_ZoomLevel -= e.GetYOffset() * 0.15f * m_ZoomLevel;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 		m_Camera.SetProjMatrix(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);

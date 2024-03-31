@@ -8,12 +8,14 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	CR_PROFILE_FUNCTION();
+
 	m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
 {
-	
+	CR_PROFILE_FUNCTION();	
 }
 
 void Sandbox2D::OnEvent(Crane::Event& e)
@@ -26,11 +28,7 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 	CR_PROFILE_FUNCTION();
 	m_Timestep = ts;
 
-	// Camera Controller
-	{
-		CR_PROFILE_SCOPE("Camera Update");
-		m_CameraController.OnUpdate(ts);
-	}
+	m_CameraController.OnUpdate(ts);
 
 	// Clear
 	{

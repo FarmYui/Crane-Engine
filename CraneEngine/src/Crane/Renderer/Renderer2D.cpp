@@ -16,6 +16,7 @@ namespace Crane
 
 	void Renderer2D::Init()
 	{
+		CR_PROFILE_FUNCTION();
 		s_Data = new Renderer2DStorage();
 
 		s_Data->VertexArray = VertexArray::Create();
@@ -59,17 +60,20 @@ namespace Crane
 
 	void Renderer2D::Shutdown()
 	{
+		CR_PROFILE_FUNCTION();
 		delete s_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
+		CR_PROFILE_FUNCTION();
 		s_Data->ColorTextureShader->Bind();
 		s_Data->ColorTextureShader->SetMat4("u_ViewProjection", camera.GetViewProjMatrix());
 	}
 
 	void Renderer2D::EndScene()
 	{
+		CR_PROFILE_FUNCTION();
 	}
 
 	// pos vec2
@@ -86,6 +90,7 @@ namespace Crane
 	// pos vec3
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha, float rotation)
 	{
+		CR_PROFILE_FUNCTION();
 		s_Data->ColorTextureShader->SetFloat4("u_Color", { color,alpha });
 
 		//bind white texture here
@@ -104,6 +109,7 @@ namespace Crane
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color ,float alpha,float rotation)
 	{
+		CR_PROFILE_FUNCTION();
 		//set color to white
 		s_Data->ColorTextureShader->SetFloat4("u_Color", glm::vec4(color.r, color.g, color.b, alpha));
 

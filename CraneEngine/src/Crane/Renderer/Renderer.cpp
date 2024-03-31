@@ -10,6 +10,7 @@ namespace Crane
 
 	void Renderer::Init()
 	{
+		CR_PROFILE_FUNCTION();
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}
