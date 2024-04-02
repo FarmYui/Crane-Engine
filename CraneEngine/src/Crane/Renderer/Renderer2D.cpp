@@ -7,11 +7,13 @@ namespace Crane
 {
 	struct VertexData
 	{
-		VertexData(glm::vec3 position, glm::vec4 color)
-			: Position(position), Color(color)
+		VertexData(glm::vec3 position, glm::vec4 color, glm::vec2 textureCoordinates, float textureIndex)
+			: Position(position), Color(color), TextureCoordinates(textureCoordinates), TextureIndex(textureIndex)
 		{}
 		glm::vec3 Position;
 		glm::vec4 Color;
+		glm::vec2 TextureCoordinates;
+		float TextureIndex;
 	};
 
 	struct Renderer2DStorage
@@ -29,6 +31,7 @@ namespace Crane
 		std::vector<VertexData> Vertices;
 
 		uint32_t QuadsCount = 0;
+		uint32_t TexturedQuadsCount = 1;
 	};
 
 	static Renderer2DStorage s_Data;
@@ -46,7 +49,9 @@ namespace Crane
 		// setting the layout of the vertex buffer
 		BufferLayout layout = {
 			{ Crane::ShaderDataType::Float3 , "a_Position" },
-			{ Crane::ShaderDataType::Float4 , "a_Color" }
+			{ Crane::ShaderDataType::Float4 , "a_Color" },
+			{ Crane::ShaderDataType::Float2 , "a_TextureCoordinates" },
+			{ Crane::ShaderDataType::Float , "a_TextureIndex" }
 		};
 
 		s_Data.VertexBuffer->SetLayout(layout);
@@ -74,11 +79,26 @@ namespace Crane
 
 		delete[] quadIndices;
 
+
 		s_Data.WhiteTexture = Texture2D::Create(1,1,4);
 		uint32_t whiteTextureData = 0xffffffff;
 		s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
-
+		
+		
+		
 		s_Data.ColorTextureShader = Crane::Shader::Create("assets/shaders/ColorTextureShader.glsl");
+		
+		s_Data.ColorTextureShader->Bind();
+		s_Data.WhiteTexture->Bind();
+
+		constexpr int samplersCount = 8;
+		int samplers[samplersCount];
+		for (uint32_t i = 0; i < samplersCount; i++)
+		{
+			samplers[i] = i;
+		}
+
+		s_Data.ColorTextureShader->SetInts("u_Textures", samplersCount, samplers);
 	}
 
 	void Renderer2D::Shutdown()
@@ -100,7 +120,10 @@ namespace Crane
 
 		s_Data.VertexBuffer->SetData(&s_Data.Vertices.at(0).Position.x, (uint32_t)s_Data.Vertices.size() * sizeof(VertexData));
 		Flush();
+
 		s_Data.Vertices.clear();
+		s_Data.QuadsCount = 0;
+		s_Data.TexturedQuadsCount = 1;
 	}
 
 	void Renderer2D::Flush()
@@ -112,16 +135,17 @@ namespace Crane
 	{
 		CR_PROFILE_FUNCTION();
 		
+
 		glm::vec4 finalColor(color, alpha);
 		
 		glm::vec3 br(position.x + size.x, position.y, 0.0f);
 		glm::vec3 tr(position.x + size.x, position.y + size.y, 0.0f);
 		glm::vec3 tl(position.x, position.y + size.y, 0.0f);
 
-		s_Data.Vertices.emplace_back(position,finalColor);
-		s_Data.Vertices.emplace_back(br, finalColor);
-		s_Data.Vertices.emplace_back(tr, finalColor);
-		s_Data.Vertices.emplace_back(tl, finalColor);
+		s_Data.Vertices.emplace_back(position,finalColor, glm::vec2(0.0f, 0.0f), 0.0f);
+		s_Data.Vertices.emplace_back(br, finalColor,      glm::vec2(1.0f, 0.0f), 0.0f);
+		s_Data.Vertices.emplace_back(tr, finalColor,      glm::vec2(1.0f, 1.0f), 0.0f);
+		s_Data.Vertices.emplace_back(tl, finalColor,      glm::vec2(0.0f, 1.0f), 0.0f);
 	
 	
 		s_Data.QuadsCount++;
@@ -130,20 +154,24 @@ namespace Crane
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
-		//set color 
-		s_Data.ColorTextureShader->SetFloat4("u_Color", { color, alpha });
 
-		texture->Bind();
-		//s_Data.ColorTextureShader->SetInt("u_Texture", 0);
+		s_Data.ColorTextureShader->Bind();
+		texture->Bind(s_Data.TexturedQuadsCount);
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::vec4 finalColor(color, alpha);
 
-		s_Data.ColorTextureShader->SetMat4("u_Model", transform);
+		glm::vec3 br(position.x + size.x, position.y, 0.0f);
+		glm::vec3 tr(position.x + size.x, position.y + size.y, 0.0f);
+		glm::vec3 tl(position.x, position.y + size.y, 0.0f);
 
-		texture->Bind(1);
-		s_Data.VertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.VertexArray);
+		s_Data.Vertices.emplace_back(position, finalColor, glm::vec2(0.0f, 0.0f), (float)s_Data.TexturedQuadsCount);
+		s_Data.Vertices.emplace_back(br, finalColor, glm::vec2(1.0f, 0.0f),       (float)s_Data.TexturedQuadsCount);
+		s_Data.Vertices.emplace_back(tr, finalColor, glm::vec2(1.0f, 1.0f),       (float)s_Data.TexturedQuadsCount);
+		s_Data.Vertices.emplace_back(tl, finalColor, glm::vec2(0.0f, 1.0f),       (float)s_Data.TexturedQuadsCount);
+
+
+		s_Data.QuadsCount++;
+		s_Data.TexturedQuadsCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
@@ -152,10 +180,10 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 
-		glm::vec4 bl(position,1.0f);
-		glm::vec4 br(position.x + size.x, position.y, 0.0f,1.0f);
-		glm::vec4 tr(position.x + size.x, position.y + size.y, 0.0f,1.0f);
-		glm::vec4 tl(position.x, position.y + size.y, 0.0f,1.0f);
+		glm::vec4 bl(position, 1.0f);
+		glm::vec4 br(position.x + size.x, position.y, 0.0f, 1.0f);
+		glm::vec4 tr(position.x + size.x, position.y + size.y, 0.0f, 1.0f);
+		glm::vec4 tl(position.x, position.y + size.y, 0.0f, 1.0f);
 
 		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f,0.0f,1.0f));
 
@@ -164,10 +192,10 @@ namespace Crane
 		tr = rotationMatrix * tr;
 		tl = rotationMatrix * tl;
 
-		s_Data.Vertices.emplace_back(glm::vec3(bl.x, bl.y, bl.z), finalColor);
-		s_Data.Vertices.emplace_back(glm::vec3(br.x, br.y, br.z), finalColor);
-		s_Data.Vertices.emplace_back(glm::vec3(tr.x, tr.y, tr.z), finalColor);
-		s_Data.Vertices.emplace_back(glm::vec3(tl.x, tl.y, tl.z), finalColor);
+		s_Data.Vertices.emplace_back(glm::vec3(bl.x, bl.y, bl.z), finalColor, glm::vec2(0.0f, 0.0f), 0.0f);
+		s_Data.Vertices.emplace_back(glm::vec3(br.x, br.y, br.z), finalColor, glm::vec2(1.0f, 0.0f), 0.0f);
+		s_Data.Vertices.emplace_back(glm::vec3(tr.x, tr.y, tr.z), finalColor, glm::vec2(1.0f, 1.0f), 0.0f);
+		s_Data.Vertices.emplace_back(glm::vec3(tl.x, tl.y, tl.z), finalColor, glm::vec2(0.0f, 1.0f), 0.0f);
 
 
 		s_Data.QuadsCount++;
@@ -176,22 +204,32 @@ namespace Crane
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
-		//set color 
-		s_Data.ColorTextureShader->SetFloat4("u_Color", glm::vec4(color.r, color.g, color.b, alpha));
 
-		texture->Bind();
-		//s_Data.ColorTextureShader->SetInt("u_Texture", 0);
+		s_Data.ColorTextureShader->Bind();
+		texture->Bind(s_Data.TexturedQuadsCount);
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-		transform = glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::vec4 finalColor(color, alpha);
 
-		s_Data.ColorTextureShader->SetMat4("u_Model", transform);
+		glm::vec4 bl(position, 1.0f);
+		glm::vec4 br(position.x + size.x, position.y, 0.0f, 1.0f);
+		glm::vec4 tr(position.x + size.x, position.y + size.y, 0.0f, 1.0f);
+		glm::vec4 tl(position.x, position.y + size.y, 0.0f, 1.0f);
 
-		texture->Bind();
-		s_Data.VertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.VertexArray);
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 
+		bl = rotationMatrix * bl;
+		br = rotationMatrix * br;
+		tr = rotationMatrix * tr;
+		tl = rotationMatrix * tl;
+
+		s_Data.Vertices.emplace_back(glm::vec3(bl.x, bl.y, bl.z), finalColor, glm::vec2(0.0f, 0.0f), (float)s_Data.TexturedQuadsCount);
+		s_Data.Vertices.emplace_back(glm::vec3(br.x, br.y, br.z), finalColor, glm::vec2(1.0f, 0.0f), (float)s_Data.TexturedQuadsCount);
+		s_Data.Vertices.emplace_back(glm::vec3(tr.x, tr.y, tr.z), finalColor, glm::vec2(1.0f, 1.0f), (float)s_Data.TexturedQuadsCount);
+		s_Data.Vertices.emplace_back(glm::vec3(tl.x, tl.y, tl.z), finalColor, glm::vec2(0.0f, 1.0f), (float)s_Data.TexturedQuadsCount);
+
+
+		s_Data.QuadsCount++;
+		s_Data.TexturedQuadsCount++;
 	}
 
 }

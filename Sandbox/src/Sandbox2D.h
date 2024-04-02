@@ -21,6 +21,8 @@ private:
 	glm::vec3 m_QuadColor = { 1.0f, 0.0f, 1.0f };
 
 	Crane::Ref<Crane::Texture2D> m_Texture;
+	Crane::Ref<Crane::Texture2D> m_Texture2;
+	Crane::Ref<Crane::Texture2D> m_Texture3;
 
 	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 

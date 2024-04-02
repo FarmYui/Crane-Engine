@@ -200,6 +200,18 @@ namespace Crane
 		UploadUniformInt(name, value);
 	}
 
+	void OpenGLShader::SetInt2(const std::string& name, int* value)
+	{
+		CR_PROFILE_FUNCTION();
+		UploadUniformInt2(name, value);
+	}
+
+	void OpenGLShader::SetInts(const std::string& name, uint32_t count, int* value)
+	{
+		CR_PROFILE_FUNCTION();
+		UploadUniformInts(name, count, value);
+	}
+
 	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
 		CR_PROFILE_FUNCTION();
@@ -238,11 +250,22 @@ namespace Crane
 
 
 	//upload
-
 	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::UploadUniformInt2(const std::string& name, int* value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1iv(location, 2, value);
+	}
+
+	void OpenGLShader::UploadUniformInts(const std::string& name, uint32_t count, int* value)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1iv(location, count, value);
 	}
 
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)

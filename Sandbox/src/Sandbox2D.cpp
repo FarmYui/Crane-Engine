@@ -11,6 +11,8 @@ void Sandbox2D::OnAttach()
 	CR_PROFILE_FUNCTION();
 
 	m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
+	m_Texture2 = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
+	m_Texture3 = Crane::Texture2D::Create("assets/textures/CraneEngineLogo.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -43,7 +45,11 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
 		Crane::Renderer2D::DrawQuad(m_QuadPosition, m_QuadSize, m_QuadColor);
-		Crane::Renderer2D::DrawRotatedQuad(m_QuadPosition + 0.1f, m_QuadSize, m_QuadRotation, m_QuadColor * 0.5f);
+		//Crane::Renderer2D::DrawRotatedQuad(m_QuadPosition + 0.1f, m_QuadSize, m_QuadRotation, m_QuadColor * 0.5f);
+		Crane::Renderer2D::DrawRotatedQuad(m_QuadPosition + 0.1f, m_QuadSize, m_QuadRotation, m_Texture); //m_QuadColor * 0.5f);
+		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x - 1.1f, 0.0f,0.0f), m_QuadSize, m_QuadRotation, m_Texture2); //m_QuadColor * 0.5f);
+		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x - 1.25f, -1.0f, -1.0f), glm::vec2(1.3f, 0.3f), glm::vec3(1.0f));
+		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x - 1.1f, -1.0f,0.0f), glm::vec2(1.0f, 0.2f), m_Texture3);
 		
 		Crane::Renderer2D::EndScene();
 	}
