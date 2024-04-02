@@ -149,20 +149,28 @@ namespace Crane
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
-		s_Data.ColorTextureShader->SetFloat4("u_Color", { color,alpha });
 
-		//bind white texture here
-		s_Data.WhiteTexture->Bind();
-		//s_Data.ColorTextureShader->SetInt("u_Texture", 0);
+		glm::vec4 finalColor(color, alpha);
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-		transform = glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::vec4 bl(position,1.0f);
+		glm::vec4 br(position.x + size.x, position.y, 0.0f,1.0f);
+		glm::vec4 tr(position.x + size.x, position.y + size.y, 0.0f,1.0f);
+		glm::vec4 tl(position.x, position.y + size.y, 0.0f,1.0f);
 
-		s_Data.ColorTextureShader->SetMat4("u_Model", transform);
+		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f,0.0f,1.0f));
 
-		s_Data.VertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data.VertexArray);
+		bl = rotationMatrix * bl;
+		br = rotationMatrix * br;
+		tr = rotationMatrix * tr;
+		tl = rotationMatrix * tl;
+
+		s_Data.Vertices.emplace_back(glm::vec3(bl.x, bl.y, bl.z), finalColor);
+		s_Data.Vertices.emplace_back(glm::vec3(br.x, br.y, br.z), finalColor);
+		s_Data.Vertices.emplace_back(glm::vec3(tr.x, tr.y, tr.z), finalColor);
+		s_Data.Vertices.emplace_back(glm::vec3(tl.x, tl.y, tl.z), finalColor);
+
+
+		s_Data.QuadsCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
