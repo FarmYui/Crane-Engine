@@ -17,6 +17,6 @@ namespace Crane
 		virtual void SetClearColor(float r, float g, float b, float a) override;
 		virtual void Clear() override;
 
-		virtual void DrawIndexed(const Ref<VertexArray>& VertexArray) override;
+		virtual void DrawIndexed(const Ref<VertexArray>& VertexArray, uint32_t indexCount) override;
 	};
 }

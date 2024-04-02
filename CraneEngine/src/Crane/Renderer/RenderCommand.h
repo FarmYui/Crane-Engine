@@ -34,9 +34,9 @@ namespace Crane
 			s_RendererAPI->Clear();
 		}
 
-		inline static void DrawIndexed(const Ref<VertexArray>& VertexArray)
+		inline static void DrawIndexed(const Ref<VertexArray>& VertexArray, uint32_t indexCount = 0)
 		{
-			s_RendererAPI->DrawIndexed(VertexArray);
+			s_RendererAPI->DrawIndexed(VertexArray, indexCount);
 		}
 
 	private:

@@ -5,7 +5,7 @@
 
 namespace Crane
 {
-	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -14,7 +14,7 @@ namespace Crane
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			return CreateRef<OpenGLVertexBuffer>(vertices, size);
+			return CreateRef<OpenGLVertexBuffer>(size);
 
 		default:
 			CR_CORE_ASSERT(false, "RendererAPI unknown!");

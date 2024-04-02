@@ -58,8 +58,10 @@ namespace Crane
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& VertexArray) 
+	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& VertexArray, uint32_t indexCount) 
 	{
-		glDrawElements(GL_TRIANGLES, VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		uint32_t count = indexCount == 0 ? VertexArray->GetIndexBuffer()->GetCount() : indexCount;
+
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	}
 }
