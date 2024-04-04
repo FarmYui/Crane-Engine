@@ -18,9 +18,9 @@ namespace Crane
 
 	struct Renderer2DStorage
 	{
-		uint32_t MaxQuads = 10'000;
-		uint32_t MaxVertices = MaxQuads * 4;
-		uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxQuads = 10'000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
 		static const uint32_t MaxTextureSlots = 32; // TODO: Check Renderer Capabilities 
 
 		Ref<VertexArray> VertexArray; 
@@ -37,6 +37,8 @@ namespace Crane
 		uint32_t TextureSlotIndex = 1; // bcz 0 is white texture
 
 		glm::vec4 QuadVertexPositions[4];
+
+		Renderer2D::Statistics Stats;
 	};
 
 	static Renderer2DStorage s_Data;
@@ -125,7 +127,12 @@ namespace Crane
 		s_Data.ColorTextureShader->Bind();
 		s_Data.ColorTextureShader->SetMat4("u_ViewProjection", camera.GetViewProjMatrix());
 
+		// clears data
+		StartNewBatch();
+	}
 
+	void Renderer2D::StartNewBatch()
+	{
 		// clear data frame to frame or it will accumulate 
 		s_Data.Vertices.clear();
 		s_Data.QuadsCount = 0;
@@ -143,6 +150,9 @@ namespace Crane
 		// we set the data to be the vertices we added this frame
 		s_Data.VertexBuffer->SetData(&s_Data.Vertices.at(0).Position.x, (uint32_t)s_Data.Vertices.size() * sizeof(VertexData));
 		Flush();
+
+
+		s_Data.Stats.DrawCalls++;
 	}
 
 	void Renderer2D::Flush()
@@ -151,10 +161,18 @@ namespace Crane
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadsCount * 6);
 	}
 
+
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 		
+		// logic to stop adding vertices on a full vertex and index buffer
+		if (s_Data.QuadsCount == s_Data.MaxQuads)
+		{	// we end the scene and start a new one with the same camera data
+			EndScene();
+			StartNewBatch();
+		}
+
 		// as we alredy bound the white texture in init we dont need to do that here
 		//...
 		// but we need to set textureIndex whitch will be zero since we want to have the color multiplied with the white texture
@@ -174,11 +192,20 @@ namespace Crane
 	
 	
 		s_Data.QuadsCount++;
+
+		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
+		// logic to stop adding vertices on a full vertex and index buffer
+		if (s_Data.QuadsCount == s_Data.MaxQuads)
+		{	// we end the scene and start a new one with the same camera data
+			EndScene();
+			StartNewBatch();
+		}
 
 		// logic to check if a texture was alredy occuping a textureSlot
 		float textureIndex = 0.0f;
@@ -215,11 +242,20 @@ namespace Crane
 
 
 		s_Data.QuadsCount++;
+
+		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
+		// logic to stop adding vertices on a full vertex and index buffer
+		if (s_Data.QuadsCount == s_Data.MaxQuads)
+		{	// we end the scene and start a new one with the same camera data
+			EndScene();
+			StartNewBatch();
+		}
 
 		// as we alredy bound the white texture in init we dont need to do that here
 		//...
@@ -241,11 +277,20 @@ namespace Crane
 
 
 		s_Data.QuadsCount++;
+
+		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
+		// logic to stop adding vertices on a full vertex and index buffer
+		if (s_Data.QuadsCount == s_Data.MaxQuads)
+		{	// we end the scene and start a new one with the same camera data
+			EndScene();
+			StartNewBatch();
+		}
 
 		// logic to check if a texture was alredy occuping a textureSlot
 		float textureIndex = 0.0f;
@@ -281,6 +326,20 @@ namespace Crane
 
 
 		s_Data.QuadsCount++;
+
+		s_Data.Stats.QuadCount++;
 	}
+
+
+	void Renderer2D::ResetStats()
+	{
+		memset(&s_Data.Stats, 0, sizeof(Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::GetStats()
+	{
+		return s_Data.Stats;
+	}
+
 
 }

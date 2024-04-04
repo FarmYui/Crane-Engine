@@ -32,6 +32,9 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 
 	m_CameraController.OnUpdate(ts);
 
+	// Reset Stats
+	Crane::Renderer2D::ResetStats();
+
 	// Clear
 	{
 		CR_PROFILE_SCOPE("Renderer Clear");
@@ -43,8 +46,8 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 	{
 		CR_PROFILE_SCOPE("Renderer Draw");
 		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
-
-		/*Crane::Renderer2D::DrawRotatedQuad({ m_QuadPosition.x, m_QuadPosition.y, m_QuadPosition.z}, m_QuadSize, m_QuadRotation, m_Texture, m_QuadColor);
+		/*
+		Crane::Renderer2D::DrawRotatedQuad({ m_QuadPosition.x, m_QuadPosition.y, m_QuadPosition.z}, m_QuadSize, m_QuadRotation, m_Texture, m_QuadColor);
 		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x - 1.1f, 0.0f,0.0f), m_QuadSize, m_QuadRotation, m_Texture2);
 		*/
 		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x, 0.0f, -0.1f), { m_QuadSize.x + 0.5f, m_QuadSize.y * 3.0f + 0.25f }, m_QuadRotation, m_QuadColor);
@@ -56,6 +59,18 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 		}
 		
 		Crane::Renderer2D::EndScene();
+
+		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		for (float y = -5.0f; y < 5.0f; y += 0.5f)
+		{
+			for (float x = -5.0f; x < 5.0f; x += 0.5f)
+			{
+				float r = (x + 5.0f) / 10.0f;
+				float g = (y + 5.0f) / 10.0f;
+				Crane::Renderer2D::DrawQuad(glm::vec3(x, y, -0.1f), glm::vec2(0.45f), glm::vec3(r, g, 0.3f));
+			}
+		}
+		Crane::Renderer2D::EndScene();
 	}
 }
 
@@ -63,9 +78,19 @@ void Sandbox2D::OnImGuiRender()
 {
 	CR_PROFILE_FUNCTION();
 
+	auto& stats = Crane::Renderer2D::GetStats();
+
 	ImGui::Begin("Info");
 	ImGui::Text("FPS: %.1f", 1.0f / m_Timestep);
 	ImGui::Text("Last Frame: %.2fms", m_Timestep.GetMilliseconds());
+	ImGui::End();
+
+	ImGui::Begin("Stats");
+	ImGui::Text("Renderer2D Stats");
+	ImGui::Text("DrawCalls: %d", stats.DrawCalls);
+	ImGui::Text("QuadCount: %d", stats.QuadCount);
+	ImGui::Text("Vertices : %d", stats.GetTotalVertexCount());
+	ImGui::Text("Indices  : %d", stats.GetTotalIndexCount());
 	ImGui::End();
 
 
