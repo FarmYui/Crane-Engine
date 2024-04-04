@@ -17,8 +17,8 @@ public:
 private:
 	glm::vec3 m_QuadPosition = { 0.0f, 0.0f, 0.0f };
 	float m_QuadRotation = 0.0f;
-	glm::vec3 m_QuadSize = { 1.0f, 1.0f, 1.0f };
-	glm::vec3 m_QuadColor = { 1.0f, 0.0f, 1.0f };
+	glm::vec3 m_QuadSize = { 1.0f, 0.2f, 1.0f };
+	glm::vec3 m_QuadColor = { 1.0f, 0.8f, 0.0f };
 
 	Crane::Ref<Crane::Texture2D> m_Texture;
 	Crane::Ref<Crane::Texture2D> m_Texture2;

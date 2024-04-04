@@ -44,13 +44,16 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 		CR_PROFILE_SCOPE("Renderer Draw");
 		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-		Crane::Renderer2D::DrawQuad(m_QuadPosition, m_QuadSize, m_QuadColor);
-		//Crane::Renderer2D::DrawRotatedQuad(m_QuadPosition + 0.1f, m_QuadSize, m_QuadRotation, m_QuadColor * 0.5f);
-		Crane::Renderer2D::DrawRotatedQuad(m_QuadPosition + 0.1f, m_QuadSize, m_QuadRotation, m_Texture); //m_QuadColor * 0.5f);
-		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x - 1.1f, 0.0f,0.0f), m_QuadSize, m_QuadRotation, m_Texture2); //m_QuadColor * 0.5f);
-		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x - 1.25f, -1.0f, -1.0f), glm::vec2(1.3f, 0.3f), glm::vec3(1.0f));
-		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x - 1.1f, -1.0f,0.0f), glm::vec2(1.0f, 0.2f), m_Texture3);
-		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x + 1.1f, -0.5f,0.0f), glm::vec2(1.0f, 0.2f), m_Texture3);
+		/*Crane::Renderer2D::DrawRotatedQuad({ m_QuadPosition.x, m_QuadPosition.y, m_QuadPosition.z}, m_QuadSize, m_QuadRotation, m_Texture, m_QuadColor);
+		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x - 1.1f, 0.0f,0.0f), m_QuadSize, m_QuadRotation, m_Texture2);
+		*/
+		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x, 0.0f, -0.1f), { m_QuadSize.x + 0.5f, m_QuadSize.y * 3.0f + 0.25f }, m_QuadRotation, m_QuadColor);
+
+		for (uint32_t i = 1; i < 4; i++)
+		{
+			float increment = 0.2f * (float)i;
+			Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x, increment + m_QuadPosition.y - 0.4f, increment),m_QuadSize, m_QuadRotation, m_Texture3, glm::vec3(m_QuadColor), increment);
+		}
 		
 		Crane::Renderer2D::EndScene();
 	}

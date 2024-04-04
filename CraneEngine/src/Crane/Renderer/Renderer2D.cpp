@@ -35,6 +35,8 @@ namespace Crane
 
 		std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1; // bcz 0 is white texture
+
+		glm::vec4 QuadVertexPositions[4];
 	};
 
 	static Renderer2DStorage s_Data;
@@ -103,6 +105,12 @@ namespace Crane
 		}
 
 		s_Data.ColorTextureShader->SetIntArray("u_Textures", s_Data.MaxTextureSlots, samplers);
+
+
+		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 	}
 
 	void Renderer2D::Shutdown()
@@ -154,15 +162,15 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 		
-		glm::vec3 br(position.x + size.x, position.y, 0.0f);
-		glm::vec3 tr(position.x + size.x, position.y + size.y, 0.0f);
-		glm::vec3 tl(position.x, position.y + size.y, 0.0f);
-							
-																			// texture slot
-		s_Data.Vertices.emplace_back(position,finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(br, finalColor,      glm::vec2(1.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(tr, finalColor,      glm::vec2(1.0f, 1.0f), textureIndex);
-		s_Data.Vertices.emplace_back(tl, finalColor,      glm::vec2(0.0f, 1.0f), textureIndex);
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
+	
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0],finalColor,       glm::vec2(0.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor,      glm::vec2(1.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor,      glm::vec2(1.0f, 1.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor,      glm::vec2(0.0f, 1.0f), textureIndex);
 	
 	
 		s_Data.QuadsCount++;
@@ -194,14 +202,16 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 
-		glm::vec3 br(position.x + size.x, position.y, 0.0f);
-		glm::vec3 tr(position.x + size.x, position.y + size.y, 0.0f);
-		glm::vec3 tl(position.x, position.y + size.y, 0.0f);
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
 
-		s_Data.Vertices.emplace_back(position, finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(br, finalColor, glm::vec2(1.0f, 0.0f),       textureIndex);
-		s_Data.Vertices.emplace_back(tr, finalColor, glm::vec2(1.0f, 1.0f),       textureIndex);
-		s_Data.Vertices.emplace_back(tl, finalColor, glm::vec2(0.0f, 1.0f),       textureIndex);
+
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f),       textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f),       textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor, glm::vec2(0.0f, 1.0f),       textureIndex);
 
 
 		s_Data.QuadsCount++;
@@ -218,22 +228,16 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 
-		glm::vec4 bl(position, 1.0f);
-		glm::vec4 br(position.x + size.x, position.y, 0.0f, 1.0f);
-		glm::vec4 tr(position.x + size.x, position.y + size.y, 0.0f, 1.0f);
-		glm::vec4 tl(position.x, position.y + size.y, 0.0f, 1.0f);
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
 
-		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f,0.0f,1.0f));
-
-		bl = rotationMatrix * bl;
-		br = rotationMatrix * br;
-		tr = rotationMatrix * tr;
-		tl = rotationMatrix * tl;
-
-		s_Data.Vertices.emplace_back(glm::vec3(bl.x, bl.y, bl.z), finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(glm::vec3(br.x, br.y, br.z), finalColor, glm::vec2(1.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(glm::vec3(tr.x, tr.y, tr.z), finalColor, glm::vec2(1.0f, 1.0f), textureIndex);
-		s_Data.Vertices.emplace_back(glm::vec3(tl.x, tl.y, tl.z), finalColor, glm::vec2(0.0f, 1.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor, glm::vec2(0.0f, 1.0f), textureIndex);
 
 
 		s_Data.QuadsCount++;
@@ -264,22 +268,16 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 
-		glm::vec4 bl(position, 1.0f);
-		glm::vec4 br(position.x + size.x, position.y, 0.0f, 1.0f);
-		glm::vec4 tr(position.x + size.x, position.y + size.y, 0.0f, 1.0f);
-		glm::vec4 tl(position.x, position.y + size.y, 0.0f, 1.0f);
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
 
-		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-
-		bl = rotationMatrix * bl;
-		br = rotationMatrix * br;
-		tr = rotationMatrix * tr;
-		tl = rotationMatrix * tl;
-
-		s_Data.Vertices.emplace_back(glm::vec3(bl.x, bl.y, bl.z), finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(glm::vec3(br.x, br.y, br.z), finalColor, glm::vec2(1.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(glm::vec3(tr.x, tr.y, tr.z), finalColor, glm::vec2(1.0f, 1.0f), textureIndex);
-		s_Data.Vertices.emplace_back(glm::vec3(tl.x, tl.y, tl.z), finalColor, glm::vec2(0.0f, 1.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f), textureIndex);
+		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor, glm::vec2(0.0f, 1.0f), textureIndex);
 
 
 		s_Data.QuadsCount++;
