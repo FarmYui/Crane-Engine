@@ -16,7 +16,7 @@ namespace Crane
 
 		virtual void SetInt(const std::string& name, int value) = 0;
 		virtual void SetInt2(const std::string& name, int* value) = 0;
-		virtual void SetInts(const std::string& name, uint32_t count, int* value) = 0;
+		virtual void SetIntArray(const std::string& name, uint32_t count, int* value) = 0;
 
 		virtual void SetFloat(const std::string& name, float value) = 0;
 		virtual void SetFloat2(const std::string& name, const glm::vec2& value) = 0;

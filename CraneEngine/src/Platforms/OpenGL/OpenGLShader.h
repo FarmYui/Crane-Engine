@@ -20,7 +20,7 @@ namespace Crane
 
 		virtual void SetInt(const std::string& name, int value) override;
 		virtual void SetInt2(const std::string& name, int* value) override;
-		virtual void SetInts(const std::string& name, uint32_t count, int* value) override;
+		virtual void SetIntArray(const std::string& name, uint32_t count, int* value) override;
 
 		virtual void SetFloat(const std::string& name, float value) override;
 		virtual void SetFloat2(const std::string& name, const glm::vec2& value) override;
@@ -33,7 +33,7 @@ namespace Crane
 
 		void UploadUniformInt(const std::string& name, int value);
 		void UploadUniformInt2(const std::string& name, int* value);
-		void UploadUniformInts(const std::string& name, uint32_t count, int* value);
+		void UploadUniformIntArray(const std::string& name, uint32_t count, int* value);
 
 		void UploadUniformFloat(const std::string& name, float value);
 		void UploadUniformFloat2(const std::string& name, const glm::vec2& value);

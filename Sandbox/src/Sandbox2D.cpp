@@ -50,6 +50,7 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 		Crane::Renderer2D::DrawRotatedQuad(glm::vec3(m_QuadPosition.x - 1.1f, 0.0f,0.0f), m_QuadSize, m_QuadRotation, m_Texture2); //m_QuadColor * 0.5f);
 		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x - 1.25f, -1.0f, -1.0f), glm::vec2(1.3f, 0.3f), glm::vec3(1.0f));
 		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x - 1.1f, -1.0f,0.0f), glm::vec2(1.0f, 0.2f), m_Texture3);
+		Crane::Renderer2D::DrawQuad(glm::vec3(m_QuadPosition.x + 1.1f, -0.5f,0.0f), glm::vec2(1.0f, 0.2f), m_Texture3);
 		
 		Crane::Renderer2D::EndScene();
 	}
