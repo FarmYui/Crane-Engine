@@ -25,7 +25,7 @@ namespace Crane
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-		m_Window->SetVSync(false);
+		//m_Window->SetVSync(false);
 
 	}
 
@@ -56,9 +56,9 @@ namespace Crane
 
 		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
-			(*it)->OnEvent(e);
 			if (e.Handled)
 				break;
+			(*it)->OnEvent(e);
 		}
 	}
 

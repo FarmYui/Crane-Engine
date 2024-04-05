@@ -157,6 +157,9 @@ namespace Crane
 
 	void Renderer2D::Flush()
 	{
+		if (s_Data.QuadsCount == 0)
+			return; // Nothing to draw
+
 		// finally draw
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadsCount * 6);
 	}
@@ -221,6 +224,11 @@ namespace Crane
 		// if its new we add it to the array & add 1 to textureSlotIndex
 		if (textureIndex == 0.0f)
 		{
+			if (s_Data.TextureSlotIndex == Renderer2DStorage::MaxTextureSlots) // if we dont have any more space for textures
+			{// we end the scene and start a new one with the same camera data
+				EndScene();
+				StartNewBatch();
+			}
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots.at(s_Data.TextureSlotIndex) = texture;
 			s_Data.TextureSlotIndex++;
@@ -234,7 +242,7 @@ namespace Crane
 		transform = glm::translate(glm::mat4(1.0f), position) *
 			glm::scale(transform, glm::vec3(size, 1.0f));
 
-
+		// to do : put all this in a for loop
 		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
 		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f),       textureIndex);
 		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f),       textureIndex);
@@ -306,6 +314,11 @@ namespace Crane
 		// if its new we add it to the array & add 1 to textureSlotIndex
 		if (textureIndex == 0.0f)
 		{
+			if (s_Data.TextureSlotIndex == Renderer2DStorage::MaxTextureSlots) // if we dont have any more space for textures
+			{// we end the scene and start a new one with the same camera data
+				EndScene();
+				StartNewBatch();
+			}
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots.at(s_Data.TextureSlotIndex) = texture;
 			s_Data.TextureSlotIndex++;
