@@ -35,6 +35,11 @@ namespace Crane
 		Renderer::Shutdown();
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
 	void Application::PushLayer(Layer* layer)
 	{
 		CR_PROFILE_FUNCTION();

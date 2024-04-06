@@ -27,6 +27,8 @@ private:
 
 	Crane::OrthographicCameraController m_CameraController;
 
+	Crane::Ref<Crane::Texture2D> m_CheckerboardTexture;
+
 	Crane::Ref<Crane::Texture2D> m_TextureAtlas;
 	std::unordered_map<char, Crane::TextureRegion2D> m_MapTiles;
 	uint32_t m_MapWidth, m_MapHeight;

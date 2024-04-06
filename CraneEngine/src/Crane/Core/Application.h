@@ -21,6 +21,8 @@ namespace Crane
 		Application();
 		virtual ~Application();
 
+		void Close();
+
 		void Run();
 		void OnEvent(Event& e);
 

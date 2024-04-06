@@ -84,11 +84,6 @@ namespace Crane
         glDeleteTextures(1, &m_RendererID);
     }
 
-    uint32_t OpenGLTexture2D::GetRendererID() const
-    {
-        return m_RendererID;
-    }
-
     void OpenGLTexture2D::SetData(void* data, uint32_t size)
     {
         CR_PROFILE_FUNCTION();
