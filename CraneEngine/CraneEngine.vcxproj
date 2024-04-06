@@ -170,6 +170,7 @@
     <ClInclude Include="src\Crane\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Crane\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Crane\Renderer\Shader.h" />
+    <ClInclude Include="src\Crane\Renderer\TextureRegion2D.h" />
     <ClInclude Include="src\Crane\Renderer\Texture.h" />
     <ClInclude Include="src\Crane\Renderer\VertexArray.h" />
     <ClInclude Include="src\Crane\Core\Window.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="src\Crane\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Crane\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Crane\Renderer\TextureRegion2D.cpp" />
     <ClCompile Include="src\Crane\Renderer\Texture.cpp" />
     <ClCompile Include="src\Crane\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />

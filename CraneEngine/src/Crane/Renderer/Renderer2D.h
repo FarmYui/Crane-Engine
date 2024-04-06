@@ -3,6 +3,7 @@
 #include "Crane/Renderer/OrthographicCamera.h"
 
 #include "Crane/Renderer/Texture.h"
+#include "Crane/Renderer/TextureRegion2D.h"
 
 namespace Crane
 {
@@ -24,13 +25,13 @@ namespace Crane
 		//-- colored 
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha = 1.0f);
 		//-- textured
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const TextureRegion2D& subRegion = { {0.0f,0.0f}, {1.0f,1.0f} }, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
 
 		/* with rotation */
 		//-- colored 
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha = 1.0f);
 		//-- textured
-		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const TextureRegion2D& subRegion = { {0.0f,0.0f}, {1.0f,1.0f} }, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
 
 
 		// Stats

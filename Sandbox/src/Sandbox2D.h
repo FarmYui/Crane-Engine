@@ -1,6 +1,7 @@
 #pragma once
 #include "Crane.h"
 
+
 class Sandbox2D : public Crane::Layer
 {
 public:
@@ -23,7 +24,10 @@ private:
 	Crane::Ref<Crane::Texture2D> m_Texture;
 	Crane::Ref<Crane::Texture2D> m_Texture2;
 	Crane::Ref<Crane::Texture2D> m_Texture3;
-	Crane::Ref<Crane::Texture2D> m_SpriteSheet;
+	Crane::Ref<Crane::Texture2D> m_TextureAtlas;
+	//Crane::TextureRegion2D m_RegionStairs;
+	//Crane::TextureRegion2D m_RegionTree;
+	Crane::TextureRegion2D m_RegionCeiling;
 
 	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 

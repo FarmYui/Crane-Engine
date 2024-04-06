@@ -136,6 +136,7 @@
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Crane\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Crane\Debug\Instrumentor.h" />
+    <ClInclude Include="src\Crane\Renderer\TextureRegion2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">
@@ -211,5 +212,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Crane\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Crane\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="src\Crane\Renderer\TextureRegion2D.cpp" />
   </ItemGroup>
 </Project>

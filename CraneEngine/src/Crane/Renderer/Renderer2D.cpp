@@ -3,6 +3,8 @@
 #include "Renderer2D.h"
 #include "Renderer.h"
 
+#include "Crane/Renderer/TextureRegion2D.h"
+
 namespace Crane
 {
 	struct VertexData
@@ -198,21 +200,11 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const TextureRegion2D& textureRegion, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 
-		float x = 7, y = 6;
-		float sheetWidth = 2560.0f, sheetHeight = 1664.0f; // texture->GetWidth/Height() 
-		float spriteWidth = 128.0f, spriteHeight = 128.0f;
-
-		float zerox = x * spriteWidth  / sheetWidth;
-		float zeroy = y * spriteHeight / sheetHeight;
-
-		float onex = (x + 1) * spriteWidth  / sheetWidth;
-		float oney = (y + 1) * spriteHeight / sheetHeight;
-
-		glm::vec2 textureCoordinates[] = { {zerox, zeroy}, {onex, zeroy}, {onex, oney}, {zerox, oney} };
+		const glm::vec2* textureCoordinates = textureRegion.GetTextureCoordinates();
 
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)
@@ -298,11 +290,11 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const TextureRegion2D& textureRegion, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 
-		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
+		const glm::vec2* textureCoordinates = textureRegion.GetTextureCoordinates();
 
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)

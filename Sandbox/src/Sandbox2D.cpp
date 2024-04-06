@@ -13,7 +13,12 @@ void Sandbox2D::OnAttach()
 	m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_Texture2 = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
 	m_Texture3 = Crane::Texture2D::Create("assets/textures/CraneEngineLogo.png");
-	m_SpriteSheet = Crane::Texture2D::Create("assets/game/textures/RPG_sheet.png");
+	m_TextureAtlas = Crane::Texture2D::Create("assets/game/textures/RPG_sheet.png");
+
+	//m_RegionStairs = Crane::TextureRegion2D::CreateFromCoords(m_TextureAtlas, { 6, 3 }, {128,128});
+	//m_RegionStairs = Crane::TextureRegion2D::CreateFromCoords(m_TextureAtlas, { 6, 3 }, {128,128});
+	//m_RegionTree = Crane::TextureRegion2D::CreateFromCoords(m_TextureAtlas, { 2, 1 }, {128,128}, {1,2});
+	m_RegionCeiling = Crane::TextureRegion2D::CreateFromCoords(m_TextureAtlas, { 2, 4 }, {128,128}, {2,3});
 }
 
 void Sandbox2D::OnDetach()
@@ -77,7 +82,9 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 
 		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-		Crane::Renderer2D::DrawQuad(glm::vec3(0.0f), glm::vec2(1.0f), m_SpriteSheet);
+		//Crane::Renderer2D::DrawQuad(glm::vec3(0.0f), glm::vec2(1.0f), m_TextureAtlas);
+		Crane::Renderer2D::DrawQuad(glm::vec3(0.0f), glm::vec2(1.0f), m_TextureAtlas, m_RegionCeiling);
+		//Crane::Renderer2D::DrawQuad(glm::vec3(0.1f), glm::vec2(1.0f, 2.0f), m_TextureAtlas, m_RegionTree);
 
 		Crane::Renderer2D::EndScene();
 	}
