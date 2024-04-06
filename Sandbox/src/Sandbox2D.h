@@ -23,6 +23,7 @@ private:
 	Crane::Ref<Crane::Texture2D> m_Texture;
 	Crane::Ref<Crane::Texture2D> m_Texture2;
 	Crane::Ref<Crane::Texture2D> m_Texture3;
+	Crane::Ref<Crane::Texture2D> m_SpriteSheet;
 
 	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 

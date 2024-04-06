@@ -13,6 +13,7 @@ void Sandbox2D::OnAttach()
 	m_Texture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_Texture2 = Crane::Texture2D::Create("assets/textures/ChernoLogo.png");
 	m_Texture3 = Crane::Texture2D::Create("assets/textures/CraneEngineLogo.png");
+	m_SpriteSheet = Crane::Texture2D::Create("assets/game/textures/RPG_sheet.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -45,6 +46,7 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 	// Draw
 	{
 		CR_PROFILE_SCOPE("Renderer Draw");
+#if TEST
 		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		/*
 		Crane::Renderer2D::DrawRotatedQuad({ m_QuadPosition.x, m_QuadPosition.y, m_QuadPosition.z}, m_QuadSize, m_QuadRotation, m_Texture, m_QuadColor);
@@ -70,6 +72,13 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 				Crane::Renderer2D::DrawQuad(glm::vec3(x, y, -0.1f), glm::vec2(0.45f), glm::vec3(r, g, 0.3f));
 			}
 		}
+		Crane::Renderer2D::EndScene();
+#endif
+
+		Crane::Renderer2D::BeginScene(m_CameraController.GetCamera());
+
+		Crane::Renderer2D::DrawQuad(glm::vec3(0.0f), glm::vec2(1.0f), m_SpriteSheet);
+
 		Crane::Renderer2D::EndScene();
 	}
 }

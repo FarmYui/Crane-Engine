@@ -25,19 +25,17 @@ namespace Crane
 
 		Ref<VertexArray> VertexArray; 
 		Ref<VertexBuffer> VertexBuffer;
-
-		Ref<Texture2D> WhiteTexture;
 		Ref<Shader> ColorTextureShader;
 
-		std::vector<VertexData> Vertices;
-
-		uint32_t QuadsCount = 0;
-
+		Ref<Texture2D> WhiteTexture;
 		std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1; // bcz 0 is white texture
 
+		// TODO: make this an array
+		std::vector<VertexData> Vertices;
 		glm::vec4 QuadVertexPositions[4];
 
+		uint32_t QuadsCount = 0;
 		Renderer2D::Statistics Stats;
 	};
 
@@ -46,8 +44,8 @@ namespace Crane
 	void Renderer2D::Init()
 	{
 		CR_PROFILE_FUNCTION();
-		// Create space for vertices that will be stored
-		s_Data.Vertices.reserve(10);
+		// Reserve space for vertices that will be stored
+		s_Data.Vertices.reserve(s_Data.MaxVertices);
 
 		// create buffers + varray
 		s_Data.VertexArray = Crane::VertexArray::Create();
@@ -143,6 +141,9 @@ namespace Crane
 	{
 		CR_PROFILE_FUNCTION();
 
+		if (s_Data.QuadsCount == 0)
+			return; // Nothing to bind or to draw 
+
 		// lets bind all our textures we got from DrawQuads
 		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
 			s_Data.TextureSlots.at(i)->Bind(i);
@@ -157,18 +158,18 @@ namespace Crane
 
 	void Renderer2D::Flush()
 	{
-		if (s_Data.QuadsCount == 0)
-			return; // Nothing to draw
-
 		// finally draw
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadsCount * 6);
 	}
 
-
+	// TODO: put the draw call in one or 2 functions 
+	// that way to make changes you need to edit less fuctions
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 		
+		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
+
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)
 		{	// we end the scene and start a new one with the same camera data
@@ -188,11 +189,9 @@ namespace Crane
 		transform = glm::translate(glm::mat4(1.0f), position) *
 			glm::scale(transform, glm::vec3(size, 1.0f));
 	
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0],finalColor,       glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor,      glm::vec2(1.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor,      glm::vec2(1.0f, 1.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor,      glm::vec2(0.0f, 1.0f), textureIndex);
-	
+		for (uint32_t i = 0; i < 4; i++)
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i] ,finalColor, textureCoordinates[i], textureIndex);
+		
 	
 		s_Data.QuadsCount++;
 
@@ -203,6 +202,18 @@ namespace Crane
 	{
 		CR_PROFILE_FUNCTION();
 
+		float x = 7, y = 6;
+		float sheetWidth = 2560.0f, sheetHeight = 1664.0f; // texture->GetWidth/Height() 
+		float spriteWidth = 128.0f, spriteHeight = 128.0f;
+
+		float zerox = x * spriteWidth  / sheetWidth;
+		float zeroy = y * spriteHeight / sheetHeight;
+
+		float onex = (x + 1) * spriteWidth  / sheetWidth;
+		float oney = (y + 1) * spriteHeight / sheetHeight;
+
+		glm::vec2 textureCoordinates[] = { {zerox, zeroy}, {onex, zeroy}, {onex, oney}, {zerox, oney} };
+
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)
 		{	// we end the scene and start a new one with the same camera data
@@ -242,21 +253,21 @@ namespace Crane
 		transform = glm::translate(glm::mat4(1.0f), position) *
 			glm::scale(transform, glm::vec3(size, 1.0f));
 
-		// to do : put all this in a for loop
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f),       textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f),       textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor, glm::vec2(0.0f, 1.0f),       textureIndex);
-
+		// Adding vertex data into array  
+		for (uint32_t i = 0; i < 4; i++)
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
+		
 
 		s_Data.QuadsCount++;
-
+		// this is for stats
 		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
+		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
 
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)
@@ -278,12 +289,10 @@ namespace Crane
 			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
 			glm::scale(transform, glm::vec3(size, 1.0f));
 
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor, glm::vec2(0.0f, 1.0f), textureIndex);
 
-
+		for (uint32_t i = 0; i < 4; i++)
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
+		
 		s_Data.QuadsCount++;
 
 		s_Data.Stats.QuadCount++;
@@ -292,6 +301,8 @@ namespace Crane
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
+		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
 
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)
@@ -332,10 +343,9 @@ namespace Crane
 			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
 			glm::scale(transform, glm::vec3(size, 1.0f));
 
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[0], finalColor, glm::vec2(0.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[1], finalColor, glm::vec2(1.0f, 0.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[2], finalColor, glm::vec2(1.0f, 1.0f), textureIndex);
-		s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[3], finalColor, glm::vec2(0.0f, 1.0f), textureIndex);
+
+		for (uint32_t i = 0; i < 4; i++)
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
 
 
 		s_Data.QuadsCount++;
