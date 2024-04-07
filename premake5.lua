@@ -90,6 +90,60 @@ project "CraneEngine"
         optimize "On"
 
 
+project "Crane-Editor"
+    location "Crane-Editor"
+    kind "ConsoleApp"
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "On"
+    
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    files
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp"
+    }
+
+    includedirs
+    {
+        "CraneEngine/vendor/spdlog/include",
+        "CraneEngine/src",
+        "CraneEngine/vendor",
+        "%{IncludeDir.glm}"
+    }
+
+    links 
+    {
+        "CraneEngine"
+    }
+
+    filter "system:windows"
+        systemversion "latest"
+        
+        defines
+        {
+            "CR_PLATFORM_WINDOWS"
+        }
+
+    
+    filter "configurations:Debug"
+        defines "CR_DEBUG"
+        runtime "Debug"
+        symbols "On"
+
+    filter "configurations:Relase"
+        defines "CR_RELASE"
+        runtime "Release"
+        optimize "On"
+    
+    filter "configurations:Dist"
+        defines "CR_DIST"
+        runtime "Release"
+        optimize "On"
+
+
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
@@ -111,8 +165,7 @@ project "Sandbox"
         "CraneEngine/vendor/spdlog/include",
         "CraneEngine/src",
         "CraneEngine/vendor",
-        "%{IncludeDir.glm}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.glm}"
     }
 
     links 
