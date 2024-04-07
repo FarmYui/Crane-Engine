@@ -12,7 +12,7 @@ namespace Crane
 		m_TextureCoordinates[3] = {min.x, max.y};
 	}
 
-	TextureRegion2D& TextureRegion2D::CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2 coords, const glm::vec2 cellSize, const glm::vec2 spriteUnitSize)
+	Ref<TextureRegion2D> TextureRegion2D::CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2 coords, const glm::vec2 cellSize, const glm::vec2 spriteUnitSize)
 	{
 		glm::vec2 min, max;
 		min.x = coords.x * cellSize.x / (float)texture->GetWidth();
@@ -21,6 +21,6 @@ namespace Crane
 		max.x = (coords.x + spriteUnitSize.x) * cellSize.x / (float)texture->GetWidth();
 		max.y = (coords.y + spriteUnitSize.y) * cellSize.y / (float)texture->GetHeight();
 
-		return TextureRegion2D(min, max);
+		return CreateRef<TextureRegion2D>(min, max);
 	}
 }

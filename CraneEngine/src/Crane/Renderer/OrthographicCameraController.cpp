@@ -66,16 +66,21 @@ namespace Crane
 		
 	}
 
-	void OrthographicCameraController::CalculateView()
+	void OrthographicCameraController::CalculateProj()
 	{
 		m_Camera.SetProjMatrix(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	}
+
+	void OrthographicCameraController::Resize(float width, float height)
+	{
+		m_AspectRatio = width / height;
+		CalculateProj();
 	}
 
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
 		CR_PROFILE_FUNCTION();
-		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		CalculateView();
+		Resize((float)e.GetWidth(), (float)e.GetHeight());
 		return false;
 	}
 
@@ -84,7 +89,7 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 		m_ZoomLevel -= e.GetYOffset() * 0.15f * m_ZoomLevel;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-		CalculateView();
+		CalculateProj();
 		return false;
 	}
 	

@@ -33,7 +33,9 @@ namespace Crane
 		Ref<Texture2D> m_CheckerboardTexture;
 
 		Ref<Texture2D> m_TextureAtlas;
-		std::unordered_map<char, TextureRegion2D> m_MapTiles;
+		std::unordered_map<char, Ref<TextureRegion2D>> m_MapTiles;
 		uint32_t m_MapWidth, m_MapHeight;
+
+		glm::vec2 m_ViewportSize;
 	};
 }

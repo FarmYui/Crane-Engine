@@ -14,7 +14,7 @@ namespace Crane
 
 		const glm::vec2* GetTextureCoordinates() const { return m_TextureCoordinates; }
 
-		static TextureRegion2D& CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2 coords, const glm::vec2 spriteOffset, const glm::vec2 spriteUnitSize = {1,1});
+		static Ref<TextureRegion2D> CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2 coords, const glm::vec2 spriteOffset, const glm::vec2 spriteUnitSize = {1,1});
 
 
 	private:
