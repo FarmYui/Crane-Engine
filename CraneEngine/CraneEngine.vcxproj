@@ -160,6 +160,7 @@
     <ClInclude Include="src\Crane\Core\LayerStack.h" />
     <ClInclude Include="src\Crane\Core\Log.h" />
     <ClInclude Include="src\Crane\Core\MouseCodes.h" />
+    <ClInclude Include="src\Crane\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Crane\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Crane\Renderer\Buffer.h" />
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="src\Crane\Core\Window.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture.h" />
@@ -191,6 +193,7 @@
     <ClCompile Include="src\Crane\Core\Layer.cpp" />
     <ClCompile Include="src\Crane\Core\LayerStack.cpp" />
     <ClCompile Include="src\Crane\Core\Log.cpp" />
+    <ClCompile Include="src\Crane\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Crane\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Crane\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Crane\Renderer\Buffer.cpp" />
@@ -205,6 +208,7 @@
     <ClCompile Include="src\Crane\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture.cpp" />

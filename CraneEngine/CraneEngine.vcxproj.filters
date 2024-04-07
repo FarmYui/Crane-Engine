@@ -137,6 +137,8 @@
     <ClInclude Include="src\Crane\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Crane\Debug\Instrumentor.h" />
     <ClInclude Include="src\Crane\Renderer\TextureRegion2D.h" />
+    <ClInclude Include="src\Crane\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">
@@ -213,5 +215,7 @@
     <ClCompile Include="src\Crane\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Crane\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Crane\Renderer\TextureRegion2D.cpp" />
+    <ClCompile Include="src\Crane\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
   </ItemGroup>
 </Project>

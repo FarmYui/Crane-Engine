@@ -23,6 +23,7 @@
 
 #include "Crane/Renderer/Buffer.h"
 #include "Crane/Renderer/Shader.h"
+#include "Crane/Renderer/Framebuffer.h"
 #include "Crane/Renderer/VertexArray.h"
 #include "Crane/Renderer/Texture.h"
 #include "Crane/Renderer/TextureRegion2D.h"

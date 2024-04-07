@@ -27,6 +27,8 @@ private:
 
 	Crane::OrthographicCameraController m_CameraController;
 
+	Crane::Ref<Crane::Framebuffer> m_Framebuffer;
+
 	Crane::Ref<Crane::Texture2D> m_CheckerboardTexture;
 
 	Crane::Ref<Crane::Texture2D> m_TextureAtlas;

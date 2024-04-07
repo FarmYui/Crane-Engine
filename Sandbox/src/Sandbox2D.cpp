@@ -26,6 +26,11 @@ void Sandbox2D::OnAttach()
 {
 	CR_PROFILE_FUNCTION();
 
+	Crane::FramebufferSpecification specification;
+	specification.Width = 1280;
+	specification.Height = 720;
+	m_Framebuffer = Crane::Framebuffer::Create(specification);
+
 	m_CheckerboardTexture = Crane::Texture2D::Create("assets/textures/Checkerboard.png");
 	m_TextureAtlas = Crane::Texture2D::Create("assets/game/textures/RPG_sheet.png");
 
@@ -62,6 +67,8 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 	// Clear
 	{
 		CR_PROFILE_SCOPE("Renderer Clear");
+
+		m_Framebuffer->Bind();
 		Crane::RenderCommand::SetClearColor(m_ClearColor);
 		Crane::RenderCommand::Clear();
 	}
@@ -117,6 +124,8 @@ void Sandbox2D::OnUpdate(Crane::Timestep ts)
 			
 
 		Crane::Renderer2D::EndScene();
+
+		m_Framebuffer->Unbind();
 	}
 }
 
@@ -199,8 +208,8 @@ void Sandbox2D::OnImGuiRender()
 		
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_QuadColor));
 
-		uint32_t textureID = m_CheckerboardTexture->GetRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
+		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ 1280.0f, 720.0f });
 		ImGui::End();
 
 		ImGui::End();
