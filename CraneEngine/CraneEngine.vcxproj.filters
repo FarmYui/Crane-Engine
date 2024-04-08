@@ -145,9 +145,6 @@
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\Windows\WindowsInput.h">
-      <Filter>Platforms\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
@@ -239,5 +236,6 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
 </Project>

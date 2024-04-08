@@ -1,15 +1,13 @@
 #include "crpch.h"
-#include "WindowsInput.h"
+
+#include "Crane/Core/Input.h"
 
 #include "Crane/Core/Application.h"
-
 #include <GLFW/glfw3.h>
 
 namespace Crane
 {
-	Input* Input::s_Instance = new WindowsInput();
-
-	bool WindowsInput::IsKeyPressedImpl(KeyCode keycode)
+	bool Input::IsKeyPressed(KeyCode keycode)
 	{
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		int state = glfwGetKey(window, static_cast<int32_t>(keycode));
@@ -17,14 +15,14 @@ namespace Crane
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool WindowsInput::IsMouseButtonPressedImpl(MouseCode button)
+	bool Input::IsMouseButtonPressed(MouseCode button)
 	{
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		int state = glfwGetMouseButton(window, static_cast<int32_t>(button));
 		return state == GLFW_PRESS;
 	}
 
-	glm::vec2 WindowsInput::GetMousePositionImpl()
+	glm::vec2 Input::GetMousePosition()
 	{
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double xpos, ypos;
@@ -32,13 +30,13 @@ namespace Crane
 		return { (float)xpos,(float)ypos };
 	}
 	
-	float WindowsInput::GetMouseXImpl()
+	float Input::GetMouseX()
 	{
-		return GetMousePositionImpl().x;
+		return GetMousePosition().x;
 	}
 	
-	float WindowsInput::GetMouseYImpl()
+	float Input::GetMouseY()
 	{
-		return GetMousePositionImpl().y;
+		return GetMousePosition().y;
 	}
 }
