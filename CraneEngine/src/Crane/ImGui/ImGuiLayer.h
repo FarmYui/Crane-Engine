@@ -15,11 +15,14 @@ namespace Crane
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
+	
+		void AllowEvents(bool allow) { m_FlowEvents = allow; }
 		virtual void OnEvent(Event& e) override;
 
 		void Begin();
 		void End();
 	private:
+		bool m_FlowEvents = false;
 		float m_Time = 0.0f;
 	};
 }

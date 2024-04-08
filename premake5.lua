@@ -90,8 +90,8 @@ project "CraneEngine"
         optimize "On"
 
 
-project "Crane-Editor"
-    location "Crane-Editor"
+project "Editor"
+    location "Editor"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"

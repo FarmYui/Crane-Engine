@@ -5,6 +5,6 @@ bin-int/
 
 # Files
 *.user
-Crane-Editor/*.json
+Editor/*.json
 Sandbox/*.json
 Sandbox/imgui.ini

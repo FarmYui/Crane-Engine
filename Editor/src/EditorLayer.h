@@ -36,6 +36,8 @@ namespace Crane
 		std::unordered_map<char, Ref<TextureRegion2D>> m_MapTiles;
 		uint32_t m_MapWidth, m_MapHeight;
 
+		bool m_ViewportFocused = false, m_ViewportHovered = false;
+
 		glm::vec2 m_ViewportSize;
 	};
 }

@@ -62,7 +62,8 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 		m_Timestep = ts;
 
-		m_CameraController.OnUpdate(ts);
+		if (m_ViewportFocused)
+			m_CameraController.OnUpdate(ts);
 
 		// Reset Stats
 		Renderer2D::ResetStats();
@@ -181,6 +182,12 @@ namespace Crane
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 		ImGui::Begin("Viewport");
+
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+
+		Application::Get().GetImGuiLayer()->AllowEvents(m_ViewportFocused && m_ViewportHovered);
+
 		ImVec2 ImGuiViewportSize = ImGui::GetContentRegionAvail();
 		glm::vec2 viewportSize = { ImGuiViewportSize.x, ImGuiViewportSize.y };
 
