@@ -3,6 +3,8 @@
 
 namespace Crane
 {
+	class Tile;
+
 	class EditorLayer : public Layer
 	{
 	public:
