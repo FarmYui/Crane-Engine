@@ -1,241 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Crane">
-      <UniqueIdentifier>{4E98FB0C-BAAC-23BE-832E-C71DEF0120EF}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crane\Core">
-      <UniqueIdentifier>{661D66AB-52D5-A7F8-BBDC-8054A7B342E9}</UniqueIdentifier>
+    <Filter Include="src\Crane">
+      <UniqueIdentifier>{A5A6B8B2-1111-6D29-5A4F-1ECFC6F84A7E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crane\Debug">
-      <UniqueIdentifier>{44253618-B0DA-AE0D-39CF-A8E4A583A511}</UniqueIdentifier>
+    <Filter Include="src\Crane\Core">
+      <UniqueIdentifier>{1DBA6CE2-0988-60E8-F21B-D10EDE883C4D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crane\Events">
-      <UniqueIdentifier>{72208522-5E83-14C7-0709-4D7DF34AE049}</UniqueIdentifier>
+    <Filter Include="src\Crane\Debug">
+      <UniqueIdentifier>{DB581030-47E4-7DF4-50F5-00E9BCFFD9F4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crane\ImGui">
-      <UniqueIdentifier>{F88F9418-6445-0D0E-ED39-07E559EE0312}</UniqueIdentifier>
+    <Filter Include="src\Crane\Events">
+      <UniqueIdentifier>{E9C6A535-D5BF-C487-FEF1-A90CEA49A493}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crane\Renderer">
-      <UniqueIdentifier>{B4134ACF-A0E1-3DD5-8975-AEFB75E2193A}</UniqueIdentifier>
+    <Filter Include="src\Crane\ImGui">
+      <UniqueIdentifier>{8FC36E30-FB4E-DCF4-0460-5FE9706A38F5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platforms">
-      <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
+    <Filter Include="src\Crane\Renderer">
+      <UniqueIdentifier>{EB332E2D-D717-EF82-4078-E9D52C7BD904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platforms\OpenGL">
-      <UniqueIdentifier>{719BB998-5D94-D8EA-86C6-BD6F721EB8F6}</UniqueIdentifier>
+    <Filter Include="src\Platforms">
+      <UniqueIdentifier>{B40E5C85-20CF-D7BB-E909-213955891C98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platforms\Windows">
-      <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
+    <Filter Include="src\Platforms\OpenGL">
+      <UniqueIdentifier>{68A52600-5434-B0C9-FD52-C4C4E9C0C06F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platforms\Windows">
+      <UniqueIdentifier>{EE2C175D-5A99-D257-238D-6AB58FB8F4BF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Crane.h" />
+    <ClInclude Include="src\Crane.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crane\Core\Application.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Core.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\EntryPoint.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Input.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\KeyCodes.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Layer.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\LayerStack.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Log.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\MouseCodes.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Timestep.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Core\Window.h">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Debug\Instrumentor.h">
-      <Filter>Crane\Debug</Filter>
+      <Filter>src\Crane\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Events\ApplicationEvent.h">
-      <Filter>Crane\Events</Filter>
+      <Filter>src\Crane\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Events\Event.h">
-      <Filter>Crane\Events</Filter>
+      <Filter>src\Crane\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Events\KeyEvent.h">
-      <Filter>Crane\Events</Filter>
+      <Filter>src\Crane\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Events\MouseEvent.h">
-      <Filter>Crane\Events</Filter>
+      <Filter>src\Crane\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\ImGui\ImGuiLayer.h">
-      <Filter>Crane\ImGui</Filter>
+      <Filter>src\Crane\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Buffer.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Framebuffer.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\GraphicsContext.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\OrthographicCamera.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\OrthographicCameraController.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\RenderCommand.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Renderer.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Renderer2D.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\RendererAPI.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Shader.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Texture.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\TextureRegion2D.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Renderer\VertexArray.h">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
-      <Filter>Platforms\Windows</Filter>
+      <Filter>src\Platforms\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\crpch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Scene\Scene.h" />
+    <ClInclude Include="src\Crane\Scene\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Core\Layer.cpp">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Core\LayerStack.cpp">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Core\Log.cpp">
-      <Filter>Crane\Core</Filter>
+      <Filter>src\Crane\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\ImGui\ImGuiBuild.cpp">
-      <Filter>Crane\ImGui</Filter>
+      <Filter>src\Crane\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\ImGui\ImGuiLayer.cpp">
-      <Filter>Crane\ImGui</Filter>
+      <Filter>src\Crane\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Buffer.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Framebuffer.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\GraphicsContext.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\OrthographicCamera.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\OrthographicCameraController.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\RenderCommand.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Renderer.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Renderer2D.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\RendererAPI.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Shader.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\Texture.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\TextureRegion2D.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Renderer\VertexArray.cpp">
-      <Filter>Crane\Renderer</Filter>
+      <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+      <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
-      <Filter>Platforms\Windows</Filter>
+      <Filter>src\Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
-      <Filter>Platforms\Windows</Filter>
+      <Filter>src\Platforms\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\crpch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Scene\Scene.cpp" />
   </ItemGroup>
 </Project>

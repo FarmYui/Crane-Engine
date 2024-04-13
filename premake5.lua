@@ -18,6 +18,7 @@ IncludeDir["Glad"] = "CraneEngine/vendor/Glad/include"
 IncludeDir["ImGui"] = "CraneEngine/vendor/ImGui"
 IncludeDir["glm"] = "CraneEngine/vendor/glm"
 IncludeDir["stb_image"] = "CraneEngine/vendor/stb_image"
+IncludeDir["entt"] = "CraneEngine/vendor/entt/include"
 
 group "Dependencies"
     include "CraneEngine/vendor/GLFW"
@@ -42,7 +43,8 @@ project "CraneEngine"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/stb_image/stb_image.cpp"
     }
 
     includedirs
@@ -53,7 +55,8 @@ project "CraneEngine"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.entt}"
     }
 
     links
@@ -111,7 +114,8 @@ project "Editor"
         "CraneEngine/vendor/spdlog/include",
         "CraneEngine/src",
         "CraneEngine/vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
     }
 
     links 

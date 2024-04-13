@@ -27,10 +27,9 @@ namespace Crane
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 
 		Timestep m_Timestep;
-
 		OrthographicCameraController m_CameraController;
-
 		Ref<Framebuffer> m_Framebuffer;
+		Ref<Scene> m_ActiveScene;
 
 		Ref<Texture2D> m_CheckerboardTexture;
 

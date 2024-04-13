@@ -38,6 +38,12 @@ namespace Crane
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
 
 
+		// make changes only in these methods
+		static void DrawQuad(const glm::mat4& transform, const glm::vec3& color, float alpha);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+
+
 		// Stats
 		struct Statistics
 		{

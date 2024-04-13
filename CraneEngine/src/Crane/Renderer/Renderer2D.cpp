@@ -164,12 +164,87 @@ namespace Crane
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadsCount * 6);
 	}
 
-	// TODO: put the draw call in one or 2 functions 
-	// that way to make changes you need to edit less fuctions
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
 		
+		DrawQuad(transform, color, alpha);
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	{
+		CR_PROFILE_FUNCTION();
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
+
+		DrawQuad(transform, texture, color, alpha);
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
+	{
+		CR_PROFILE_FUNCTION();
+
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
+
+		DrawQuad(transform, texture, textureRegion, color, alpha);
+	}
+
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
+	{
+		CR_PROFILE_FUNCTION();
+
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
+
+		DrawQuad(transform, color, alpha);
+	}
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	{
+		CR_PROFILE_FUNCTION();
+
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
+
+		DrawQuad(transform, texture, color, alpha);
+	}
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
+	{
+		CR_PROFILE_FUNCTION();
+
+		//model * vtx pos
+		glm::mat4 transform(1.0f);
+		transform = glm::translate(glm::mat4(1.0f), position) *
+			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(transform, glm::vec3(size, 1.0f));
+
+		DrawQuad(transform, texture, textureRegion, color, alpha);
+	}
+
+
+
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec3& color, float alpha)
+	{
+		CR_PROFILE_FUNCTION();
+
 		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
 
 		// logic to stop adding vertices on a full vertex and index buffer
@@ -185,26 +260,21 @@ namespace Crane
 		float textureIndex = 0.0f;
 
 		glm::vec4 finalColor(color, alpha);
-		
-		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
-	
+
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i] ,finalColor, textureCoordinates[i], textureIndex);
-		
-	
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
+
+
 		s_Data.QuadsCount++;
 
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 
-		glm::vec2 textureCoordinates[] = {{0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f}};
+		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
 
 		// logic to stop adding vertices on a full vertex and index buffer
 		if (s_Data.QuadsCount == s_Data.MaxQuads)
@@ -240,11 +310,6 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 
-		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
-
 		// Adding vertex data into array  
 		for (uint32_t i = 0; i < 4; i++)
 			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
@@ -255,7 +320,7 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -295,165 +360,16 @@ namespace Crane
 
 		glm::vec4 finalColor(color, alpha);
 
-		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
-
 		// Adding vertex data into array  
 		for (uint32_t i = 0; i < 4; i++)
 			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
-		
+
 
 		s_Data.QuadsCount++;
 		// this is for stats
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
-	{
-		CR_PROFILE_FUNCTION();
-
-		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
-
-		// logic to stop adding vertices on a full vertex and index buffer
-		if (s_Data.QuadsCount == s_Data.MaxQuads)
-		{	// we end the scene and start a new one with the same camera data
-			EndScene();
-			StartNewBatch();
-		}
-
-		// as we alredy bound the white texture in init we dont need to do that here
-		//...
-		// but we need to set textureIndex whitch will be zero since we want to have the color multiplied with the white texture
-		float textureIndex = 0.0f;
-
-		glm::vec4 finalColor(color, alpha);
-
-		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
-
-
-		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
-		
-		s_Data.QuadsCount++;
-
-		s_Data.Stats.QuadCount++;
-	}
-
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
-	{
-		CR_PROFILE_FUNCTION();
-
-		glm::vec2 textureCoordinates[] = { {0.0f,0.0f}, {1.0f,0.0f}, {1.0f,1.0f}, {0.0f,1.0f} };
-
-		// logic to stop adding vertices on a full vertex and index buffer
-		if (s_Data.QuadsCount == s_Data.MaxQuads)
-		{	// we end the scene and start a new one with the same camera data
-			EndScene();
-			StartNewBatch();
-		}
-
-		// logic to check if a texture was alredy occuping a textureSlot
-		float textureIndex = 0.0f;
-		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
-		{
-			if (s_Data.TextureSlots.at(i)->GetRendererID() == texture->GetRendererID())
-			{
-				textureIndex = (float)i;
-				break;
-			}
-		}
-
-		// if its new we add it to the array & add 1 to textureSlotIndex
-		if (textureIndex == 0.0f)
-		{
-			if (s_Data.TextureSlotIndex == Renderer2DStorage::MaxTextureSlots) // if we dont have any more space for textures
-			{// we end the scene and start a new one with the same camera data
-				EndScene();
-				StartNewBatch();
-			}
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots.at(s_Data.TextureSlotIndex) = texture;
-			s_Data.TextureSlotIndex++;
-		}
-
-		glm::vec4 finalColor(color, alpha);
-
-		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
-
-
-		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
-
-
-		s_Data.QuadsCount++;
-
-		s_Data.Stats.QuadCount++;
-	}
-
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
-	{
-		CR_PROFILE_FUNCTION();
-
-		const std::array<glm::vec2,4>& textureCoordinates = textureRegion->GetTextureCoordinates();
-
-		// logic to stop adding vertices on a full vertex and index buffer
-		if (s_Data.QuadsCount == s_Data.MaxQuads)
-		{	// we end the scene and start a new one with the same camera data
-			EndScene();
-			StartNewBatch();
-		}
-
-		// logic to check if a texture was alredy occuping a textureSlot
-		float textureIndex = 0.0f;
-		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
-		{
-			if (s_Data.TextureSlots.at(i)->GetRendererID() == texture->GetRendererID())
-			{
-				textureIndex = (float)i;
-				break;
-			}
-		}
-
-		// if its new we add it to the array & add 1 to textureSlotIndex
-		if (textureIndex == 0.0f)
-		{
-			if (s_Data.TextureSlotIndex == Renderer2DStorage::MaxTextureSlots) // if we dont have any more space for textures
-			{// we end the scene and start a new one with the same camera data
-				EndScene();
-				StartNewBatch();
-			}
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots.at(s_Data.TextureSlotIndex) = texture;
-			s_Data.TextureSlotIndex++;
-		}
-
-		glm::vec4 finalColor(color, alpha);
-
-		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
-
-
-		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex);
-
-
-		s_Data.QuadsCount++;
-
-		s_Data.Stats.QuadCount++;
-	}
 
 
 	void Renderer2D::ResetStats()

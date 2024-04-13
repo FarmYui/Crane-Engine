@@ -258,6 +258,7 @@ static char s_Map[] =
 "WWWWWWWWWWWWWWWWWWWWWWWW"
 "WWWWWWWWWWWWWWWWWWWWWWWW";
 
+
 namespace Crane
 {
 
@@ -312,6 +313,15 @@ namespace Crane
 		m_MapTiles['W'] = TextureRegion2D::CreateFromCoords(m_TextureAtlas, { 11, 11 }, { 128,128 });
 
 		m_CameraController.SetZoomLevel(5.0f);
+
+		m_ActiveScene = CreateRef<Scene>();
+
+		auto square = m_ActiveScene->CreateEntity();
+
+		auto& reg = m_ActiveScene->Reg();
+		reg.emplace<TransformComponent>(square);
+		reg.emplace<SpriteRendererComponent>(square, glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
+		
 	}
 
 	void EditorLayer::OnDetach()
@@ -361,7 +371,7 @@ namespace Crane
 
 			Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-			for (uint32_t y = 0; y < s_MapHeight; y++)
+			/*for (uint32_t y = 0; y < s_MapHeight; y++)
 			{
 				for (uint32_t x = 0; x < m_MapWidth; x++)
 				{
@@ -374,7 +384,10 @@ namespace Crane
 
 					Renderer2D::DrawQuad(glm::vec3(x - m_MapWidth / 2.0f, m_MapHeight - y - m_MapHeight / 2.0f, 0.0f), glm::vec2(1.0f), m_TextureAtlas, region);
 				}
-			}
+			}*/
+
+
+			m_ActiveScene->OnUpdate(ts);
 
 
 			Renderer2D::EndScene();
