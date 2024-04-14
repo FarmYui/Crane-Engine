@@ -18,7 +18,7 @@ IncludeDir["Glad"] = "CraneEngine/vendor/Glad/include"
 IncludeDir["ImGui"] = "CraneEngine/vendor/ImGui"
 IncludeDir["glm"] = "CraneEngine/vendor/glm"
 IncludeDir["stb_image"] = "CraneEngine/vendor/stb_image"
-IncludeDir["entt"] = "CraneEngine/vendor/entt/include"
+IncludeDir["entt"] = "CraneEngine/vendor/entt/"
 
 group "Dependencies"
     include "CraneEngine/vendor/GLFW"
@@ -169,7 +169,8 @@ project "Sandbox"
         "CraneEngine/vendor/spdlog/include",
         "CraneEngine/src",
         "CraneEngine/vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
     }
 
     links 

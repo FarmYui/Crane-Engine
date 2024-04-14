@@ -22,6 +22,9 @@
     <Filter Include="src\Crane\Renderer">
       <UniqueIdentifier>{EB332E2D-D717-EF82-4078-E9D52C7BD904}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crane\Scene">
+      <UniqueIdentifier>{82BB1E31-EE46-8CF5-F757-0FEA6362E8F5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platforms">
       <UniqueIdentifier>{B40E5C85-20CF-D7BB-E909-213955891C98}</UniqueIdentifier>
     </Filter>
@@ -99,6 +102,9 @@
     <ClInclude Include="src\Crane\Renderer\BufferLayout.h">
       <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Renderer\Camera.h">
+      <Filter>src\Crane\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crane\Renderer\Framebuffer.h">
       <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
@@ -135,6 +141,15 @@
     <ClInclude Include="src\Crane\Renderer\VertexArray.h">
       <Filter>src\Crane\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Scene\Components.h">
+      <Filter>src\Crane\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Scene\Entity.h">
+      <Filter>src\Crane\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Scene\Scene.h">
+      <Filter>src\Crane\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
@@ -162,10 +177,6 @@
     <ClInclude Include="src\crpch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\Scene\Scene.h" />
-    <ClInclude Include="src\Crane\Scene\Components.h" />
-    <ClInclude Include="src\Crane\Scene\Entity.h" />
-    <ClInclude Include="src\Crane\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">
@@ -225,6 +236,12 @@
     <ClCompile Include="src\Crane\Renderer\VertexArray.cpp">
       <Filter>src\Crane\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crane\Scene\Entity.cpp">
+      <Filter>src\Crane\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Scene\Scene.cpp">
+      <Filter>src\Crane\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
@@ -258,7 +275,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crane\Scene\Scene.cpp" />
-    <ClCompile Include="src\Crane\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>
