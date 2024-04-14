@@ -164,6 +164,7 @@
     </ClInclude>
     <ClInclude Include="src\Crane\Scene\Scene.h" />
     <ClInclude Include="src\Crane\Scene\Components.h" />
+    <ClInclude Include="src\Crane\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">
@@ -257,5 +258,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Crane\Scene\Scene.cpp" />
+    <ClCompile Include="src\Crane\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>

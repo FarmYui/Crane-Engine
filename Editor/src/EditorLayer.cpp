@@ -316,11 +316,8 @@ namespace Crane
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		auto square = m_ActiveScene->CreateEntity();
-
-		auto& reg = m_ActiveScene->Reg();
-		reg.emplace<TransformComponent>(square);
-		reg.emplace<SpriteRendererComponent>(square, glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
+		Entity square = m_ActiveScene->CreateEntity("Square");
+		square.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
 		
 	}
 

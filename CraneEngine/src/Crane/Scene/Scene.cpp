@@ -1,19 +1,16 @@
 #include "crpch.h"
 #include "Scene.h"
 
+#include "Entity.h"
 #include "Components.h"
 
 #include "Crane/Renderer/Renderer2D.h"
+
 
 namespace Crane
 {
 	Scene::Scene()
 	{
-	}
-
-	entt::entity Scene::CreateEntity()
-	{
-		return m_Registry.create();
 	}
 
 	void Scene::OnUpdate(Timestep timestep)
@@ -26,7 +23,18 @@ namespace Crane
 			Renderer2D::DrawQuad(transform, { sprite.Color.r, sprite.Color.g, sprite.Color.b }, sprite.Color.a);
 		}
 	}
+
+
+	Entity Scene::CreateEntity(const std::string& name = "")
+	{
+		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<TransformComponent>();
+
+		TagComponent& tag = entity.AddComponent<TagComponent>(name);
+		tag = name.empty() ? "Entity" : name;
+
+		return entity;
+	}
+
 }
-
-
 	

@@ -18,6 +18,7 @@
 
 #include "Crane/Scene/Scene.h"
 #include "Crane/Scene/Components.h"
+#include "Crane/Scene/Entity.h"
 
 // ---Renderer------------------------
 #include "Crane/Renderer/Renderer.h"

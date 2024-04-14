@@ -15,6 +15,4 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 Unfortunately the submodules are not maintained anymore so make sure to follow the vid i made to setup correctly 
 the dependencies (to avoid headaches)
 
-remember to include in prj stb_image.cpp
-
 In the future obv i will try to remove the submodules and update them but i'm not going to do that any time soon
