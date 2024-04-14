@@ -1,35 +1,34 @@
 #pragma once
 #include "Crane.h"
 
-
-class Sandbox2D : public Crane::Layer
+namespace Crane
 {
-public:
-	Sandbox2D();
-	virtual ~Sandbox2D() = default;
+	class Tile;
 
-	void OnAttach() override;
-	void OnDetach() override;
+	class Sandbox2D : public Layer
+	{
+	public:
+		Sandbox2D();
+		virtual ~Sandbox2D() = default;
 
-	void OnEvent(Crane::Event& e) override;
-	void OnUpdate(Crane::Timestep ts) override;
-	void OnImGuiRender() override;
+		void OnAttach() override;
+		void OnDetach() override;
 
-private:
-	glm::vec3 m_QuadPosition = { 0.0f, 0.0f, 0.0f };
-	float m_QuadRotation = 0.0f;
-	glm::vec3 m_QuadSize = { 1.0f, 0.2f, 1.0f };
-	glm::vec3 m_QuadColor = { 1.0f, 0.8f, 0.0f };
+		void OnEvent(Event& e) override;
+		void OnUpdate(Timestep ts) override;
+		void OnImGuiRender() override;
 
-	glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+	private:
+		Timestep m_Timestep;
+		OrthographicCameraController m_CameraController;
+		Ref<Framebuffer> m_Framebuffer;
 
-	Crane::Timestep m_Timestep;
+		Ref<Texture2D> m_TextureAtlas;
+		std::unordered_map<char, Ref<TextureRegion2D>> m_MapTiles;
+		uint32_t m_MapWidth, m_MapHeight;
 
-	Crane::OrthographicCameraController m_CameraController;
+		bool m_ViewportFocused = false, m_ViewportHovered = false;
 
-	Crane::Ref<Crane::Texture2D> m_CheckerboardTexture;
-
-	Crane::Ref<Crane::Texture2D> m_TextureAtlas;
-	std::unordered_map<char, Crane::TextureRegion2D> m_MapTiles;
-	uint32_t m_MapWidth, m_MapHeight;
-};
+		glm::vec2 m_ViewportSize;
+	};
+}

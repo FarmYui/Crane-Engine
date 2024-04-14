@@ -15,12 +15,36 @@ namespace Crane
 
 	void Scene::OnUpdate(Timestep timestep)
 	{
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
 		{
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			auto group = m_Registry.view<TransformComponent,CameraComponent>();
+			for (auto entity : group)
+			{
+				auto& [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+				
+				if (camera.Primary)
+				{
+					mainCamera = &camera.Camera;
+					cameraTransform = &transform.Transform;
+					break;
+				}
+			}
+		}
+
+		if (mainCamera)
+		{
+			Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 			
-			Renderer2D::DrawQuad(transform, { sprite.Color.r, sprite.Color.g, sprite.Color.b }, sprite.Color.a);
+				Renderer2D::DrawQuad(transform, { sprite.Color.r, sprite.Color.g, sprite.Color.b }, sprite.Color.a);
+			}
+
+			Renderer2D::EndScene();
 		}
 	}
 

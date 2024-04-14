@@ -3,8 +3,6 @@
 
 namespace Crane
 {
-	class Tile;
-
 	class EditorLayer : public Layer
 	{
 	public:
@@ -31,11 +29,7 @@ namespace Crane
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
 
-		Ref<Texture2D> m_CheckerboardTexture;
-
-		Ref<Texture2D> m_TextureAtlas;
-		std::unordered_map<char, Ref<TextureRegion2D>> m_MapTiles;
-		uint32_t m_MapWidth, m_MapHeight;
+		Entity m_CameraEntity;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 

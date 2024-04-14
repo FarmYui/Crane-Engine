@@ -2,6 +2,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Crane/Renderer/Camera.h"
+
 namespace Crane
 {
 	struct TagComponent
@@ -39,6 +41,21 @@ namespace Crane
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color) {}
+
+	};
+
+	struct CameraComponent
+	{
+		Crane::Camera Camera;
+		bool Primary = false;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {}
+
+		operator const Crane::Camera& () const { return Camera; }
+		operator Crane::Camera& () { return Camera; }
 
 	};
 

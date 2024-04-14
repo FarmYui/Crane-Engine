@@ -16,7 +16,7 @@ namespace Crane
 		template<typename T, typename...Args>
 		T& AddComponent(Args&&... args)
 		{
-			//CR_CORE_ASSERT(,"")
+			// TO DO: we should assert that the component does not alredy exist
 			return m_Scene->m_Registry.emplace<T>(m_EntityID, std::forward<Args>(args)...);
 		}
 
@@ -34,7 +34,7 @@ namespace Crane
 
 		operator bool() { return m_EntityID != entt::null; }
 	private:
-		entt::entity m_EntityID = entt::null;
+		entt::entity m_EntityID{ entt::null };
 		Scene* m_Scene = nullptr;
 	};
 }
