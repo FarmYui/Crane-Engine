@@ -2,7 +2,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Crane/Renderer/Camera.h"
+#include "Crane/Scene/SceneCamera.h"
 
 namespace Crane
 {
@@ -46,16 +46,17 @@ namespace Crane
 
 	struct CameraComponent
 	{
-		Crane::Camera Camera;
+		SceneCamera Camera;
 		bool Primary = false;
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {}
+		//CameraComponent(uint32_t width, uint32_t height, float size, float nearClip, float farClip)
+		//	: Camera(width,height, size, nearClip, farClip) {}
 
-		operator const Crane::Camera& () const { return Camera; }
-		operator Crane::Camera& () { return Camera; }
+		operator const SceneCamera& () const { return Camera; }
+		operator SceneCamera& () { return Camera; }
 
 	};
 

@@ -6,7 +6,7 @@ namespace Crane
 {
 
 	EditorLayer::EditorLayer()
-		: Layer("EditorLayer"), m_CameraController(OrthographicCameraController(1.78f, true))
+		: Layer("EditorLayer")
 	{};
 
 	void EditorLayer::OnAttach()
@@ -18,16 +18,17 @@ namespace Crane
 		specification.Height = 720;
 		m_Framebuffer = Framebuffer::Create(specification);
 
-		m_CameraController.SetZoomLevel(5.0f);
-
 		m_ActiveScene = CreateRef<Scene>();
 
 		Entity square = m_ActiveScene->CreateEntity("Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
 		
 
-		Entity m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f,16.0f,-9.0f,9.0f,-1.0f,1.0f)).Primary = true;
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>().Primary = true;
+
+		m_SecondCameraEntity = m_ActiveScene->CreateEntity("Second Camera Entity");
+		m_SecondCameraEntity.AddComponent<CameraComponent>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -37,7 +38,6 @@ namespace Crane
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
 	}
 
 	void EditorLayer::OnUpdate(Timestep ts)
@@ -51,12 +51,11 @@ namespace Crane
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_CameraController.Resize(m_ViewportSize.x, m_ViewportSize.y);
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 
-		if (m_ViewportFocused)
-			m_CameraController.OnUpdate(ts);
+		//if (m_ViewportFocused)
 
 		// Reset Stats
 		Renderer2D::ResetStats();
@@ -151,6 +150,20 @@ namespace Crane
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+		ImGui::Separator();
+		if (ImGui::Checkbox("CameraA: ", &m_PrimaryCamera))
+		{
+			m_SecondCameraEntity.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+		}
+		static float zoom = 5.0f;
+		if (ImGui::DragFloat("Camera Zoom", &zoom, 0.5f))
+		{
+			m_SecondCameraEntity.GetComponent<CameraComponent>().Camera.SetOrthographicSize(zoom);
+		}
+		ImGui::Separator();
+
 		ImGui::End();
 
 

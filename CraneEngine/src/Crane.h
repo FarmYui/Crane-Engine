@@ -16,6 +16,7 @@
 
 #include "Crane/Renderer/OrthographicCameraController.h"
 
+#include "Crane/Scene/SceneCamera.h"
 #include "Crane/Scene/Scene.h"
 #include "Crane/Scene/Components.h"
 #include "Crane/Scene/Entity.h"

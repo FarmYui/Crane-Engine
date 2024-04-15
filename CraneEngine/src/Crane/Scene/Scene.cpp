@@ -13,15 +13,27 @@ namespace Crane
 	{
 	}
 
+
+	Entity Scene::CreateEntity(const std::string& name = "")
+	{
+		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<TransformComponent>();
+
+		TagComponent& tag = entity.AddComponent<TagComponent>(name);
+		tag = name.empty() ? "Entity" : name;
+
+		return entity;
+	}
+
 	void Scene::OnUpdate(Timestep timestep)
 	{
 		Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 		{
-			auto group = m_Registry.view<TransformComponent,CameraComponent>();
-			for (auto entity : group)
+			auto view = m_Registry.view<TransformComponent,CameraComponent>();
+			for (auto entity : view)
 			{
-				auto& [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 				
 				if (camera.Primary)
 				{
@@ -48,17 +60,23 @@ namespace Crane
 		}
 	}
 
-
-	Entity Scene::CreateEntity(const std::string& name = "")
+	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
-		Entity entity = { m_Registry.create(), this };
-		entity.AddComponent<TransformComponent>();
+		m_ViewportWidth = width;
+		m_ViewportHeight = height;
 
-		TagComponent& tag = entity.AddComponent<TagComponent>(name);
-		tag = name.empty() ? "Entity" : name;
+		auto view = m_Registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
 
-		return entity;
+			if (!cameraComponent.FixedAspectRatio)
+				cameraComponent.Camera.SetViewportSize(width, height);
+			
+		}
 	}
+
+
 
 }
 	

@@ -25,11 +25,12 @@ namespace Crane
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 
 		Timestep m_Timestep;
-		OrthographicCameraController m_CameraController;
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
 
 		Entity m_CameraEntity;
+		Entity m_SecondCameraEntity;
+		bool m_PrimaryCamera = true;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 
