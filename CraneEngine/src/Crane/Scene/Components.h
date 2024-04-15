@@ -66,25 +66,18 @@ namespace Crane
 	{
 		ScriptableEntity* Instance = nullptr;
 
-		std::function<void()> InstantiateFunction;
-		std::function<void()> DestroyInstanceFunction;
-						   
-		std::function<void(ScriptableEntity*)> OnCreateFunction;
-		std::function<void(ScriptableEntity*)> OnDestroyFunction;
-		std::function<void(ScriptableEntity*,Timestep)> OnUpdateFunction;
+		using InstantiateType = ScriptableEntity* (*)();
+		using DestroyType = void (*)(NativeScriptComponent*);
 
-		template<typename T>
+		InstantiateType InstantiateScript;
+		DestroyType DestroyScript;
+
+		template<typename T> 
 		void Bind()
 		{
-			InstantiateFunction = [&]() { Instance = new T(); };
-			DestroyInstanceFunction = [&]() { delete static_cast<T*>(Instance); Instance = nullptr; };
-
-			OnCreateFunction = [](ScriptableEntity* instance) { static_cast<T*>(instance)->OnCreate(); };
-			OnDestroyFunction = [](ScriptableEntity* instance) { static_cast<T*>(instance)->OnDestroy(); };
-			OnUpdateFunction = [](ScriptableEntity* instance, Timestep ts) { static_cast<T*>(instance)->OnUpdate(ts); };
+			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+			DestroyScript = [](NativeScriptComponent* component) { delete component->Instance; component->Instance = nullptr; };
 		}
-
-		
 	};
 
 }

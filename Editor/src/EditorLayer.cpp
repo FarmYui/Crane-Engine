@@ -20,8 +20,8 @@ namespace Crane
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		Entity square = m_ActiveScene->CreateEntity("Square");
-		square.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
+		m_Quad = m_ActiveScene->CreateEntity("Quad");
+		m_Quad.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
 		
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
@@ -33,17 +33,7 @@ namespace Crane
 		class CameraController : public ScriptableEntity
 		{
 		public:
-			void OnCreate()
-			{
-				
-			}
-
-			void OnDestroy()
-			{
-
-			}
-
-			void OnUpdate(Timestep ts)
+			virtual void OnUpdate(Timestep ts) override
 			{
 				glm::mat4& cameraTransform = GetComponent<TransformComponent>().Transform;
 				float cameraSpeed = 5.0f;
@@ -65,6 +55,7 @@ namespace Crane
 		};
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -187,8 +178,21 @@ namespace Crane
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
+
+
 		ImGui::Separator();
-		if (ImGui::Checkbox("CameraA: ", &m_PrimaryCamera))
+		auto& tag = m_Quad.GetComponent<TagComponent>().Tag;
+		ImGui::Text("%s", tag.c_str());
+		ImGui::ColorEdit4("Quad Color", glm::value_ptr(m_Quad.GetComponent<SpriteRendererComponent>().Color));
+		
+		ImGui::Separator();
+
+		ImGui::Text("Camera:");
+	
+		ImGui::DragFloat3("Camera Position",
+			glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+
+		if (ImGui::Checkbox("CameraA", &m_PrimaryCamera))
 		{
 			m_SecondCameraEntity.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
 			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;

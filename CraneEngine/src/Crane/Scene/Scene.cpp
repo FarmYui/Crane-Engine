@@ -29,16 +29,17 @@ namespace Crane
 	{
 		// Update Scripts
 		{
-			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			m_Registry.view<NativeScriptComponent>().each([=](const entt::entity entity, NativeScriptComponent& nativeScriptComponent)
 				{
-					if (!nsc.Instance)
+					// move this to scene::play
+					if (!nativeScriptComponent.Instance)
 					{
-						nsc.InstantiateFunction();
-						nsc.Instance->m_Entity = { entity, this };
-						nsc.OnCreateFunction(nsc.Instance);
+						nativeScriptComponent.Instance = nativeScriptComponent.InstantiateScript();
+						nativeScriptComponent.Instance->m_Entity = { entity, this };
+						nativeScriptComponent.Instance->OnCreate();
 					}
 
-					nsc.OnUpdateFunction(nsc.Instance, ts);
+					nativeScriptComponent.Instance->OnUpdate(ts);
 					
 				});
 		}
@@ -50,7 +51,7 @@ namespace Crane
 			auto view = m_Registry.view<TransformComponent,CameraComponent>();
 			for (auto entity : view)
 			{
-				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
+				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 				
 				if (camera.Primary)
 				{
@@ -68,7 +69,7 @@ namespace Crane
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
 			{
-				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 			
 				Renderer2D::DrawQuad(transform, { sprite.Color.r, sprite.Color.g, sprite.Color.b }, sprite.Color.a);
 			}
