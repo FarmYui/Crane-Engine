@@ -178,6 +178,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Crane\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Crane\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">

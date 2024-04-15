@@ -20,6 +20,7 @@
 #include "Crane/Scene/Scene.h"
 #include "Crane/Scene/Components.h"
 #include "Crane/Scene/Entity.h"
+#include "Crane/Scene/ScriptableEntity.h"
 
 // ---Renderer------------------------
 #include "Crane/Renderer/Renderer.h"

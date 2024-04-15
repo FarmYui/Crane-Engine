@@ -29,6 +29,42 @@ namespace Crane
 
 		m_SecondCameraEntity = m_ActiveScene->CreateEntity("Second Camera Entity");
 		m_SecondCameraEntity.AddComponent<CameraComponent>();
+
+		class CameraController : public ScriptableEntity
+		{
+		public:
+			void OnCreate()
+			{
+				
+			}
+
+			void OnDestroy()
+			{
+
+			}
+
+			void OnUpdate(Timestep ts)
+			{
+				glm::mat4& cameraTransform = GetComponent<TransformComponent>().Transform;
+				float cameraSpeed = 5.0f;
+
+
+				if (Input::IsKeyPressed(KeyCode::W))
+					cameraTransform[3][1] -= cameraSpeed * ts;
+
+				if (Input::IsKeyPressed(KeyCode::S))
+					cameraTransform[3][1] += cameraSpeed * ts;
+
+				if (Input::IsKeyPressed(CR_KEY_A))
+					cameraTransform[3][0] += cameraSpeed * ts;
+
+				if (Input::IsKeyPressed(CR_KEY_D))
+					cameraTransform[3][0] -= cameraSpeed * ts;
+				
+			}
+		};
+
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
