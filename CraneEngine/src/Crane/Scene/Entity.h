@@ -32,7 +32,19 @@ namespace Crane
 			return m_Scene->m_Registry.remove<T>(m_EntityID);
 		}
 
+		bool operator==(const Entity& other) const 
+		{ 
+			return m_EntityID == other.m_EntityID && m_Scene == other.m_Scene; 
+		}
+
+		bool operator!=(const Entity& other) const
+		{
+			return !operator==(other);
+		}
+
 		operator bool() { return m_EntityID != entt::null; }
+
+		uint32_t GetID() const { return (uint32_t)m_EntityID; }
 	private:
 		entt::entity m_EntityID{ entt::null };
 		Scene* m_Scene = nullptr;

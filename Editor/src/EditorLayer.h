@@ -1,6 +1,8 @@
 #pragma once
 #include "Crane.h"
 
+#include "Panels/SceneHierarchyPanel.h"
+
 namespace Crane
 {
 	class EditorLayer : public Layer
@@ -34,5 +36,9 @@ namespace Crane
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 
 		glm::vec2 m_ViewportSize;
+
+
+		// Panels
+		SceneHierarchyPanel m_SceneHeirarchyPanel;
 	};
 }

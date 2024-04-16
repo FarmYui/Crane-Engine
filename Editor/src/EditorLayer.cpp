@@ -50,12 +50,15 @@ namespace Crane
 
 				if (Input::IsKeyPressed(CR_KEY_D))
 					cameraTransform[3][0] -= cameraSpeed * ts;
+
 				
 			}
 		};
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+		m_SceneHeirarchyPanel.SetScene(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -168,6 +171,8 @@ namespace Crane
 
 			ImGui::EndMenuBar();
 		}
+
+		m_SceneHeirarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
 
