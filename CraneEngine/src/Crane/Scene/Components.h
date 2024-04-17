@@ -54,8 +54,6 @@ namespace Crane
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		//CameraComponent(uint32_t width, uint32_t height, float size, float nearClip, float farClip)
-		//	: Camera(width,height, size, nearClip, farClip) {}
 
 		operator const SceneCamera& () const { return Camera; }
 		operator SceneCamera& () { return Camera; }

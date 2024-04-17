@@ -8,7 +8,6 @@ namespace Crane
 	{
 	public:
 		SceneCamera() = default;
-		//SceneCamera(uint32_t width, uint32_t height, float size, float nearClip, float farClip);
 		virtual ~SceneCamera() = default;
 
 		void SetOrthographic(float size, float nearClip, float farClip);

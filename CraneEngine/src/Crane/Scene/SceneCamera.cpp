@@ -24,6 +24,11 @@ namespace Crane
 
 	void SceneCamera::CalculateProjection()
 	{
-		m_Projection = glm::ortho(m_OrthographicSize * m_AspectRatio * 0.5f, -m_OrthographicSize * m_AspectRatio * 0.5f, m_OrthographicSize * 0.5f, -m_OrthographicSize * 0.5f, m_OrthographicNear, m_OrthographicFar);
+		float orthoLeft = -m_OrthographicSize * m_AspectRatio * 0.5f;
+		float orthoRight = m_OrthographicSize * m_AspectRatio * 0.5f;
+		float orthoBottom = -m_OrthographicSize * 0.5f;
+		float orthoTop = m_OrthographicSize * 0.5f;
+
+		m_Projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
 	}
 }

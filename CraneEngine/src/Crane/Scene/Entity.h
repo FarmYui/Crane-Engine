@@ -13,22 +13,30 @@ namespace Crane
 		Entity(entt::entity entityID, Scene* scene);
 		Entity(const Entity& other) = default;
 
+		template<typename T>
+		bool HasComponent()
+		{
+			return m_Scene->m_Registry.any_of<T>(m_EntityID);
+		}
+
 		template<typename T, typename...Args>
 		T& AddComponent(Args&&... args)
 		{
-			// TO DO: we should assert that the component does not alredy exist
+			CR_CORE_ASSERT(!HasComponent<T>(), "Entity alredy has Component!");
 			return m_Scene->m_Registry.emplace<T>(m_EntityID, std::forward<Args>(args)...);
 		}
 
 		template<typename T>
 		T& GetComponent()
 		{
+			CR_CORE_ASSERT(HasComponent<T>(), "Entity does not have Component!");
 			return m_Scene->m_Registry.get<T>(m_EntityID);
 		}
 
 		template<typename T>
 		void RemoveComponent()
 		{
+			CR_CORE_ASSERT(HasComponent<T>(), "Entity does not have Component!");
 			return m_Scene->m_Registry.remove<T>(m_EntityID);
 		}
 

@@ -124,8 +124,11 @@ namespace Crane
 	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
 	{
 		CR_PROFILE_FUNCTION();
+		
+		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
+
 		s_Data.ColorTextureShader->Bind();
-		s_Data.ColorTextureShader->SetMat4("u_ViewProjection", camera.GetProjection() * glm::inverse(transform));
+		s_Data.ColorTextureShader->SetMat4("u_ViewProjection", viewProj);
 
 		// clears data
 		StartNewBatch();
@@ -179,9 +182,8 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 
 		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 		
 		DrawQuad(transform, color, alpha);
 	}
@@ -189,10 +191,10 @@ namespace Crane
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
+
 		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
 		DrawQuad(transform, texture, color, alpha);
 	}
@@ -202,9 +204,8 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 
 		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
 		DrawQuad(transform, texture, textureRegion, color, alpha);
 	}
@@ -215,10 +216,9 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 
 		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
 		DrawQuad(transform, color, alpha);
 	}
@@ -228,10 +228,9 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 
 		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
 		DrawQuad(transform, texture, color, alpha);
 	}
@@ -241,10 +240,9 @@ namespace Crane
 		CR_PROFILE_FUNCTION();
 
 		//model * vtx pos
-		glm::mat4 transform(1.0f);
-		transform = glm::translate(glm::mat4(1.0f), position) *
-			glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-			glm::scale(transform, glm::vec3(size, 1.0f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
 		DrawQuad(transform, texture, textureRegion, color, alpha);
 	}

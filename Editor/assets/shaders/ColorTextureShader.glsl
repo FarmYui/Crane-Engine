@@ -12,7 +12,7 @@ out vec4 v_Color;
 out vec2 v_TextureCoordinates;
 out float v_TextureIndex;
 
-uniform mat4 u_ViewProjection;			
+uniform mat4 u_ViewProjection;
 
 void main()
 {

@@ -2,10 +2,11 @@
 
 #include "Crane/Scene/Components.h"
 
-
 #include <glm/gtc/type_ptr.hpp>
 #include <ImGui/imgui.h>
+
 #include <entt/entt.hpp>
+
 namespace Crane
 {
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& Scene)
@@ -28,24 +29,27 @@ namespace Crane
 			DrawEntityNode(entity);
 		}
 
-		// or this...
-		/*	
-		m_Context->m_Registry.view<entt::entity>().each([](auto entity)
-			{
-				TagComponent tagComponent = m_Context->m_Registry.get<TagComponent>(entity);
-				ImGui::Text("%s", tagComponent.Tag.c_str());
-			});
-		*/
-
-		// they should do the same thing
+		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+			m_SelectedEntity = {};
+		
 
 		ImGui::End();
+
+
+		
+		ImGui::Begin("Properties");
+		
+		if (m_SelectedEntity.GetID() != entt::null)
+			DrawComponents(m_SelectedEntity);
+		
+
+		ImGui::End();
+		
 	}
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
 		TagComponent& tagComponent = entity.GetComponent<TagComponent>();
-		TransformComponent& transformComponent = entity.GetComponent<TransformComponent>();
 
 		ImGuiTreeNodeFlags flags = ((m_SelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
 		flags |= ImGuiTreeNodeFlags_OpenOnArrow;
@@ -58,11 +62,41 @@ namespace Crane
 
 		if (opened)
 		{
-
-			ImGui::DragFloat3("Translation", glm::value_ptr(transformComponent.Transform[3]), 0.1f);
 			ImGui::TreePop();
 		}
+	}
 
-		
+	void SceneHierarchyPanel::DrawComponents(Entity entity)
+	{
+		if (entity.HasComponent<TagComponent>())
+		{
+			std::string& tag = entity.GetComponent<TagComponent>().Tag;
+			
+			char buffer[256];
+			memset(buffer, 0, sizeof(buffer));
+			strcpy_s(buffer, sizeof(buffer), tag.c_str());
+			if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
+			{
+				tag = std::string(buffer);
+			}
+		}
+
+		if (entity.HasComponent<TransformComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+			{
+				glm::mat4& transform = entity.GetComponent<TransformComponent>().Transform;
+				ImGui::DragFloat3("Translation", glm::value_ptr(transform[3]), 0.1f);
+			
+				ImGui::TreePop();
+			}			
+		}
+
+		if (entity.HasComponent<SpriteRendererComponent>())
+		{
+			glm::vec4& color = entity.GetComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Color", glm::value_ptr(color));
+		}
+
 	}
 }

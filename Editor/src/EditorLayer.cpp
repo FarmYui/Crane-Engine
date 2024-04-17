@@ -20,8 +20,8 @@ namespace Crane
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		m_Quad = m_ActiveScene->CreateEntity("Quad");
-		m_Quad.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
+		Entity quad = m_ActiveScene->CreateEntity("Quad");
+		quad.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
 		
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
@@ -40,16 +40,16 @@ namespace Crane
 
 
 				if (Input::IsKeyPressed(KeyCode::W))
-					cameraTransform[3][1] -= cameraSpeed * ts;
-
-				if (Input::IsKeyPressed(KeyCode::S))
 					cameraTransform[3][1] += cameraSpeed * ts;
 
-				if (Input::IsKeyPressed(CR_KEY_A))
-					cameraTransform[3][0] += cameraSpeed * ts;
+				if (Input::IsKeyPressed(KeyCode::S))
+					cameraTransform[3][1] -= cameraSpeed * ts;
 
-				if (Input::IsKeyPressed(CR_KEY_D))
+				if (Input::IsKeyPressed(KeyCode::A))
 					cameraTransform[3][0] -= cameraSpeed * ts;
+
+				if (Input::IsKeyPressed(KeyCode::D))
+					cameraTransform[3][0] += cameraSpeed * ts;
 
 				
 			}
@@ -83,9 +83,6 @@ namespace Crane
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
-
-
-		//if (m_ViewportFocused)
 
 		// Reset Stats
 		Renderer2D::ResetStats();
@@ -183,19 +180,9 @@ namespace Crane
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-
-
-		ImGui::Separator();
-		auto& tag = m_Quad.GetComponent<TagComponent>().Tag;
-		ImGui::Text("%s", tag.c_str());
-		ImGui::ColorEdit4("Quad Color", glm::value_ptr(m_Quad.GetComponent<SpriteRendererComponent>().Color));
-		
 		ImGui::Separator();
 
 		ImGui::Text("Camera:");
-	
-		ImGui::DragFloat3("Camera Position",
-			glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
 
 		if (ImGui::Checkbox("CameraA", &m_PrimaryCamera))
 		{
@@ -207,7 +194,6 @@ namespace Crane
 		{
 			m_SecondCameraEntity.GetComponent<CameraComponent>().Camera.SetOrthographicSize(zoom);
 		}
-		ImGui::Separator();
 
 		ImGui::End();
 
@@ -224,7 +210,7 @@ namespace Crane
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void*)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::Image((void*)(uint64_t)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 
