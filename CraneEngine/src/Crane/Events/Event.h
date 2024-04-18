@@ -1,5 +1,6 @@
 #pragma once
-#include "crpch.h"
+
+#include <functional>
 
 #include "Crane/Core/Core.h"
 

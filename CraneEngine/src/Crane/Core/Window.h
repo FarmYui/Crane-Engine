@@ -1,5 +1,6 @@
 #pragma once
-#include "crpch.h"
+
+#include <sstream>
 
 #include "Crane/Core/Core.h"
 #include "Crane/Events/Event.h"

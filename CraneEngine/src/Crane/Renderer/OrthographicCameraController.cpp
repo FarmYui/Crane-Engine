@@ -24,22 +24,22 @@ namespace Crane
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
 		CR_PROFILE_FUNCTION();
-		if (Input::IsKeyPressed(CR_KEY_W))
+		if (Input::IsKeyPressed(Key::W))
 		{
 			m_CameraPosition.y += sin(glm::radians(m_CameraRotation + 90)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.x += cos(glm::radians(m_CameraRotation + 90)) * m_CameraTranslationSpeed * ts;
 		}
-		if (Input::IsKeyPressed(CR_KEY_S))
+		if (Input::IsKeyPressed(Key::S))
 		{
 			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation + 90)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation + 90)) * m_CameraTranslationSpeed * ts;
 		}
-		if (Input::IsKeyPressed(CR_KEY_A))
+		if (Input::IsKeyPressed(Key::A))
 		{
 			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 		}
-		if (Input::IsKeyPressed(CR_KEY_D))
+		if (Input::IsKeyPressed(Key::D))
 		{
 			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
 			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
@@ -47,7 +47,7 @@ namespace Crane
 
 		if (m_Rotation)
 		{
-			if (Input::IsMouseButtonPressed(CR_MOUSE_BUTTON_3))
+			if (Input::IsMouseButtonPressed(Mouse::Button2))
 			{
 				float currentMouseX = Input::GetMouseX();
 				m_CameraRotation += (m_PrevMouseX) ? ((currentMouseX - m_PrevMouseX) * m_CameraRotationSpeed) : 0;

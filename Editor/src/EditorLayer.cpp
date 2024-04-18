@@ -42,16 +42,16 @@ namespace Crane
 				float cameraSpeed = 5.0f;
 
 
-				if (Input::IsKeyPressed(KeyCode::W))
+				if (Input::IsKeyPressed(Key::W))
 					cameraTransform[3][1] += cameraSpeed * ts;
 
-				if (Input::IsKeyPressed(KeyCode::S))
+				if (Input::IsKeyPressed(Key::S))
 					cameraTransform[3][1] -= cameraSpeed * ts;
 
-				if (Input::IsKeyPressed(KeyCode::A))
+				if (Input::IsKeyPressed(Key::A))
 					cameraTransform[3][0] -= cameraSpeed * ts;
 
-				if (Input::IsKeyPressed(KeyCode::D))
+				if (Input::IsKeyPressed(Key::D))
 					cameraTransform[3][0] += cameraSpeed * ts;
 
 				

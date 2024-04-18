@@ -32,11 +32,8 @@ namespace Crane
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectedEntity = {};
 		
-
 		ImGui::End();
 
-
-		
 		ImGui::Begin("Properties");
 		
 		if (m_SelectedEntity.GetID() != entt::null)
@@ -63,19 +60,6 @@ namespace Crane
 		if (opened)
 		{
 			ImGui::TreePop();
-		}
-	}
-
-	template<typename T, typename F>
-	void SceneHierarchyPanel::DrawComponent(const std::string& name, F func)
-	{
-		if (m_SelectedEntity.HasComponent<T>())
-		{
-			if (ImGui::TreeNodeEx((const void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
-			{
-				func();
-				ImGui::TreePop();
-			}
 		}
 	}
 
@@ -169,5 +153,18 @@ namespace Crane
 					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
 				}
 			});
+	}
+
+	template<typename T, typename F>
+	void SceneHierarchyPanel::DrawComponent(const std::string& name, F func)
+	{
+		if (m_SelectedEntity.HasComponent<T>())
+		{
+			if (ImGui::TreeNodeEx((const void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+			{
+				func();
+				ImGui::TreePop();
+			}
+		}
 	}
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+
 #include "Event.h"
 #include "Crane/Core/Input.h"
 
