@@ -35,26 +35,25 @@ namespace Crane
 
 		class CameraController : public ScriptableEntity
 		{
+		private:
+			float m_CameraSpeed = 5.0f;
 		public:
+
 			virtual void OnUpdate(Timestep ts) override
 			{
-				glm::mat4& cameraTransform = GetComponent<TransformComponent>().Transform;
-				float cameraSpeed = 5.0f;
-
-
+				glm::vec3& cameraTranslation = GetComponent<TransformComponent>().Translation;
+				
 				if (Input::IsKeyPressed(Key::W))
-					cameraTransform[3][1] += cameraSpeed * ts;
+					cameraTranslation.y += m_CameraSpeed * ts;
 
 				if (Input::IsKeyPressed(Key::S))
-					cameraTransform[3][1] -= cameraSpeed * ts;
+					cameraTranslation.y -= m_CameraSpeed * ts;
 
 				if (Input::IsKeyPressed(Key::A))
-					cameraTransform[3][0] -= cameraSpeed * ts;
+					cameraTranslation.x -= m_CameraSpeed * ts;
 
 				if (Input::IsKeyPressed(Key::D))
-					cameraTransform[3][0] += cameraSpeed * ts;
-
-				
+					cameraTranslation.x += m_CameraSpeed * ts;
 			}
 		};
 
@@ -186,7 +185,7 @@ namespace Crane
 		ImGui::Separator();
 
 		ImGui::Text("Rendering Time: ");
-		ImGui::Text("FPS: %f", 1/m_Timestep);
+		ImGui::Text("FPS: %.2f", 1/m_Timestep);
 
 		ImGui::End();
 
