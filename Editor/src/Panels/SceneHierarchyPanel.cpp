@@ -66,6 +66,19 @@ namespace Crane
 		}
 	}
 
+	template<typename T, typename F>
+	void SceneHierarchyPanel::DrawComponent(const std::string& name, F func)
+	{
+		if (m_SelectedEntity.HasComponent<T>())
+		{
+			if (ImGui::TreeNodeEx((const void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+			{
+				func();
+				ImGui::TreePop();
+			}
+		}
+	}
+
 	void SceneHierarchyPanel::DrawComponents(Entity entity)
 	{
 		if (entity.HasComponent<TagComponent>())
@@ -81,31 +94,20 @@ namespace Crane
 			}
 		}
 
-		if (entity.HasComponent<TransformComponent>())
-		{
-			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+		DrawComponent<TransformComponent>("Transform", [&]() 
 			{
 				glm::mat4& transform = entity.GetComponent<TransformComponent>().Transform;
 				ImGui::DragFloat3("Translation", glm::value_ptr(transform[3]), 0.1f);
-			
-				ImGui::TreePop();
-			}			
-		}
+			});
+		
 
-		if (entity.HasComponent<SpriteRendererComponent>())
-		{
-			if (ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
+		DrawComponent<SpriteRendererComponent>("Sprite Renderer",[&]()
 			{
-				glm::vec4& color = entity.GetComponent<SpriteRendererComponent>().Color;
-				ImGui::ColorEdit4("Color", glm::value_ptr(color));
-				
-				ImGui::TreePop();
-			}
-		}
+				SpriteRendererComponent& spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
+				ImGui::ColorEdit4("Color", glm::value_ptr(spriteRendererComponent.Color));
+			});
 
-		if (entity.HasComponent<CameraComponent>())
-		{
-			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+		DrawComponent<CameraComponent>("Camera", [&]()
 			{
 				CameraComponent& cameraComponent = entity.GetComponent<CameraComponent>();
 				SceneCamera& camera = cameraComponent.Camera;
@@ -128,7 +130,7 @@ namespace Crane
 
 						if (isSelected)
 							ImGui::SetItemDefaultFocus();
-						
+
 					}
 
 					ImGui::EndCombo();
@@ -159,18 +161,13 @@ namespace Crane
 					float nearClip = camera.GetOrthographicNearClip();
 					if (ImGui::DragFloat("Near Clip", &nearClip, 0.1f))
 						camera.SetOrthographicNearClip(nearClip);
-					
+
 					float farClip = camera.GetOrthographicFarClip();
 					if (ImGui::DragFloat("Far Clip", &farClip, 0.1f))
 						camera.SetOrthographicFarClip(farClip);
-	
+
 					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
 				}
-
-
-				ImGui::TreePop();
-			}
-		}
-
+			});
 	}
 }

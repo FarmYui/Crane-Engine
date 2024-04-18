@@ -20,8 +20,11 @@ namespace Crane
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		Entity quad = m_ActiveScene->CreateEntity("Quad");
-		quad.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
+		Entity quad = m_ActiveScene->CreateEntity("Quad A");
+		quad.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 0.7f));
+		
+		Entity quadb = m_ActiveScene->CreateEntity("Quad B");
+		quadb.AddComponent<SpriteRendererComponent>(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 		
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
@@ -171,7 +174,7 @@ namespace Crane
 
 		m_SceneHeirarchyPanel.OnImGuiRender();
 
-		ImGui::Begin("Settings");
+		ImGui::Begin("Stats");
 
 		auto stats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
