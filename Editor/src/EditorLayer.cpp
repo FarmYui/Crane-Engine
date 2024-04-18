@@ -180,21 +180,6 @@ namespace Crane
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		ImGui::Separator();
-
-		ImGui::Text("Camera:");
-
-		if (ImGui::Checkbox("CameraA", &m_PrimaryCamera))
-		{
-			m_SecondCameraEntity.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-		}
-		static float zoom = 5.0f;
-		if (ImGui::DragFloat("Camera Zoom", &zoom, 0.5f))
-		{
-			m_SecondCameraEntity.GetComponent<CameraComponent>().Camera.SetOrthographicSize(zoom);
-		}
-
 		ImGui::End();
 
 
