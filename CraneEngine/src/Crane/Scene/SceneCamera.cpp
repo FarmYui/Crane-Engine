@@ -6,17 +6,6 @@
 namespace Crane
 {
 
-	void SceneCamera::SetOrthographic(float size, float nearClip, float farClip)
-	{
-		m_ProjectionType = ProjectionType::Orthographic;
-
-		m_OrthographicSize = size;
-		m_OrthographicNear = nearClip;
-		m_OrthographicFar = farClip;
-		
-		CalculateProjection();
-	}
-
 	void SceneCamera::SetPerspective(float verticalFov, float nearClip, float farClip)
 	{
 		m_ProjectionType = ProjectionType::Perspective;
@@ -24,6 +13,17 @@ namespace Crane
 		m_PerspectiveFOV = verticalFov;
 		m_PerspectiveNear = nearClip;
 		m_PerspectiveFar = farClip;
+
+		CalculateProjection();
+	}
+
+	void SceneCamera::SetOrthographic(float size, float nearClip, float farClip)
+	{
+		m_ProjectionType = ProjectionType::Orthographic;
+
+		m_OrthographicSize = size;
+		m_OrthographicNear = nearClip;
+		m_OrthographicFar = farClip;
 
 		CalculateProjection();
 	}

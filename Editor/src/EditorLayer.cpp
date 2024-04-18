@@ -173,7 +173,7 @@ namespace Crane
 		}
 
 		m_SceneHeirarchyPanel.OnImGuiRender();
-
+		
 		ImGui::Begin("Stats");
 
 		auto stats = Renderer2D::GetStats();
@@ -182,6 +182,11 @@ namespace Crane
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+		ImGui::Separator();
+
+		ImGui::Text("Rendering Time: ");
+		ImGui::Text("FPS: %f", 1/m_Timestep);
 
 		ImGui::End();
 
