@@ -1,10 +1,10 @@
+![Crane](/Resources/Branding/CraneEngine.png?raw=true "Crane")
+
 # CraneEngine
 Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
 
-![Crane](/Resources/Branding/CraneEngine.png?raw=true "Crane")
-
 ## Getting Started
-Visual Studio 2022 is recommended, Crane is officially untested on other development environments whilst we focus on a Windows build.
+💻 Visual Studio 2022 is recommended, Crane only supports Windows.
 
 You can clone the repository to a local destination using git:
 
