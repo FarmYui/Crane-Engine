@@ -37,7 +37,7 @@ namespace Crane
 		void RemoveComponent()
 		{
 			CR_CORE_ASSERT(HasComponent<T>(), "Entity does not have Component!");
-			return m_Scene->m_Registry.remove<T>(m_EntityID);
+			m_Scene->m_Registry.remove<T>(m_EntityID);
 		}
 
 		bool operator==(const Entity& other) const 
@@ -51,8 +51,9 @@ namespace Crane
 		}
 
 		operator bool() { return m_EntityID != entt::null; }
+		operator entt::entity() { return m_EntityID; }
 
-		uint32_t GetID() const { return (uint32_t)m_EntityID; }
+		entt::entity GetID() const { return m_EntityID; }
 	private:
 		entt::entity m_EntityID{ entt::null };
 		Scene* m_Scene = nullptr;

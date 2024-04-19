@@ -13,6 +13,7 @@ namespace Crane
 {
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& Scene)
 	{
+		SetScene(Scene);
 	}
 
 	void SceneHierarchyPanel::SetScene(const Ref<Scene>& Scene)
@@ -34,13 +35,44 @@ namespace Crane
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectedEntity = {};
 		
+		// Right click on blank space
+		if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
+		{
+			if (ImGui::MenuItem("Create Empty"))
+				m_Scene->CreateEntity("Empty Entity");
+
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
+
+
+
 
 		ImGui::Begin("Properties");
 		
 		if (m_SelectedEntity.GetID() != entt::null)
+		{
 			DrawComponents(m_SelectedEntity);
 		
+			if (ImGui::Button("Add Component"))
+				ImGui::OpenPopup("Add Component");
+
+			if (ImGui::BeginPopup("Add Component"))
+			{
+				if (ImGui::MenuItem("Camera"))
+					m_SelectedEntity.AddComponent<CameraComponent>();
+
+				if (ImGui::MenuItem("Sprite Renderer"))
+					m_SelectedEntity.AddComponent<SpriteRendererComponent>();
+
+				if (ImGui::MenuItem("Native Script"))
+					m_SelectedEntity.AddComponent<NativeScriptComponent>();
+
+
+				ImGui::EndPopup();
+			}
+		}
 
 		ImGui::End();
 		
@@ -48,23 +80,41 @@ namespace Crane
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
-		TagComponent& tagComponent = entity.GetComponent<TagComponent>();
+		std::string& tag = entity.GetComponent<TagComponent>().Tag;
 
 		ImGuiTreeNodeFlags flags = ((m_SelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
 		flags |= ImGuiTreeNodeFlags_OpenOnArrow;
-		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)entity.GetID(), flags, tagComponent.Tag.c_str());
+		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)entity.GetID(), flags, tag.c_str());
 
 		if (ImGui::IsItemClicked())
 		{
 			m_SelectedEntity = entity;
 		}
+		
+
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem())
+		{
+			if (ImGui::MenuItem("Delete Entity"))
+				entityDeleted = true;
+
+			ImGui::EndPopup();
+		}
+		
 
 		if (opened)
 		{
 			ImGui::TreePop();
 		}
-	}
 
+		if (entityDeleted)
+		{
+			m_Scene->DestroyEntity(entity);
+			if (m_SelectedEntity == entity)
+				m_SelectedEntity = {};
+			
+		}
+	}
 
 	static void	DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f)
 	{
@@ -229,13 +279,36 @@ namespace Crane
 	template<typename T, typename F>
 	void SceneHierarchyPanel::DrawComponent(const std::string& name, F func)
 	{
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+
 		if (m_SelectedEntity.HasComponent<T>())
 		{
-			if (ImGui::TreeNodeEx((const void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
+			bool open = ImGui::TreeNodeEx((const void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
+			if (ImGui::Button("+", ImVec2{20.0f, 20.0f}))
+			{
+				ImGui::OpenPopup("Component Settings");
+			}
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("Component Settings"))
+			{
+				if (ImGui::MenuItem("Remove Component"))
+					removeComponent = true;
+
+				ImGui::EndPopup();
+			}
+
+			if (open)
 			{
 				func();
 				ImGui::TreePop();
 			}
+
+			if (removeComponent)
+				m_SelectedEntity.RemoveComponent<T>();
 		}
 	}
 }

@@ -183,6 +183,7 @@ namespace Crane
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
 		ImGui::Separator();
+		ImGui::Separator();
 
 		ImGui::Text("Rendering Time: ");
 		ImGui::Text("FPS: %.2f", 1/m_Timestep);

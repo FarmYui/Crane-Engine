@@ -9,11 +9,6 @@
 
 namespace Crane
 {
-	Scene::Scene()
-	{
-	}
-
-
 	Entity Scene::CreateEntity(const std::string& name = "")
 	{
 		Entity entity = { m_Registry.create(), this };
@@ -23,6 +18,11 @@ namespace Crane
 		tag = name.empty() ? "Entity" : name;
 
 		return entity;
+	}
+
+	void Scene::DestroyEntity(Entity entity)
+	{
+		m_Registry.destroy(entity.GetID());
 	}
 
 	void Scene::OnUpdate(Timestep ts)
