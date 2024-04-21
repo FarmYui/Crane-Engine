@@ -150,6 +150,15 @@
     <ClInclude Include="src\Crane\Scene\Scene.h">
       <Filter>src\Crane\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crane\Scene\SceneCamera.h">
+      <Filter>src\Crane\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Scene\SceneSerializer.h">
+      <Filter>src\Crane\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crane\Scene\ScriptableEntity.h">
+      <Filter>src\Crane\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
@@ -177,8 +186,6 @@
     <ClInclude Include="src\crpch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crane\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Crane\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crane\Core\Application.cpp">
@@ -244,6 +251,12 @@
     <ClCompile Include="src\Crane\Scene\Scene.cpp">
       <Filter>src\Crane\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crane\Scene\SceneCamera.cpp">
+      <Filter>src\Crane\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crane\Scene\SceneSerializer.cpp">
+      <Filter>src\Crane\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
@@ -277,6 +290,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crane\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

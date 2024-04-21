@@ -19,11 +19,13 @@ IncludeDir["ImGui"] = "CraneEngine/vendor/ImGui"
 IncludeDir["glm"] = "CraneEngine/vendor/glm"
 IncludeDir["stb_image"] = "CraneEngine/vendor/stb_image"
 IncludeDir["entt"] = "CraneEngine/vendor/entt/"
+IncludeDir["yaml_cpp"] = "CraneEngine/vendor/yaml-cpp/include"
 
 group "Dependencies"
     include "CraneEngine/vendor/GLFW"
     include "CraneEngine/vendor/Glad"
     include "CraneEngine/vendor/ImGui"
+    include "CraneEngine/vendor/yaml-cpp"
 
 group ""
 
@@ -56,7 +58,8 @@ project "CraneEngine"
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.yaml_cpp}"
     }
 
     links
@@ -64,6 +67,7 @@ project "CraneEngine"
         "GLFW",
         "Glad",
         "ImGui",
+        "yaml-cpp",
         "opengl32.lib"
     }
 
@@ -115,7 +119,8 @@ project "Editor"
         "CraneEngine/src",
         "CraneEngine/vendor",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.yaml_cpp}"
     }
 
     links 

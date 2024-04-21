@@ -1,6 +1,7 @@
 #include "EditorLayer.h"
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
+#include "Crane/Scene/SceneSerializer.h"
 
 namespace Crane
 {
@@ -20,47 +21,11 @@ namespace Crane
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		Entity quad = m_ActiveScene->CreateEntity("Quad A");
-		quad.AddComponent<SpriteRendererComponent>(glm::vec4(0.1f, 0.2f, 1.0f, 0.7f));
-		
-		Entity quadb = m_ActiveScene->CreateEntity("Quad B");
-		quadb.AddComponent<SpriteRendererComponent>(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
-		
-
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComponent>().Primary = true;
-
-		m_SecondCameraEntity = m_ActiveScene->CreateEntity("Second Camera Entity");
-		m_SecondCameraEntity.AddComponent<CameraComponent>();
-
-		class CameraController : public ScriptableEntity
-		{
-		private:
-			float m_CameraSpeed = 5.0f;
-		public:
-
-			virtual void OnUpdate(Timestep ts) override
-			{
-				glm::vec3& cameraTranslation = GetComponent<TransformComponent>().Translation;
-				
-				if (Input::IsKeyPressed(Key::W))
-					cameraTranslation.y += m_CameraSpeed * ts;
-
-				if (Input::IsKeyPressed(Key::S))
-					cameraTranslation.y -= m_CameraSpeed * ts;
-
-				if (Input::IsKeyPressed(Key::A))
-					cameraTranslation.x -= m_CameraSpeed * ts;
-
-				if (Input::IsKeyPressed(Key::D))
-					cameraTranslation.x += m_CameraSpeed * ts;
-			}
-		};
-
-		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-		m_SecondCameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
 		m_SceneHeirarchyPanel.SetScene(m_ActiveScene);
+
+		SceneSerializer sceneSerializer(m_ActiveScene);
+		sceneSerializer.Deserialize("assets/scenes/Example.crane");
+
 	}
 
 	void EditorLayer::OnDetach()
@@ -166,9 +131,17 @@ namespace Crane
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
-				// which we can't undo at the moment without finer window depth/z control.
-				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+				SceneSerializer sceneSerializer(m_ActiveScene);
+				if (ImGui::MenuItem("Serialize"))
+				{
+					sceneSerializer.Serialize("assets/scenes/Example.crane");
+
+				}
+				if (ImGui::MenuItem("Deserialize"))
+				{
+					sceneSerializer.Deserialize("assets/scenes/Example.crane");
+				}
+				
 
 				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
