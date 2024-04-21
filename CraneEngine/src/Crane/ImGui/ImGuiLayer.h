@@ -21,6 +21,8 @@ namespace Crane
 
 		void Begin();
 		void End();
+
+		void SetDarkThemeColors();
 	private:
 		bool m_FlowEvents = false;
 		float m_Time = 0.0f;

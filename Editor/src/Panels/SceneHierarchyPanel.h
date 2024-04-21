@@ -19,9 +19,6 @@ namespace Crane
 	private:
 		void DrawEntityNode(Entity entity);
 		void DrawComponents(Entity entity);
-
-		template<typename T, typename F>
-		void DrawComponent(const std::string& name, F func);
 	private:
 		Ref<Scene> m_Scene;
 		Entity m_SelectedEntity;
