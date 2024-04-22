@@ -1,7 +1,9 @@
 #include "EditorLayer.h"
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
+
 #include "Crane/Scene/SceneSerializer.h"
+#include "Crane/Utils/PlatformUtils.h"
 
 namespace Crane
 {
@@ -22,10 +24,6 @@ namespace Crane
 		m_ActiveScene = CreateRef<Scene>();
 
 		m_SceneHeirarchyPanel.SetScene(m_ActiveScene);
-
-		SceneSerializer sceneSerializer(m_ActiveScene);
-		sceneSerializer.Deserialize("assets/scenes/Example.crane");
-
 	}
 
 	void EditorLayer::OnDetach()
@@ -35,6 +33,42 @@ namespace Crane
 
 	void EditorLayer::OnEvent(Event& e)
 	{
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(CR_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		// Shortcuts
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool controlPressed = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		bool shiftPressed = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+
+		switch (e.GetKeyCode())
+		{
+		case Key::N:
+			if (controlPressed)
+				NewScene();
+			break;
+		
+		case Key::O:
+			if (controlPressed)
+				OpenScene();
+			break;
+
+		case Key::S:
+			if (controlPressed && shiftPressed)
+				SaveSceneAs();
+			break;
+
+		default:
+			return false;
+		}
+
+		// this is actually wrong bcz if we dont press control no code will be run
+		return true;
 	}
 
 	void EditorLayer::OnUpdate(Timestep ts)
@@ -70,6 +104,37 @@ namespace Crane
 			m_ActiveScene->OnUpdate(ts);
 
 			m_Framebuffer->Unbind();
+		}
+	}
+
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHeirarchyPanel.SetScene(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Crane Scene (*.crane)\0*.crane\0");
+
+		if (!filepath.empty())
+		{
+			NewScene();
+
+			SceneSerializer sceneSerializer(m_ActiveScene);
+			sceneSerializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::OpenFile("Crane Scene (*.crane)\0*.crane\0");
+
+		if (!filepath.empty())
+		{
+			SceneSerializer sceneSerializer(m_ActiveScene);
+			sceneSerializer.Serialize(filepath);
 		}
 	}
 
@@ -131,16 +196,15 @@ namespace Crane
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				SceneSerializer sceneSerializer(m_ActiveScene);
-				if (ImGui::MenuItem("Serialize"))
-				{
-					sceneSerializer.Serialize("assets/scenes/Example.crane");
-
-				}
-				if (ImGui::MenuItem("Deserialize"))
-				{
-					sceneSerializer.Deserialize("assets/scenes/Example.crane");
-				}
+				
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+				
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenScene();
+				
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneAs();
 				
 
 				if (ImGui::MenuItem("Exit")) Application::Get().Close();

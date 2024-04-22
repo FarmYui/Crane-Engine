@@ -17,7 +17,12 @@ namespace Crane
 		void OnEvent(Event& e) override;
 		void OnUpdate(Timestep ts) override;
 		void OnImGuiRender() override;
-
+	private:
+		bool OnKeyPressed(KeyPressedEvent& e);
+	private:
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
 	private:
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 

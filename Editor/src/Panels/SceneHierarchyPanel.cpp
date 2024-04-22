@@ -19,6 +19,7 @@ namespace Crane
 	void SceneHierarchyPanel::SetScene(const Ref<Scene>& Scene)
 	{ 
 		m_Scene = Scene;
+		m_SelectedEntity = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()
