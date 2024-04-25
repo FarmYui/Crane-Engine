@@ -1,9 +1,11 @@
 #include "EditorLayer.h"
 #include <imgui/imgui.h>
+#include <ImGuizmo/ImGuizmo.h>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Crane/Scene/SceneSerializer.h"
 #include "Crane/Utils/PlatformUtils.h"
+#include "Crane/Math/Math.h"
 
 namespace Crane
 {
@@ -48,6 +50,7 @@ namespace Crane
 
 		switch (e.GetKeyCode())
 		{
+		// Scene Shortcuts
 		case Key::N:
 			if (controlPressed)
 				NewScene();
@@ -61,6 +64,26 @@ namespace Crane
 		case Key::S:
 			if (controlPressed && shiftPressed)
 				SaveSceneAs();
+			break;
+		
+		// Gizmo Shortcuts
+		case Key::Q:
+			m_GizmoMode = -1;
+			break;
+		case Key::W:
+			m_GizmoMode = (int32_t)ImGuizmo::TRANSLATE;
+			break;
+		case Key::E:
+			m_GizmoMode = (int32_t)ImGuizmo::ROTATE;
+			break;
+		case Key::R:
+			m_GizmoMode = (int32_t)ImGuizmo::SCALE;
+			break;
+		// Cicle trough gizmos
+		case Key::Tab:
+			m_GizmoMode++;
+			if (m_GizmoMode == 3)
+				m_GizmoMode = 0;
 			break;
 
 		default:
@@ -240,13 +263,66 @@ namespace Crane
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
 
-		Application::Get().GetImGuiLayer()->AllowEvents(m_ViewportFocused && m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->AllowEvents(m_ViewportFocused || m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)(uint64_t)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		// Gizmos
+		Entity selectedEntity = m_SceneHeirarchyPanel.GetSelectedEntity();
+		if (selectedEntity && m_GizmoMode != -1)
+		{
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+			
+			// Camera
+			Entity cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			const SceneCamera& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+
+			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			const glm::mat4& cameraProj = camera.GetProjection();
+
+			// Selected Entity transform
+			TransformComponent& entityTransformComponent = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 entityTransform = entityTransformComponent.GetTransform();
+			
+			// Snapping
+			bool snapEnabled = Input::IsKeyPressed(Key::LeftControl);
+			float snapAmount = 0.5f;
+			if (m_GizmoMode == (int32_t)ImGuizmo::ROTATE)
+				snapAmount = 45.0f;
+
+			float snapAmountVec[3] = { snapAmount, snapAmount, snapAmount };
+
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProj), 
+				(ImGuizmo::OPERATION)m_GizmoMode, ImGuizmo::LOCAL, glm::value_ptr(entityTransform), (float*)0, snapEnabled ? snapAmountVec : (float*)0);
+			
+
+			// All of this could be skipped if we had a way to store transform matrix inside transformComponent
+			if (ImGuizmo::IsUsing())
+			{
+				// but since we dont 
+				glm::vec3 entityTranslation, entityRotation, entityScale;
+				// we have to decompose the matrix we get back from ImGuizmo
+				Math::DecomposeTransform(entityTransform, entityTranslation, entityRotation, entityScale);
+
+				glm::vec3 deltaRotation = entityRotation - entityTransformComponent.Rotation;
+				// do other shit to set trs 
+				entityTransformComponent.Translation = entityTranslation;
+				entityTransformComponent.Rotation += deltaRotation;
+				entityTransformComponent.Scale = entityScale;
+				
+				// and then once we need to use the matrix 
+				// we have to calculate it
+			}
+			// this seems bad
+
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 

@@ -3,6 +3,8 @@
 # CraneEngine
 Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
 
+![CraneEngine](/Resources/Branding/CraneEngineScreenshot.png?raw=true "CraneEngine")
+
 ## Getting Started
 💻 Visual Studio 2022 is recommended, Crane only supports Windows.
 

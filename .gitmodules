@@ -13,3 +13,6 @@
 [submodule "CraneEngine/vendor/yaml-cpp"]
 	path = CraneEngine/vendor/yaml-cpp
 	url = https://github.com/TheCherno/yaml-cpp
+[submodule "CraneEngine/vendor/ImGuizmo"]
+	path = CraneEngine/vendor/ImGuizmo
+	url = https://github.com/TheCherno/ImGuizmo

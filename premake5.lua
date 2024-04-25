@@ -20,6 +20,7 @@ IncludeDir["glm"] = "CraneEngine/vendor/glm"
 IncludeDir["stb_image"] = "CraneEngine/vendor/stb_image"
 IncludeDir["entt"] = "CraneEngine/vendor/entt/"
 IncludeDir["yaml_cpp"] = "CraneEngine/vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "CraneEngine/vendor/ImGuizmo"
 
 group "Dependencies"
     include "CraneEngine/vendor/GLFW"
@@ -46,7 +47,9 @@ project "CraneEngine"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-        "%{prj.name}/vendor/stb_image/stb_image.cpp"
+        "%{prj.name}/vendor/stb_image/stb_image.cpp",
+        "%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+        "%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
     }
 
     includedirs
@@ -59,7 +62,8 @@ project "CraneEngine"
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.yaml_cpp}"
+        "%{IncludeDir.yaml_cpp}",
+        "%{IncludeDir.ImGuizmo}"
     }
 
     links
@@ -70,6 +74,9 @@ project "CraneEngine"
         "yaml-cpp",
         "opengl32.lib"
     }
+
+    filter "files:CraneEngine/vendor/ImGuizmo/**.cpp"
+        flags {"NoPCH"}
 
     filter "system:windows"
         systemversion "latest"

@@ -119,6 +119,20 @@ namespace Crane
 	}
 
 
+	Entity Scene::GetPrimaryCameraEntity()
+	{
+		// this
+		auto view = m_Registry.view<CameraComponent>();
+		for (entt::entity entityID : view)
+		{
+			const CameraComponent& cameraComponent = view.get<CameraComponent>(entityID);
+			if (cameraComponent.Primary == true)
+				return Entity{entityID, this};
+		}
+		
+		return {};
+	}
+
 
 }
 	

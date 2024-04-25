@@ -38,8 +38,10 @@ namespace Crane
 
 		glm::vec2 m_ViewportSize;
 
-
 		// Panels
 		SceneHierarchyPanel m_SceneHeirarchyPanel;
+
+		int32_t m_GizmoMode = 0;
+		float m_SnapAmount = 1.f;
 	};
 }

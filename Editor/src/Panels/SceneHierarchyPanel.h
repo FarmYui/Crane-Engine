@@ -13,6 +13,8 @@ namespace Crane
 		SceneHierarchyPanel() = default;
 		SceneHierarchyPanel(const Ref<Scene>& Scene);
 
+		Entity GetSelectedEntity() const { return m_SelectedEntity; }
+
 		void SetScene(const Ref<Scene>& Scene);
 
 		void OnImGuiRender();
