@@ -3,6 +3,7 @@
 #include "entt.hpp"
 
 #include "Crane/Core/Timestep.h"
+#include "Crane/Renderer/EditorCamera.h"
 
 namespace Crane
 {
@@ -18,7 +19,8 @@ namespace Crane
 		Entity CreateEntity(const std::string& name);
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(Timestep ts);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
+		void OnUpdateRuntime(Timestep ts);
 		void OnViewportResize(uint32_t width, uint32_t height);
 	
 		Entity GetPrimaryCameraEntity();

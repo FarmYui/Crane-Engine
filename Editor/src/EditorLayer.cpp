@@ -35,6 +35,8 @@ namespace Crane
 
 	void EditorLayer::OnEvent(Event& e)
 	{
+		m_EditorCamera.OnEvent(e);
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(CR_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 	}
@@ -105,8 +107,12 @@ namespace Crane
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
+
+		if (m_ViewportFocused)
+			m_EditorCamera.OnUpdate(ts);
 
 		// Reset Stats
 		Renderer2D::ResetStats();
@@ -124,7 +130,7 @@ namespace Crane
 		{
 			CR_PROFILE_SCOPE("Renderer Draw");
 
-			m_ActiveScene->OnUpdate(ts);
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 			m_Framebuffer->Unbind();
 		}
@@ -279,12 +285,15 @@ namespace Crane
 			ImGuizmo::SetDrawlist();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 			
-			// Camera
-			Entity cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
-			const SceneCamera& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			// Camera Entity
+			//Entity cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			//const SceneCamera& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			//
+			//glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			//const glm::mat4& cameraProj = camera.GetProjection();
 
-			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
-			const glm::mat4& cameraProj = camera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
+			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
 
 			// Selected Entity transform
 			TransformComponent& entityTransformComponent = selectedEntity.GetComponent<TransformComponent>();
@@ -298,7 +307,7 @@ namespace Crane
 
 			float snapAmountVec[3] = { snapAmount, snapAmount, snapAmount };
 
-			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProj), 
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), 
 				(ImGuizmo::OPERATION)m_GizmoMode, ImGuizmo::LOCAL, glm::value_ptr(entityTransform), (float*)0, snapEnabled ? snapAmountVec : (float*)0);
 			
 

@@ -2,6 +2,7 @@
 
 #include "Crane/Renderer/Camera.h"
 #include "Crane/Renderer/OrthographicCamera.h"
+#include "Crane/Renderer/EditorCamera.h"
 
 #include "Crane/Renderer/Texture.h"
 #include "Crane/Renderer/TextureRegion2D.h"
@@ -15,6 +16,7 @@ namespace Crane
 		static void Shutdown();
 
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const OrthographicCamera& camera);
 
 		static void EndScene();

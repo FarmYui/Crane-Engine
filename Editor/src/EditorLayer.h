@@ -2,6 +2,7 @@
 #include "Crane.h"
 
 #include "Panels/SceneHierarchyPanel.h"
+#include "Crane/Renderer/EditorCamera.h"
 
 namespace Crane
 {
@@ -30,9 +31,7 @@ namespace Crane
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
 
-		Entity m_CameraEntity;
-		Entity m_SecondCameraEntity;
-		bool m_PrimaryCamera = true;
+		EditorCamera m_EditorCamera;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 

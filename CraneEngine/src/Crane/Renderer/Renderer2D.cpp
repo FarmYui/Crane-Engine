@@ -134,6 +134,19 @@ namespace Crane
 		StartNewBatch();
 	}
 
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		CR_PROFILE_FUNCTION();
+
+		glm::mat4& viewProj = camera.GetViewProjection();
+
+		s_Data.ColorTextureShader->Bind();
+		s_Data.ColorTextureShader->SetMat4("u_ViewProjection", viewProj);
+
+		// clears data
+		StartNewBatch();
+	}
+
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		CR_PROFILE_FUNCTION();
