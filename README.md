@@ -1,9 +1,7 @@
-![Crane](/Resources/Branding/CraneEngine.png?raw=true "Crane")
+![Crane](/Resources/Branding/CraneEngineLogo.png?raw=true "Crane")
 
 # CraneEngine
 Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
-
-![CraneEngine](/Resources/Branding/CraneEngineScreenshot.png?raw=true "CraneEngine")
 
 ## Getting Started
 💻 Visual Studio 2022 is recommended, Crane only supports Windows.
@@ -20,3 +18,8 @@ the dependencies (to avoid headaches)
 update: turn on staticruntime in premakefile of yaml-cpp or it will give linking errors ;
 
 In the future obv i will try to remove the submodules and update them but i'm not going to do that any time soon
+
+## Editor
+🎨 Here is how the editor is looking
+![CraneEngine](/Resources/Branding/CraneSceneScreenshot.png?raw=true "CraneEngine")
+The scene was entirely made with tools inside the editor
