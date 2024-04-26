@@ -1,7 +1,7 @@
-![Crane](/Resources/Branding/CraneEngineLogo.png?raw=true "Crane")
+![Crane](/Resources/Branding/CraneLogo.png?raw=true "Crane")
 
 # CraneEngine
-Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
+🏗️ Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
 
 ## Getting Started
 💻 Visual Studio 2022 is recommended, Crane only supports Windows.

@@ -21,6 +21,7 @@ namespace Crane
 		FramebufferSpecification specification;
 		specification.Width = 1280;
 		specification.Height = 720;
+		specification.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 		m_Framebuffer = Framebuffer::Create(specification);
 
 		m_ActiveScene = CreateRef<Scene>();
