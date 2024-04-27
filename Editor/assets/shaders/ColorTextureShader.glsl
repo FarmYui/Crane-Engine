@@ -29,6 +29,7 @@ void main()
 #version 330 core
 			
 layout(location = 0) out vec4 color;
+layout(location = 1) out int entityID;
 
 in vec4 v_Color;
 in vec2 v_TextureCoordinates;
@@ -40,4 +41,6 @@ void main()
 {
 	int index = int(v_TextureIndex);
 	color = texture(u_Textures[index], v_TextureCoordinates) * v_Color;
+
+	entityID = 50;
 }

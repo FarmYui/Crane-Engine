@@ -21,7 +21,7 @@ namespace Crane
 		FramebufferSpecification specification;
 		specification.Width = 1280;
 		specification.Height = 720;
-		specification.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+		specification.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
 		m_Framebuffer = Framebuffer::Create(specification);
 
 		m_ActiveScene = CreateRef<Scene>();
@@ -133,8 +133,35 @@ namespace Crane
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
+
+			ImVec2 globalMousePos = ImGui::GetMousePos();
+			if (m_ViewportBounds[0].x > 0.0f)
+				globalMousePos.x -= m_ViewportBounds[0].x;
+			if (m_ViewportBounds[0].y > 0.0f)
+				globalMousePos.y -= m_ViewportBounds[0].y;
+
+			glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+			globalMousePos.y = m_ViewportSize.y - globalMousePos.y;
+
+			int mouseX = globalMousePos.x;
+			int mouseY = globalMousePos.y;
+
+			
+			if (mouseX > 0 && mouseY > 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+			{
+				//if (Input::IsMouseButtonPressed(Mouse::ButtonLeft))
+				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+				CR_CORE_WARN("PixelData: {0}", pixelData);
+				//CR_CORE_WARN("MousePos: {0}, {1}", mouseX, mouseY);
+
+			}
+
+
+
 			m_Framebuffer->Unbind();
 		}
+
+
 	}
 
 	void EditorLayer::NewScene()
@@ -277,6 +304,18 @@ namespace Crane
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)(uint64_t)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+
+		//ImVec2 viewportOffset = ImGui::GetCursorPos(); // Includes tab bar
+		// whatever tab bar who cares
+
+		ImVec2 minBound = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
+		ImVec2 maxBound = { minBound.x + m_ViewportSize.x, minBound.y + m_ViewportSize.y };
+
+		m_ViewportBounds[0] = { minBound.x, minBound.y };
+		m_ViewportBounds[1] = { maxBound.x, maxBound.y };
+
+		//CR_CORE_WARN("MinBounds: {0}, {1}, MaxBound: {2}, {3}", m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x, m_ViewportBounds[1].y );
 
 		// Gizmos
 		Entity selectedEntity = m_SceneHeirarchyPanel.GetSelectedEntity();
