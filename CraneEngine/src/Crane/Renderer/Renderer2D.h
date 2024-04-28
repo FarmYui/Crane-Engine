@@ -31,25 +31,25 @@ namespace Crane
 
 		/* without rotation */
 		//-- colored 
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha = 1.0f);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color); 
 		//-- textured
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color = {1.0f,1.0f,1.0f}, float alpha = 1.0f);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color = { 1.0f,1.0f,1.0f,1.0f});
 		//-- subregion
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = {1.0f,1.0f,1.0f}, float alpha = 1.0f);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec4& color = { 1.0f,1.0f,1.0f,1.0f});
 		
 		/* with rotation */
 		//-- colored 
-		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha = 1.0f);
+		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color); 
 		//-- textured
-		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec4& color = { 1.0f, 1.0f,1.0f,1.0f });
 		//-- subregion
-		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec4& color = { 1.0f, 1.0f,1.0f,1.0f });
 
 
 		// make changes only in these methods
-		static void DrawQuad(const glm::mat4& transform, const glm::vec3& color, float alpha = 1.0f, int entityID = -1);
-		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f, int entityID = -1);
-		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f, int entityID = -1);
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entityID = -1);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color = { 1.0f, 1.0f,1.0f,1.0f }, int entityID = -1);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec4& color = { 1.0f, 1.0f,1.0f,1.0f }, int entityID = -1);
 
 		static void DrawSprite(const glm::mat4& transform, SpriteRendererComponent& spriteRendererComponent, int entityID);
 

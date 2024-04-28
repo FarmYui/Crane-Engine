@@ -194,7 +194,7 @@ namespace Crane
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadsCount * 6);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -202,10 +202,10 @@ namespace Crane
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 		
-		DrawQuad(transform, color, alpha);
+		DrawQuad(transform, color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -213,10 +213,10 @@ namespace Crane
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
-		DrawQuad(transform, texture, color, alpha);
+		DrawQuad(transform, texture, color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec4& color)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -224,23 +224,11 @@ namespace Crane
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
-		DrawQuad(transform, texture, textureRegion, color, alpha);
+		DrawQuad(transform, texture, textureRegion, color);
 	}
 
 
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec3& color, float alpha)
-	{
-		CR_PROFILE_FUNCTION();
-
-		//model * vtx pos
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-		transform = glm::scale(transform, glm::vec3(size, 1.0f));
-
-		DrawQuad(transform, color, alpha);
-	}
-
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -249,10 +237,10 @@ namespace Crane
 		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
-		DrawQuad(transform, texture, color, alpha);
+		DrawQuad(transform, color);
 	}
 
-	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec4& color)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -261,11 +249,23 @@ namespace Crane
 		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		transform = glm::scale(transform, glm::vec3(size, 1.0f));
 
-		DrawQuad(transform, texture, textureRegion, color, alpha);
+		DrawQuad(transform, texture, color);
+	}
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec4& color)
+	{
+		CR_PROFILE_FUNCTION();
+
+		//model * vtx pos
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		transform = glm::rotate(transform, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::scale(transform, glm::vec3(size, 1.0f));
+
+		DrawQuad(transform, texture, textureRegion, color);
 	}
 
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec3& color, float alpha, int entityID)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entityID)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -283,10 +283,8 @@ namespace Crane
 		// but we need to set textureIndex whitch will be zero since we want to have the color multiplied with the white texture
 		float textureIndex = 0.0f;
 
-		glm::vec4 finalColor(color, alpha);
-
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, entityID);
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], color, textureCoordinates[i], textureIndex, entityID);
 
 
 		s_Data.QuadsCount++;
@@ -294,7 +292,7 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha, int entityID)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, int entityID)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -331,12 +329,9 @@ namespace Crane
 			s_Data.TextureSlotIndex++;
 		}
 
-
-		glm::vec4 finalColor(color, alpha);
-
 		// Adding vertex data into array  
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, entityID);
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], color, textureCoordinates[i], textureIndex, entityID);
 
 
 		s_Data.QuadsCount++;
@@ -344,7 +339,7 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha, int entityID)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec4& color, int entityID)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -381,12 +376,9 @@ namespace Crane
 			s_Data.TextureSlotIndex++;
 		}
 
-
-		glm::vec4 finalColor(color, alpha);
-
 		// Adding vertex data into array  
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, entityID);
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], color, textureCoordinates[i], textureIndex, entityID);
 
 
 		s_Data.QuadsCount++;
@@ -396,7 +388,7 @@ namespace Crane
 
 	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& spriteRendererComponent, int entityID)
 	{
-		DrawQuad(transform, { spriteRendererComponent.Color.r, spriteRendererComponent.Color.g, spriteRendererComponent.Color.b }, spriteRendererComponent.Color.a, entityID);
+		DrawQuad(transform, spriteRendererComponent.Color, entityID);
 	}
 
 
