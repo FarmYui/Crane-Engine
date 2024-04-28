@@ -14,6 +14,7 @@ namespace Crane
 		SceneHierarchyPanel(const Ref<Scene>& Scene);
 
 		Entity GetSelectedEntity() const { return m_SelectedEntity; }
+		void SetSelectedEntity(uint32_t entityID) { m_SelectedEntity = { (entt::entity)entityID, m_Scene.get() }; }
 
 		void SetScene(const Ref<Scene>& Scene);
 
