@@ -9,14 +9,16 @@ namespace Crane
 {
 	struct VertexData
 	{
-		VertexData(glm::vec3 position, glm::vec4 color, glm::vec2 textureCoordinates, float textureIndex, float entityID)
+		VertexData(glm::vec3 position, glm::vec4 color, glm::vec2 textureCoordinates, float textureIndex, int entityID)
 			: Position(position), Color(color), TextureCoordinates(textureCoordinates), TextureIndex(textureIndex), EntityID(entityID)
 		{}
 		glm::vec3 Position;
 		glm::vec4 Color;
 		glm::vec2 TextureCoordinates;
 		float TextureIndex;
-		float EntityID;
+
+		// Editor only
+		int EntityID;
 	};
 
 	struct Renderer2DStorage
@@ -56,11 +58,11 @@ namespace Crane
 
 		// setting the layout of the vertex buffer
 		BufferLayout layout = {
-			{ Crane::ShaderDataType::Float3 , "a_Position" },
-			{ Crane::ShaderDataType::Float4 , "a_Color" },
+			{ Crane::ShaderDataType::Float3 , "a_Position"		     },
+			{ Crane::ShaderDataType::Float4 , "a_Color"			 	 },
 			{ Crane::ShaderDataType::Float2 , "a_TextureCoordinates" },
-			{ Crane::ShaderDataType::Float  , "a_TextureIndex" },
-			{ Crane::ShaderDataType::Float  , "a_EntityID" }
+			{ Crane::ShaderDataType::Float  , "a_TextureIndex"		 },
+			{ Crane::ShaderDataType::Int    , "a_EntityID"			 }	
 		};
 		s_Data.VertexBuffer->SetLayout(layout);
 
@@ -192,7 +194,6 @@ namespace Crane
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadsCount * 6);
 	}
 
-#if CRANE_DEPRECATED
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha)
 	{
 		CR_PROFILE_FUNCTION();
@@ -262,10 +263,9 @@ namespace Crane
 
 		DrawQuad(transform, texture, textureRegion, color, alpha);
 	}
-#endif
 
 
-	void Renderer2D::DrawQuad(uint32_t entityID, const glm::mat4& transform, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec3& color, float alpha, int entityID)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -286,7 +286,7 @@ namespace Crane
 		glm::vec4 finalColor(color, alpha);
 
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, (float)entityID);
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, entityID);
 
 
 		s_Data.QuadsCount++;
@@ -294,7 +294,7 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(uint32_t entityID, const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color, float alpha, int entityID)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -336,7 +336,7 @@ namespace Crane
 
 		// Adding vertex data into array  
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, (float)entityID);
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, entityID);
 
 
 		s_Data.QuadsCount++;
@@ -344,7 +344,7 @@ namespace Crane
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(uint32_t entityID, const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color, float alpha, int entityID)
 	{
 		CR_PROFILE_FUNCTION();
 
@@ -386,12 +386,17 @@ namespace Crane
 
 		// Adding vertex data into array  
 		for (uint32_t i = 0; i < 4; i++)
-			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, (float)entityID);
+			s_Data.Vertices.emplace_back(transform * s_Data.QuadVertexPositions[i], finalColor, textureCoordinates[i], textureIndex, entityID);
 
 
 		s_Data.QuadsCount++;
 		// this is for stats
 		s_Data.Stats.QuadCount++;
+	}
+
+	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& spriteRendererComponent, int entityID)
+	{
+		DrawQuad(transform, { spriteRendererComponent.Color.r, spriteRendererComponent.Color.g, spriteRendererComponent.Color.b }, spriteRendererComponent.Color.a, entityID);
 	}
 
 

@@ -112,7 +112,7 @@ namespace Crane
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
-		if (m_ViewportFocused)
+		if (m_ViewportFocused && !ImGuizmo::IsUsing())
 			m_EditorCamera.OnUpdate(ts);
 
 		// Reset Stats
@@ -152,7 +152,7 @@ namespace Crane
 			
 			if (mouseX > 0 && mouseY > 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 			{
-				if (!ImGuizmo::IsUsing() && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt) && Input::IsMouseButtonPressed(Mouse::ButtonLeft))
+				if (/*!ImGuizmo::IsUsing() && */ !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt) && Input::IsMouseButtonPressed(Mouse::ButtonLeft))
 				{
 					int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
 					//CR_CORE_WARN("PixelData: {0}", pixelData);

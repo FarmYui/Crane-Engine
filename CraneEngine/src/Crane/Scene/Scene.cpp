@@ -34,7 +34,7 @@ namespace Crane
 		{
 			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-			Renderer2D::DrawQuad((uint32_t)entity, transform.GetTransform(), { sprite.Color.r, sprite.Color.g, sprite.Color.b }, sprite.Color.a);
+			Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 		}
 
 		Renderer2D::EndScene();
@@ -86,7 +86,7 @@ namespace Crane
 			{
 				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 			
-				Renderer2D::DrawQuad((uint32_t)entity, transform.GetTransform(), {sprite.Color.r, sprite.Color.g, sprite.Color.b}, sprite.Color.a);
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 			}
 
 			Renderer2D::EndScene();

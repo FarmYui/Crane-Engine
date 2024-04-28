@@ -3,7 +3,6 @@
 # CraneEngine
 🏗️ Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
 
-## Editor
 🎨 Here is how the editor is looking
 ![CraneEngine](/Resources/Branding/CraneSceneScreenshot.png?raw=true "CraneEngine")
 The scene was entirely made with tools inside the editor

@@ -2,18 +2,195 @@ Scene: Untitled
 Entities:
   - Entity: 12837192831273
     TagComponent:
-      Tag: R Top
+      Tag: Empty Entity
     TransformComponent:
-      Translation: [6, 5.5, 0]
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Left
+    TransformComponent:
+      Translation: [3.5, 5.5, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999978185, 1, 0.999978185]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left Left
+    TransformComponent:
+      Translation: [3.5, 2, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999995232, 5, 0.999995232]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom Left
+    TransformComponent:
+      Translation: [-2.5, 0, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [-1.125, 5.5, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999996185, 1, 0.999996185]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Left
+    TransformComponent:
+      Translation: [-2.5, 3.5, -0.49999997]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999994576, 5, 0.999994576]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Top
+    TransformComponent:
+      Translation: [6, 6, -0.499949992]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [5, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.938223958, 0.065204747, 0.065204747, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left Top
+    TransformComponent:
+      Translation: [4, 4.5, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top Top
+    TransformComponent:
+      Translation: [0.75, 6, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [3.75, 0.999993503, 0.999993503]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Top
+    TransformComponent:
+      Translation: [-2, 6, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom Top
+    TransformComponent:
+      Translation: [0, 0.5, -0.499949992]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [5, 0.999999881, 0.999999881]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Back
+    TransformComponent:
+      Translation: [6, 5.5, -1]
       Rotation: [0, 0, 0]
       Scale: [5, 1, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
   - Entity: 12837192831273
     TagComponent:
-      Tag: R Left
+      Tag: R Left Back
     TransformComponent:
-      Translation: [4, 2, 0]
+      Translation: [4, 2, -1]
+      Rotation: [0, 0, 0]
+      Scale: [1, 5, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top Back
+    TransformComponent:
+      Translation: [0.75, 5.5, -1]
+      Rotation: [0, 0, 0]
+      Scale: [3.75, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Back
+    TransformComponent:
+      Translation: [-2, 3.5, -1]
+      Rotation: [0, 0, 0]
+      Scale: [1, 5, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom Back
+    TransformComponent:
+      Translation: [0, 0, -1]
+      Rotation: [0, 0, 0]
+      Scale: [5, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top
+    TransformComponent:
+      Translation: [0.75, 5.5, 0]
+      Rotation: [0, 0, 0]
+      Scale: [3.75, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left
+    TransformComponent:
+      Translation: [-2, 3.5, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 5, 1]
     SpriteRendererComponent:
@@ -29,19 +206,19 @@ Entities:
       Color: [1, 1, 1, 1]
   - Entity: 12837192831273
     TagComponent:
-      Tag: C Left
+      Tag: R Left
     TransformComponent:
-      Translation: [-2, 3.5, 0]
+      Translation: [4, 2, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 5, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
   - Entity: 12837192831273
     TagComponent:
-      Tag: C Top
+      Tag: R Top
     TransformComponent:
-      Translation: [0.75, 5.5, 0]
+      Translation: [6, 5.5, 0]
       Rotation: [0, 0, 0]
-      Scale: [3.75, 1, 1]
+      Scale: [5, 1, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]

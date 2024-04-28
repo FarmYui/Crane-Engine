@@ -7,6 +7,8 @@
 #include "Crane/Renderer/Texture.h"
 #include "Crane/Renderer/TextureRegion2D.h"
 
+#include "Crane/Scene/Components.h"
+
 namespace Crane
 {
 	class Renderer2D
@@ -26,8 +28,7 @@ namespace Crane
 		// primitives
 		// ////////////////////
 
-		// Old
-#if CRANE_DEPRECATED
+
 		/* without rotation */
 		//-- colored 
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color, float alpha = 1.0f);
@@ -43,13 +44,14 @@ namespace Crane
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
 		//-- subregion
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
-#endif
+
 
 		// make changes only in these methods
-		static void DrawQuad(uint32_t entityID, const glm::mat4& transform, const glm::vec3& color, float alpha);
-		static void DrawQuad(uint32_t entityID, const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
-		static void DrawQuad(uint32_t entityID, const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f);
+		static void DrawQuad(const glm::mat4& transform, const glm::vec3& color, float alpha = 1.0f, int entityID = -1);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f, int entityID = -1);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const Ref<TextureRegion2D>& textureRegion, const glm::vec3& color = { 1.0f,1.0f,1.0f }, float alpha = 1.0f, int entityID = -1);
 
+		static void DrawSprite(const glm::mat4& transform, SpriteRendererComponent& spriteRendererComponent, int entityID);
 
 		// Stats
 		struct Statistics
