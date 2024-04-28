@@ -125,6 +125,9 @@ namespace Crane
 			m_Framebuffer->Bind();
 			RenderCommand::SetClearColor(m_ClearColor);
 			RenderCommand::Clear();
+
+			// Clear entity id attachment 
+			m_Framebuffer->ClearAttachment(1, -1);
 		}
 
 		// Draw
@@ -143,8 +146,8 @@ namespace Crane
 			glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
 			globalMousePos.y = m_ViewportSize.y - globalMousePos.y;
 
-			int mouseX = globalMousePos.x;
-			int mouseY = globalMousePos.y;
+			int mouseX = (int)globalMousePos.x;
+			int mouseY = (int)globalMousePos.y;
 
 			
 			if (mouseX > 0 && mouseY > 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)

@@ -18,6 +18,8 @@ namespace Crane
 		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { CR_CORE_ASSERT(index < m_ColorAttachments.size(), "Invalid index, Index out of vector"); return m_ColorAttachments.at(index); }
 
+		virtual void ClearAttachment(uint32_t attachmentIndex, int value);
+
 		void Invalidate();
 	private:
 		uint32_t m_RendererID = 0;

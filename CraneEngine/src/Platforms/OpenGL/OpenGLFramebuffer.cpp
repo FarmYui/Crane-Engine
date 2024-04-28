@@ -78,6 +78,19 @@ namespace Crane
             return false;
         }
 
+
+        static GLenum CraneTextureFormatToGL(FramebufferTextureFormat format)
+        {
+            switch (format)
+            {
+            case FramebufferTextureFormat::RGBA8:       return GL_RGBA8;
+            case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+            }
+
+            CR_CORE_ASSERT(false, "Unknown format");
+            return 0;
+        }
+
     }
 
     OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& specification)
@@ -129,6 +142,15 @@ namespace Crane
         glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
 
         return pixelData;
+    }
+
+    void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+    {
+        CR_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(), "Invalid attachmentIndex, Reason: Index out of range");
+
+        auto& spec = m_ColorAttachmentSpecifications.at(attachmentIndex);
+
+        glClearTexImage(m_ColorAttachments.at(attachmentIndex), 0, Utils::CraneTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
     }
 
     void OpenGLFramebuffer::Invalidate()
