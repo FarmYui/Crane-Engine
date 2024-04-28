@@ -45,6 +45,10 @@ void main()
 {
 	int index = int(v_TextureIndex);
 	color = texture(u_Textures[index], v_TextureCoordinates) * v_Color;
-
-	entityID = int(v_EntityID);
+	
+	// When you cast a float to an int, truncation occurs. 
+	// If the literal representation of the float is slightly below an integer value (e.g., 3024.9999), 
+	// it becomes the lower integer (e.g., 3024).
+	// This behavior can lead to unexpected results when comparing or converting between float and int
+	entityID = int(v_EntityID + 0.5f);
 }

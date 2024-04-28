@@ -152,10 +152,10 @@ namespace Crane
 			
 			if (mouseX > 0 && mouseY > 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 			{
-				if (!Input::IsKeyPressed(Key::LeftAlt) && Input::IsMouseButtonPressed(Mouse::ButtonLeft))
+				if (!ImGuizmo::IsUsing() && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt) && Input::IsMouseButtonPressed(Mouse::ButtonLeft))
 				{
 					int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-					CR_CORE_WARN("PixelData: {0}", pixelData);
+					//CR_CORE_WARN("PixelData: {0}", pixelData);
 					if (pixelData != -1)
 						m_SceneHeirarchyPanel.SetSelectedEntity((uint32_t)pixelData);
 					
