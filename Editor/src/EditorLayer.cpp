@@ -39,7 +39,9 @@ namespace Crane
 		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<KeyPressedEvent>(CR_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+		dispatcher.Dispatch<KeyPressedEvent>(CR_BIND_EVENT_FN(EditorLayer::OnKeyPressed)); 
+		dispatcher.Dispatch<MouseButtonPressedEvent>(CR_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
+
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -93,8 +95,21 @@ namespace Crane
 			return false;
 		}
 
-		// this is actually wrong bcz if we dont press control no code will be run
+		// this is actually wrong bcz if we dont press control no code will run
 		return true;
+	}
+
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		if (e.GetMouseButton() == Mouse::ButtonLeft)
+		{
+			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
+			{
+				m_SceneHeirarchyPanel.SetSelectedEntity(m_HoveredEntity);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void EditorLayer::OnUpdate(Timestep ts)
@@ -136,7 +151,7 @@ namespace Crane
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
-
+			// Entity Selection Shenanigans
 			ImVec2 globalMousePos = ImGui::GetMousePos();
 			if (m_ViewportBounds[0].x > 0.0f)
 				globalMousePos.x -= m_ViewportBounds[0].x;
@@ -148,23 +163,11 @@ namespace Crane
 
 			int mouseX = (int)globalMousePos.x;
 			int mouseY = (int)globalMousePos.y;
-
-			
-			if (mouseX > 0 && mouseY > 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
-			{
-				if (/*!ImGuizmo::IsUsing() && */ !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt) && Input::IsMouseButtonPressed(Mouse::ButtonLeft))
-				{
-					int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-					//CR_CORE_WARN("PixelData: {0}", pixelData);
-					if (pixelData != -1)
-						m_SceneHeirarchyPanel.SetSelectedEntity((uint32_t)pixelData);
-					
-				}
-				//CR_CORE_WARN("MousePos: {0}, {1}", mouseX, mouseY);
-
+			if (m_ViewportHovered)
+			{	
+				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+				m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
 			}
-
-
 
 			m_Framebuffer->Unbind();
 		}
@@ -281,6 +284,16 @@ namespace Crane
 
 		m_SceneHeirarchyPanel.OnImGuiRender();
 
+		ImGui::Begin("Infos");
+
+		std::string name = "None";
+		if (m_HoveredEntity.GetID() != entt::null)
+			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+
+		ImGui::Text("Hovered Entity: %s", name.c_str());
+
+		ImGui::End();
+
 		ImGui::Begin("Stats");
 
 		auto stats = Renderer2D::GetStats();
@@ -302,6 +315,14 @@ namespace Crane
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 		ImGui::Begin("Viewport");
 
+		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
+		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
+		auto viewportOffset = ImGui::GetWindowPos();
+		m_ViewportBounds[0] = { viewportMinRegion.x + viewportOffset.x, viewportMinRegion.y + viewportOffset.y };
+		m_ViewportBounds[1] = { viewportMaxRegion.x + viewportOffset.x, viewportMaxRegion.y + viewportOffset.y };
+
+		//CR_CORE_WARN("MinBounds: {0}, {1}, MaxBound: {2}, {3}", m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x, m_ViewportBounds[1].y );
+
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
 
@@ -313,25 +334,13 @@ namespace Crane
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)(uint64_t)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
-
-		//ImVec2 viewportOffset = ImGui::GetCursorPos(); // Includes tab bar
-		// whatever tab bar who cares
-
-		ImVec2 minBound = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
-		ImVec2 maxBound = { minBound.x + m_ViewportSize.x, minBound.y + m_ViewportSize.y };
-
-		m_ViewportBounds[0] = { minBound.x, minBound.y };
-		m_ViewportBounds[1] = { maxBound.x, maxBound.y };
-
-		//CR_CORE_WARN("MinBounds: {0}, {1}, MaxBound: {2}, {3}", m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x, m_ViewportBounds[1].y );
-
 		// Gizmos
 		Entity selectedEntity = m_SceneHeirarchyPanel.GetSelectedEntity();
 		if (selectedEntity && m_GizmoMode != -1)
 		{
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
-			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x - m_ViewportBounds[0].x, m_ViewportBounds[1].y - m_ViewportBounds[0].y);
 			
 			// Camera Entity
 			//Entity cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();

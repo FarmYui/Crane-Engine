@@ -20,6 +20,7 @@ namespace Crane
 		void OnImGuiRender() override;
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 	private:
 		void NewScene();
 		void OpenScene();
@@ -30,6 +31,8 @@ namespace Crane
 		Timestep m_Timestep;
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
+
+		Entity m_HoveredEntity;
 
 		EditorCamera m_EditorCamera;
 
