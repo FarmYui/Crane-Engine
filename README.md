@@ -2,34 +2,44 @@
 
 # CraneEngine
 🏗️ Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
-Crane Engine was originally born as 2D but has native support for 3D too, 
-in fact the Editor camera supports pitch & yaw rotations, so you can move around the scene with ease
+Crane Engine was originally born as 2D but has native support for 3D too.
+
+Here is a beatiful render done by the CraneEngine
+![CraneEngine](/Resources/Branding/CraneEngineRender.png?raw=true "CraneEngine")
 
 ## Editor
+📷 The Editor camera supports pitch & yaw rotations, so you can move around the scene with ease
+
+### GUI
 🎨 Here is how the editor is looking
 ![CraneEngine](/Resources/Branding/CraneSceneScreenshot.png?raw=true "CraneEngine")
-2D Example
-![CraneEngine](/Resources/Branding/CraneSceneScreenshot.png?raw=true "CraneEngine")
-3D Example
-All scenes were entirely made with tools inside the editor
+The scene was entirely made with tools inside the editor
 
+The Editor has: 
+- Viewport panel        | It renders the scene from the EditorCamera, you can also select entities directly from here 
+- SceneHeirarchy panel  | It shows all the entities in the scene
+- Properties panel      | After selecting an entity you will see its components here
+- Stats panel           | It shows how many: draw calls, quads, vertices and indices you have in your scene
+
+The Editor has easy learning curve, even for beginners.
+Here are all the shortcuts you may want to use to speed up your creation process.
 ### How to move around
-- Alt + MouseButtonLeft   | Rotates around the scene
-- Alt + MouseButtonMiddle | Pans around the scene
-- Alt + MouseButtonRight  | Zooms into the scene
+- Alt + MouseButtonLeft    | Rotates around the scene
+- Alt + MouseButtonMiddle  | Pans around the scene
+- Alt + MouseButtonRight   | Zooms into the scene
 
-### Shortcuts
-Scene Shortcuts
-- Ctrl + N         | Creates a new Empty Scene
-- Ctrl + Shift + S | Saves a Scene into a pre-existing file
-- Ctrl + O         | Opens a Scene from file
+### Scene Shortcuts
+- Ctrl + N          | Creates a new Empty Scene
+- Ctrl + Shift + S  | Saves a Scene into a pre-existing file
+- Ctrl + O          | Opens a Scene from file
 
-Gizmo Shortcuts
-- Tab | Cycles trough Gizmos
-- Q   | Gets rid of Gizmos
-- W   | Toggles the Translation Gizmo
-- E   | Toggles the Rotation Gizmo
-- R   | Toggles the Scale Gizmo
+### Gizmo Shortcuts
+- Tab  | Cycles trough Gizmos
+- Q    | Gets rid of Gizmos
+- W    | Toggles the Translation Gizmo
+- E    | Toggles the Rotation Gizmo
+- R    | Toggles the Scale Gizmo
+
 
 ## Getting Started
 💻 Visual Studio 2022 is recommended, Crane only supports Windows.

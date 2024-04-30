@@ -2,6 +2,8 @@
 #include "Crane.h"
 
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
+
 #include "Crane/Renderer/EditorCamera.h"
 
 namespace Crane
@@ -45,6 +47,7 @@ namespace Crane
 
 		// Panels
 		SceneHierarchyPanel m_SceneHeirarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 
 		int32_t m_GizmoMode = 0;
 		float m_SnapAmount = 1.f;

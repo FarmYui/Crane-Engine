@@ -293,6 +293,7 @@ namespace Crane
 		}
 
 		m_SceneHeirarchyPanel.OnImGuiRender();
+		m_ContentBrowserPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
 
