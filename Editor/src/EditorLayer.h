@@ -25,6 +25,8 @@ namespace Crane
 		void NewScene();
 		void OpenScene();
 		void SaveSceneAs();
+
+		void SelectEntity();
 	private:
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 
@@ -32,9 +34,9 @@ namespace Crane
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
 
-		Entity m_HoveredEntity;
-
 		EditorCamera m_EditorCamera;
+
+		bool m_SelectEntity = false;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 

@@ -2,10 +2,34 @@
 
 # CraneEngine
 🏗️ Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
+Crane Engine was originally born as 2D but has native support for 3D too, 
+in fact the Editor camera supports pitch & yaw rotations, so you can move around the scene with ease
 
+## Editor
 🎨 Here is how the editor is looking
 ![CraneEngine](/Resources/Branding/CraneSceneScreenshot.png?raw=true "CraneEngine")
-The scene was entirely made with tools inside the editor
+2D Example
+![CraneEngine](/Resources/Branding/CraneSceneScreenshot.png?raw=true "CraneEngine")
+3D Example
+All scenes were entirely made with tools inside the editor
+
+### How to move around
+- Alt + MouseButtonLeft   | Rotates around the scene
+- Alt + MouseButtonMiddle | Pans around the scene
+- Alt + MouseButtonRight  | Zooms into the scene
+
+### Shortcuts
+Scene Shortcuts
+- Ctrl + N         | Creates a new Empty Scene
+- Ctrl + Shift + S | Saves a Scene into a pre-existing file
+- Ctrl + O         | Opens a Scene from file
+
+Gizmo Shortcuts
+- Tab | Cycles trough Gizmos
+- Q   | Gets rid of Gizmos
+- W   | Toggles the Translation Gizmo
+- E   | Toggles the Rotation Gizmo
+- R   | Toggles the Scale Gizmo
 
 ## Getting Started
 💻 Visual Studio 2022 is recommended, Crane only supports Windows.

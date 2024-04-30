@@ -105,7 +105,8 @@ namespace Crane
 		{
 			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
 			{
-				m_SceneHeirarchyPanel.SetSelectedEntity(m_HoveredEntity);
+				m_SelectEntity = true;
+
 				return true;
 			}
 		}
@@ -151,23 +152,9 @@ namespace Crane
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
-			// Entity Selection Shenanigans
-			ImVec2 globalMousePos = ImGui::GetMousePos();
-			if (m_ViewportBounds[0].x > 0.0f)
-				globalMousePos.x -= m_ViewportBounds[0].x;
-			if (m_ViewportBounds[0].y > 0.0f)
-				globalMousePos.y -= m_ViewportBounds[0].y;
-
-			glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
-			globalMousePos.y = m_ViewportSize.y - globalMousePos.y;
-
-			int mouseX = (int)globalMousePos.x;
-			int mouseY = (int)globalMousePos.y;
-			if (m_ViewportHovered)
-			{	
-				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-				m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
-			}
+			// this has to be called only if the framebuffer is bound
+			if (m_SelectEntity)
+				SelectEntity();
 
 			m_Framebuffer->Unbind();
 		}
@@ -204,6 +191,29 @@ namespace Crane
 			SceneSerializer sceneSerializer(m_ActiveScene);
 			sceneSerializer.Serialize(filepath);
 		}
+	}
+
+	void EditorLayer::SelectEntity()
+	{
+		// Entity Selection Shenanigans
+		ImVec2 globalMousePos = ImGui::GetMousePos();
+		if (m_ViewportBounds[0].x > 0.0f)
+			globalMousePos.x -= m_ViewportBounds[0].x;
+		if (m_ViewportBounds[0].y > 0.0f)
+			globalMousePos.y -= m_ViewportBounds[0].y;
+
+		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+		globalMousePos.y = m_ViewportSize.y - globalMousePos.y;
+
+		int mouseX = (int)globalMousePos.x;
+		int mouseY = (int)globalMousePos.y;
+
+		int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+		if (pixelData != -1)
+			m_SceneHeirarchyPanel.SetSelectedEntity({ (entt::entity)pixelData, m_ActiveScene.get() });
+
+		m_SelectEntity = false;
+		
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -283,16 +293,6 @@ namespace Crane
 		}
 
 		m_SceneHeirarchyPanel.OnImGuiRender();
-
-		ImGui::Begin("Infos");
-
-		std::string name = "None";
-		if (m_HoveredEntity.GetID() != entt::null)
-			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
-
-		ImGui::Text("Hovered Entity: %s", name.c_str());
-
-		ImGui::End();
 
 		ImGui::Begin("Stats");
 
