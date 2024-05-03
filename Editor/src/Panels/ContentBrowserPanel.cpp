@@ -1,3 +1,4 @@
+#include "crpch.h"
 #include "ContentBrowserPanel.h"
 
 #include <ImGui/imgui.h>
@@ -9,37 +10,57 @@ namespace Crane
 	ContentBrowserPanel::ContentBrowserPanel()
 		: m_CurrentDirectory(s_AssetsDirectory)
 	{
+		m_FolderIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FolderIcon.png");
+		m_FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
 	}
 
 	void ContentBrowserPanel::OpenDirectory()
 	{
+		bool isContentBrowserHovered = ImGui::IsWindowHovered();
+
+		static float thumbnailSize = 100.0f;
+		static float padding = 7.0f;
+		float cellSize = thumbnailSize + padding;
+		float panelSizeWidth = ImGui::GetContentRegionAvail().x;
+
+		int columnCount = (int)(panelSizeWidth / cellSize);
+		if (columnCount < 1)
+			columnCount = 1;
+
+		ImGui::Columns(columnCount, 0, false);
+
 		for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 		{
 			const auto& path = directoryEntry.path();
 			std::string filenameString = path.filename().string();
 
-			if (directoryEntry.is_directory())
+			bool isDirectory = directoryEntry.is_directory();
+			ImTextureID iconID = isDirectory ? (ImTextureID)(uint64_t)m_FolderIcon->GetRendererID() : (ImTextureID)(uint64_t)m_FileIcon->GetRendererID();
+
+			ImGui::ImageButton(filenameString.c_str(), iconID, {thumbnailSize, thumbnailSize}, { 0,1 }, { 1,0 });
+			
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 			{
-				if (ImGui::Button(filenameString.c_str(), { 100,100 }))
+				if (isDirectory)
 				{
-					// '/=' is an overloaded operator to add onto std::filename::path
+					// '/=' is an overloaded operator to add onto directory
 					m_CurrentDirectory /= path.filename();
-				
 				}
-				
-			}
-			if (directoryEntry.is_regular_file())
-			{
-				ImGui::Button(filenameString.c_str(), { 100,100 });
 			}
 
-			ImGui::SameLine();
+			ImGui::TextWrapped(filenameString.c_str());
+
+			ImGui::NextColumn();
 		}
-
-		ImGui::NewLine();
+		ImGui::Columns(1);
 
 		if (m_CurrentDirectory.has_parent_path() && ImGui::Button("<-", {70,50}))
 			m_CurrentDirectory = m_CurrentDirectory.parent_path();
+
+		ImGui::DragFloat("Thumbnail Size", &thumbnailSize, 1.0f, 60.0f, 300.0f);
+		//ImGui::DragFloat("Padding", &padding, 1.0f, 5.0f, 50.0f);
+
+		// TODO status directory bar
 	}
 
 	void ContentBrowserPanel::OnImGuiRender()

@@ -1,8 +1,9 @@
 ![Crane](/Resources/Branding/CraneLogo.png?raw=true "Crane")
 
 # CraneEngine
-🏗️ Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
+🏗️🚧👷🏻Crane Engine is created by following the "Game Engine" tutorial series by the Cherno
 Crane Engine was originally born as 2D but has native support for 3D too.
+
 
 ## Editor
 📷 The Editor camera supports pitch & yaw rotations, so you can move around the scene with ease
@@ -13,13 +14,18 @@ Crane Engine was originally born as 2D but has native support for 3D too.
 The scene was entirely made with tools inside the editor
 
 ### Panels
+As you can see the editor has lots of panels that contain diffrent pieces of information that are helpful when creating a game
+
 | Panel Name     | Description                                                              |
 | -------------- | ------------------------------------------------------------------------ |
 | Viewport       | It renders the scene from the EditorCamera, you can also select entities |
 | SceneHeirarchy | It shows all the entities in the scene                                   |
 | Properties     | After selecting an entity you will see its components here               |
+| Content Browser| Helps you browse in editor the assets directory of your project          |
 | Stats          | It shows how many: draw calls, quads, vertices and indices in your scene |
 
+
+## Shortcuts
 The Editor has easy learning curve, even for beginners.
 Here are all the shortcuts you may want to use to speed up your creation process.
 
