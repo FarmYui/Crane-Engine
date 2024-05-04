@@ -388,7 +388,10 @@ namespace Crane
 
 	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& spriteRendererComponent, int entityID)
 	{
-		DrawQuad(transform, spriteRendererComponent.Color, entityID);
+		if (spriteRendererComponent.Texture)
+			DrawQuad(transform, spriteRendererComponent.Texture, spriteRendererComponent.Color, entityID);
+		else
+			DrawQuad(transform, spriteRendererComponent.Color, entityID);
 	}
 
 

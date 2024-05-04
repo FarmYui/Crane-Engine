@@ -138,6 +138,12 @@ namespace Crane
 
 				out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent.Color;
 
+				if (spriteRendererComponent.Texture.get() != nullptr)
+					out << YAML::Key << "TexturePath" << YAML::Value << spriteRendererComponent.Texture->GetPath();
+				else
+					out << YAML::Key << "TexturePath" << YAML::Value << "";
+
+
 				out << YAML::EndMap; // SpriteRendererComponent
 			});
 
@@ -253,6 +259,10 @@ namespace Crane
 					SpriteRendererComponent& spriteRendererComponent = deserializedEntity.AddComponent<SpriteRendererComponent>();
 
 					spriteRendererComponent.Color = spriteRendererComponentNode["Color"].as<glm::vec4>();
+
+					std::string texturePath = spriteRendererComponentNode["TexturePath"].as<std::string>();
+					if (!texturePath.empty())
+						spriteRendererComponent.Texture = Texture2D::Create(texturePath);
 				}
 
 				YAML::Node cameraComponentNode = entityNode["CameraComponent"];

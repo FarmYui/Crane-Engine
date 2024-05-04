@@ -8,9 +8,12 @@
 #include <ImGui/imgui_internal.h>
 
 #include <entt/entt.hpp>
+#include <filesystem>
 
 namespace Crane
 {
+	extern const std::filesystem::path g_AssetPath;
+
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& Scene)
 	{
 		SetScene(Scene);
@@ -271,6 +274,24 @@ namespace Crane
 		DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](SpriteRendererComponent& spriteRendererComponent)
 			{
 				ImGui::ColorEdit4("Color", glm::value_ptr(spriteRendererComponent.Color));
+				
+
+				ImGui::Button("Texture", {0.0f, 0.0f});
+
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						const wchar_t* relativePath = (wchar_t*)payload->Data;
+						std::filesystem::path texturePath = g_AssetPath / relativePath;
+
+						// if here we pass a dir or something that is not a .png/.jpg file this will crash
+						spriteRendererComponent.Texture = Texture2D::Create(texturePath.string());
+					}
+
+					ImGui::EndDragDropTarget();
+				}
+
 			});
 
 		DrawComponent<CameraComponent>("Camera", entity, [](CameraComponent& cameraComponent)
