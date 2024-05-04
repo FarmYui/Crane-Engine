@@ -26,6 +26,7 @@ namespace Crane
 	private:
 		void NewScene();
 		void OpenScene();
+		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
 
 		void SelectEntity();

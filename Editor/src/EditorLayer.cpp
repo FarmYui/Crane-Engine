@@ -10,6 +10,8 @@
 namespace Crane
 {
 
+	extern const std::filesystem::path g_AssetPath;
+
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer")
 	{};
@@ -174,12 +176,15 @@ namespace Crane
 		std::string filepath = FileDialogs::OpenFile("Crane Scene (*.crane)\0*.crane\0");
 
 		if (!filepath.empty())
-		{
-			NewScene();
+			OpenScene(filepath);
+	}
 
-			SceneSerializer sceneSerializer(m_ActiveScene);
-			sceneSerializer.Deserialize(filepath);
-		}
+	void EditorLayer::OpenScene(const std::filesystem::path& path)
+	{
+		NewScene();
+
+		SceneSerializer sceneSerializer(m_ActiveScene);
+		sceneSerializer.Deserialize(path.string());
 	}
 
 	void EditorLayer::SaveSceneAs()
@@ -274,16 +279,16 @@ namespace Crane
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				
+
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
-				
+
 				if (ImGui::MenuItem("Open...", "Ctrl+O"))
 					OpenScene();
-				
+
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
-				
+
 
 				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
@@ -334,6 +339,22 @@ namespace Crane
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)(uint64_t)textureID, viewportPanelSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+
+		if (ImGui::BeginDragDropTarget())
+		{
+
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+			{
+				const wchar_t* relativePath = (wchar_t*)payload->Data;
+
+				// if here we pass a dir or something that is not a .crane file this will crash
+				OpenScene(g_AssetPath / relativePath);
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
 
 		// Gizmos
 		Entity selectedEntity = m_SceneHeirarchyPanel.GetSelectedEntity();
