@@ -276,25 +276,18 @@ namespace Crane
 			{
 				ImGui::ColorEdit4("Color", glm::value_ptr(spriteRendererComponent.Color));
 
+				bool hasTexture = spriteRendererComponent.Texture ? 1 : 0;
 
-				if (ImGui::Button("Texture", { 100, 100 }))
+				if (ImGui::ImageButton("Texture", hasTexture ? (ImTextureID)spriteRendererComponent.Texture->GetRendererID() : (ImTextureID)0, { 50,50 }, { 0,1 }, { 1,0 }))
 				{
-					if (spriteRendererComponent.Texture)
-					{
-						spriteRendererComponent.Texture->SetPath("");
-						spriteRendererComponent.Texture = nullptr;
-					}
-					else
-					{
-						std::string filepath = FileDialogs::OpenFile("Image (*.png)\0*.png\0");
+					std::string filepath = FileDialogs::OpenFile("Image (*.png)\0*.png\0");
 
-						if (!filepath.empty())
-						{
-							spriteRendererComponent.Texture = Texture2D::Create(filepath);
-						}
+					if (!filepath.empty())
+					{
+						spriteRendererComponent.Texture = Texture2D::Create(filepath);
 					}
 				}
-
+				
 
 				if (ImGui::BeginDragDropTarget())
 				{
@@ -310,6 +303,17 @@ namespace Crane
 					ImGui::EndDragDropTarget();
 				}
 
+				ImGui::SameLine();
+
+				if (hasTexture)
+				{
+					if (ImGui::Button("X", { 30, 30 }))
+					{
+						// code to delete texture
+						spriteRendererComponent.Texture->SetPath("");
+						spriteRendererComponent.Texture = nullptr;
+					}
+				}
 			});
 
 		DrawComponent<CameraComponent>("Camera", entity, [](CameraComponent& cameraComponent)

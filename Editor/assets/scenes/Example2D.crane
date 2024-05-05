@@ -4,7 +4,7 @@ Entities:
     TagComponent:
       Tag: Crane Logo
     TransformComponent:
-      Translation: [1.85876107, 1, 0]
+      Translation: [1.60000002, 1, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
@@ -24,12 +24,12 @@ Entities:
     TagComponent:
       Tag: White Square
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [-2.98023224e-08, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
-      TexturePath: assets\textures\Checkerboard.png
+      TexturePath: C:\Dev\Cpp\GameEngine\CraneEngine\Editor\assets\textures\Checkerboard.png
   - Entity: 12837192831273
     TagComponent:
       Tag: Orthographic Camera
