@@ -1,6 +1,7 @@
 #include "SceneHierarchyPanel.h"
 
 #include "Crane/Scene/Components.h"
+#include "Crane/Utils/PlatformUtils.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -274,9 +275,26 @@ namespace Crane
 		DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](SpriteRendererComponent& spriteRendererComponent)
 			{
 				ImGui::ColorEdit4("Color", glm::value_ptr(spriteRendererComponent.Color));
-				
 
-				ImGui::Button("Texture", {0.0f, 0.0f});
+
+				if (ImGui::Button("Texture", { 100, 100 }))
+				{
+					if (spriteRendererComponent.Texture)
+					{
+						spriteRendererComponent.Texture->SetPath("");
+						spriteRendererComponent.Texture = nullptr;
+					}
+					else
+					{
+						std::string filepath = FileDialogs::OpenFile("Image (*.png)\0*.png\0");
+
+						if (!filepath.empty())
+						{
+							spriteRendererComponent.Texture = Texture2D::Create(filepath);
+						}
+					}
+				}
+
 
 				if (ImGui::BeginDragDropTarget())
 				{

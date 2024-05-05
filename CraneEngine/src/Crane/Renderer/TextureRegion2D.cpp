@@ -4,6 +4,14 @@
 namespace Crane
 {
 
+	TextureRegion2D::TextureRegion2D()
+	{
+		m_TextureCoordinates[0] = { 0.0f , 0.0f };
+		m_TextureCoordinates[1] = { 1.0f , 0.0f };
+		m_TextureCoordinates[2] = { 1.0f , 1.0f };
+		m_TextureCoordinates[3] = { 0.0f , 1.0f };
+	}
+
 	TextureRegion2D::TextureRegion2D(const glm::vec2& min, const glm::vec2& max)
 	{
 		m_TextureCoordinates[0] = { min.x, min.y };
@@ -24,4 +32,8 @@ namespace Crane
 		return CreateRef<TextureRegion2D>(min, max);
 	}
 
+	Ref<TextureRegion2D> TextureRegion2D::CreateDefault()
+	{
+		return CreateRef<TextureRegion2D>();
+	}
 }
