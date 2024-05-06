@@ -207,11 +207,13 @@ namespace Crane
 	void EditorLayer::OnScenePlay()
 	{
 		m_SceneState = SceneState::Play;
+		m_ActiveScene->OnRuntimeStart();
 	}
 
 	void EditorLayer::OnSceneStop()
 	{
 		m_SceneState = SceneState::Edit;
+		m_ActiveScene->OnRuntimeStop();
 	}
 
 	void EditorLayer::SelectEntity()
@@ -252,14 +254,14 @@ namespace Crane
 		// Center the button
 		ImGui::SetCursorPosX(panelSize.x * 0.5f - panelSize.y);
 
-		if (ImGui::ImageButton("PlayButton", (ImTextureID)m_PlayButtonTexture->GetRendererID(), { panelSize.y, panelSize.y }, { 0,0 }, { 1,1 }))
+		if (ImGui::ImageButton((ImTextureID)m_PlayButtonTexture->GetRendererID(), {panelSize.y, panelSize.y }, {0,0}, {1,1}, 0))
 		{
 			OnScenePlay();
 		}
 
 		ImGui::SameLine();
 
-		if (ImGui::ImageButton("StopButton", (ImTextureID)m_StopButtonTexture->GetRendererID(), { panelSize.y, panelSize.y }, { 0,0 }, { 1,1 }))
+		if (ImGui::ImageButton((ImTextureID)m_StopButtonTexture->GetRendererID(), { panelSize.y, panelSize.y }, { 0,0 }, { 1,1 }, 0))
 		{
 			OnSceneStop();
 		}

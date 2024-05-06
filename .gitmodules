@@ -16,3 +16,6 @@
 [submodule "CraneEngine/vendor/ImGuizmo"]
 	path = CraneEngine/vendor/ImGuizmo
 	url = https://github.com/TheCherno/ImGuizmo
+[submodule "CraneEngine/vendor/box2d"]
+	path = CraneEngine/vendor/box2d
+	url = https://github.com/TheCherno/box2d

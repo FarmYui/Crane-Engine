@@ -14,6 +14,30 @@
 namespace YAML
 {
 	template<>
+	struct convert<glm::vec2>
+	{
+		static Node encode(const glm::vec2& vec2)
+		{
+			Node node;
+			node.push_back(vec2.x);
+			node.push_back(vec2.y);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec2& vec2)
+		{
+			if (!node.IsSequence() || node.size() != 2)
+				return false;
+
+			vec2.x = node[0].as<float>();
+			vec2.y = node[1].as<float>();
+
+			return true;
+		}
+	};
+
+
+	template<>
 	struct convert<glm::vec3>
 	{
 		static Node encode(const glm::vec3& vec3)
@@ -69,6 +93,13 @@ namespace YAML
 
 namespace Crane
 {
+
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec2& vec2)
+	{
+		out << YAML::Flow;
+		out << YAML::BeginSeq << vec2.x << vec2.y << YAML::EndSeq;
+		return out;
+	}
 
 	YAML::Emitter& operator<<(YAML::Emitter& out,const glm::vec3& vec3)
 	{
@@ -171,6 +202,32 @@ namespace Crane
 				out << YAML::EndMap; // CameraComponent
 			});
 
+		SerializeComponent<RigidBody2DComponent>(entity, [&](RigidBody2DComponent& rigidBodyComponent)
+			{
+				out << YAML::Key << "RigidBody2DComponent";
+				out << YAML::BeginMap; // RigidBody2DComponent
+
+				out << YAML::Key << "BodyType" << YAML::Value << (int)rigidBodyComponent.Type;
+				out << YAML::Key << "FixedRotation" << YAML::Value << rigidBodyComponent.FixedRotation;
+
+				out << YAML::EndMap; // RigidBody2DComponent
+			});
+
+		SerializeComponent<BoxCollider2DComponent>(entity, [&](BoxCollider2DComponent& boxColliderComponent)
+			{
+				out << YAML::Key << "BoxCollider2DComponent";
+				out << YAML::BeginMap; // BoxCollider2DComponent
+
+				out << YAML::Key << "Offset" << YAML::Value << boxColliderComponent.Offset;
+				out << YAML::Key << "Size" << YAML::Value << boxColliderComponent.Size;
+				
+				out << YAML::Key << "Density" << YAML::Value << boxColliderComponent.Density;
+				out << YAML::Key << "Friction" << YAML::Value << boxColliderComponent.Friction;
+				out << YAML::Key << "Restitution" << YAML::Value << boxColliderComponent.Restitution;
+				out << YAML::Key << "RestitutionThreshold" << YAML::Value << boxColliderComponent.RestitutionThreshold;
+
+				out << YAML::EndMap; // BoxCollider2DComponent
+			});
 
 		out << YAML::EndMap; // Entity
 	}
@@ -286,6 +343,29 @@ namespace Crane
 					cameraComponent.Primary = cameraComponentNode["Primary"].as<bool>();
 					cameraComponent.FixedAspectRatio = cameraComponentNode["FixedAspectRatio"].as<bool>();
 
+				}
+
+				YAML::Node rigidBodyComponentNode = entityNode["RigidBody2DComponent"];
+				if (rigidBodyComponentNode)
+				{
+					RigidBody2DComponent& rigidBody = deserializedEntity.AddComponent<RigidBody2DComponent>();
+
+					rigidBody.Type = (RigidBody2DComponent::BodyType)rigidBodyComponentNode["BodyType"].as<int>();
+					rigidBody.FixedRotation = rigidBodyComponentNode["FixedRotation"].as<bool>();
+				}
+
+				YAML::Node boxColliderComponentNode = entityNode["BoxCollider2DComponent"];
+				if (boxColliderComponentNode)
+				{
+					BoxCollider2DComponent& boxCollider = deserializedEntity.AddComponent<BoxCollider2DComponent>();
+
+					boxCollider.Offset = boxColliderComponentNode["Offset"].as<glm::vec2>();
+					boxCollider.Size = boxColliderComponentNode["Size"].as<glm::vec2>();
+
+					boxCollider.Density = boxColliderComponentNode["Density"].as<float>();
+					boxCollider.Friction = boxColliderComponentNode["Friction"].as<float>();
+					boxCollider.Restitution = boxColliderComponentNode["Restitution"].as<float>();
+					boxCollider.RestitutionThreshold = boxColliderComponentNode["RestitutionThreshold"].as<float>();
 				}
 				
 			}

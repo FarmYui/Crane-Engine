@@ -21,12 +21,14 @@ IncludeDir["stb_image"] = "CraneEngine/vendor/stb_image"
 IncludeDir["entt"] = "CraneEngine/vendor/entt/"
 IncludeDir["yaml_cpp"] = "CraneEngine/vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "CraneEngine/vendor/ImGuizmo"
+IncludeDir["box2d"] = "CraneEngine/vendor/box2d/include"
 
 group "Dependencies"
     include "CraneEngine/vendor/GLFW"
     include "CraneEngine/vendor/Glad"
     include "CraneEngine/vendor/ImGui"
     include "CraneEngine/vendor/yaml-cpp"
+    include "CraneEngine/vendor/box2d"
 
 group ""
 
@@ -63,7 +65,8 @@ project "CraneEngine"
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.entt}",
         "%{IncludeDir.yaml_cpp}",
-        "%{IncludeDir.ImGuizmo}"
+        "%{IncludeDir.ImGuizmo}",
+        "%{IncludeDir.box2d}"
     }
 
     links
@@ -72,6 +75,7 @@ project "CraneEngine"
         "Glad",
         "ImGui",
         "yaml-cpp",
+        "box2d",
         "opengl32.lib"
     }
 
@@ -127,7 +131,8 @@ project "Editor"
         "CraneEngine/vendor",
         "%{IncludeDir.glm}",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.yaml_cpp}"
+        "%{IncludeDir.yaml_cpp}",
+        "%{IncludeDir.box2d}"
     }
 
     links 
@@ -182,7 +187,8 @@ project "Sandbox"
         "CraneEngine/src",
         "CraneEngine/vendor",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.box2d}"
     }
 
     links 

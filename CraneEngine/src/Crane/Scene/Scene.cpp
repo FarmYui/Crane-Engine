@@ -6,9 +6,29 @@
 
 #include "Crane/Renderer/Renderer2D.h"
 
+#include "box2d/b2_world.h"
+#include "box2d/b2_body.h"
+#include "box2d/b2_fixture.h"
+#include "box2d/b2_polygon_shape.h"
 
 namespace Crane
 {
+	static b2BodyType ToBox2DRigidbodyType(RigidBody2DComponent::BodyType type)
+	{
+		switch (type)
+		{
+		case Crane::RigidBody2DComponent::BodyType::Static:
+			return b2_staticBody;
+		case Crane::RigidBody2DComponent::BodyType::Dynamic:
+			return b2_dynamicBody;
+		case Crane::RigidBody2DComponent::BodyType::Kinematic:
+			return b2_kinematicBody;
+		default:
+			CR_CORE_ASSERT(false, "Unknown Body type");
+			return b2_staticBody;
+		}
+	}
+
 	Entity Scene::CreateEntity(const std::string& name = "")
 	{
 		Entity entity = { m_Registry.create(), this };
@@ -23,6 +43,52 @@ namespace Crane
 	void Scene::DestroyEntity(Entity entity)
 	{
 		m_Registry.destroy(entity.GetID());
+	}
+
+	void Scene::OnRuntimeStart()
+	{
+		m_PhysicsWorld = new b2World({0.0f, -9.8f});
+
+		m_Registry.view<RigidBody2DComponent>().each([=](const entt::entity entity, RigidBody2DComponent& rigidBodyComponent) {
+			
+				Entity e{ entity, this };
+			
+				TransformComponent& transformComponent = e.GetComponent<TransformComponent>();
+				
+				b2BodyDef properties;
+				properties.type = ToBox2DRigidbodyType(rigidBodyComponent.Type);
+				properties.position.Set(transformComponent.Translation.x, transformComponent.Translation.y);
+				properties.angle = transformComponent.Rotation.z;
+				
+				b2Body* body = m_PhysicsWorld->CreateBody(&properties);
+				body->SetFixedRotation(rigidBodyComponent.FixedRotation);
+				rigidBodyComponent.RuntimeBody = (void*)body;
+
+				if (e.HasComponent<BoxCollider2DComponent>())
+				{
+					BoxCollider2DComponent& colliderComponent = e.GetComponent<BoxCollider2DComponent>();
+
+					b2PolygonShape boxShape;
+					boxShape.SetAsBox(transformComponent.Scale.x * colliderComponent.Size.x, transformComponent.Scale.y * colliderComponent.Size.y);
+
+					b2FixtureDef fixtureDef;
+					fixtureDef.shape = &boxShape;
+					fixtureDef.density = colliderComponent.Density;
+					fixtureDef.friction = colliderComponent.Friction;
+					fixtureDef.restitution = colliderComponent.Restitution;
+					fixtureDef.restitutionThreshold = colliderComponent.RestitutionThreshold;
+					
+					body->CreateFixture(&fixtureDef);
+
+					colliderComponent.RuntimeFixture = (void*)&fixtureDef;
+				}
+			});
+	}
+
+	void Scene::OnRuntimeStop()
+	{
+		delete m_PhysicsWorld;
+		m_PhysicsWorld = nullptr;
 	}
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
@@ -56,6 +122,30 @@ namespace Crane
 
 					nativeScriptComponent.Instance->OnUpdate(ts);
 					
+				});
+		}
+
+		// Update Physics
+		{
+			const uint32_t velocityIterations = 6;
+			const uint32_t positionIterations = 2;
+			
+			m_PhysicsWorld->Step(ts.GetSeconds(), velocityIterations, positionIterations);
+
+			// Retreive transform from b2d
+			m_Registry.view<RigidBody2DComponent>().each([=](const entt::entity entity, RigidBody2DComponent& rigidBodyComponent)
+				{
+					Entity e{ entity, this };
+					TransformComponent& transformComponent = e.GetComponent<TransformComponent>();
+
+					b2Body* body = (b2Body*)rigidBodyComponent.RuntimeBody;
+					
+					const b2Vec2& position = body->GetPosition();
+					transformComponent.Translation.x = position.x;
+					transformComponent.Translation.y = position.y;
+
+					transformComponent.Rotation.z = body->GetAngle();
+
 				});
 		}
 
@@ -147,5 +237,12 @@ namespace Crane
 	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
 	{}
+	template<>
+	void Scene::OnComponentAdded<RigidBody2DComponent>(Entity entity, RigidBody2DComponent& component)
+	{}
+	template<>
+	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
+	{}
+
 }
 	

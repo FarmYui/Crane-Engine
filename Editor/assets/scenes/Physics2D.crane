@@ -1,0 +1,60 @@
+Scene: Untitled
+Entities:
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Box
+    TransformComponent:
+      Translation: [-7.4505806e-09, 2.76999998, 5.58793545e-08]
+      Rotation: [0, 0, -2.81402397]
+      Scale: [0.750000417, 0.750000417, 0.75]
+    SpriteRendererComponent:
+      Color: [1, 0.996078432, 1, 1]
+      TexturePath: assets\textures\Checkerboard.png
+    RigidBody2DComponent:
+      BodyType: 1
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0.699999988
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Ground
+    TransformComponent:
+      Translation: [0, -1, 0]
+      Rotation: [0, 0, -0.238437623]
+      Scale: [8.99999809, 0.642655075, 1]
+    SpriteRendererComponent:
+      Color: [0.670280218, 0.548042715, 1, 1]
+      TexturePath: ""
+    RigidBody2DComponent:
+      BodyType: 0
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 1.5, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 8.69999981
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
