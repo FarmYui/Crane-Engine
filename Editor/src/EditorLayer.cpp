@@ -29,6 +29,9 @@ namespace Crane
 		m_ActiveScene = CreateRef<Scene>();
 
 		m_SceneHeirarchyPanel.SetScene(m_ActiveScene);
+
+		m_PlayButtonTexture = Texture2D::Create("Resources/Icons/PlayButton.png");
+		m_StopButtonTexture = Texture2D::Create("Resources/Icons/StopButton.png");
 	}
 
 	void EditorLayer::OnDetach()
@@ -152,7 +155,10 @@ namespace Crane
 		{
 			CR_PROFILE_SCOPE("Renderer Draw");
 
-			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			if (m_SceneState == SceneState::Edit)
+				m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			if (m_SceneState == SceneState::Play)
+				m_ActiveScene->OnUpdateRuntime(ts);
 
 			// this has to be called only if the framebuffer is bound
 			if (m_SelectEntity)
@@ -198,6 +204,16 @@ namespace Crane
 		}
 	}
 
+	void EditorLayer::OnScenePlay()
+	{
+		m_SceneState = SceneState::Play;
+	}
+
+	void EditorLayer::OnSceneStop()
+	{
+		m_SceneState = SceneState::Edit;
+	}
+
 	void EditorLayer::SelectEntity()
 	{
 		// Entity Selection Shenanigans
@@ -219,6 +235,39 @@ namespace Crane
 
 		m_SelectEntity = false;
 		
+	}
+
+	void EditorLayer::UI_Toolbar()
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0 , 2});
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, {0 , 0});
+
+		auto& colors = ImGui::GetStyle().Colors;
+		ImGui::PushStyleColor(ImGuiCol_Button, colors[ImGuiCol_Button]);
+
+		ImGui::Begin("##toolbar", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		ImVec2 panelSize = ImGui::GetContentRegionAvail();
+
+		// Center the button
+		ImGui::SetCursorPosX(panelSize.x * 0.5f - panelSize.y);
+
+		if (ImGui::ImageButton("PlayButton", (ImTextureID)m_PlayButtonTexture->GetRendererID(), { panelSize.y, panelSize.y }, { 0,0 }, { 1,1 }))
+		{
+			OnScenePlay();
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::ImageButton("StopButton", (ImTextureID)m_StopButtonTexture->GetRendererID(), { panelSize.y, panelSize.y }, { 0,0 }, { 1,1 }))
+		{
+			OnSceneStop();
+		}
+
+		ImGui::End();
+
+		ImGui::PopStyleVar(2);
+		ImGui::PopStyleColor();
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -413,6 +462,8 @@ namespace Crane
 
 		ImGui::End();
 		ImGui::PopStyleVar();
+
+		UI_Toolbar();
 
 		ImGui::End();
 		

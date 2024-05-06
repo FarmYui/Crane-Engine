@@ -38,7 +38,7 @@ namespace Crane
 			bool isDirectory = directoryEntry.is_directory();
 			ImTextureID iconID = isDirectory ? (ImTextureID)(uint64_t)m_FolderIcon->GetRendererID() : (ImTextureID)(uint64_t)m_FileIcon->GetRendererID();
 
-			ImGui::PushStyleColor(ImGuiCol_Button, { 0.1f ,0.1f ,0.1f ,1.0f });
+			ImGui::PushStyleColor(ImGuiCol_Button, { 0.12f ,0.12f ,0.12f ,1.0f });
 			ImGui::ImageButton(filenameString.c_str(), iconID, {thumbnailSize, thumbnailSize}, { 0,1 }, { 1,0 });
 			ImGui::PopStyleColor();
 

@@ -2,269 +2,37 @@ Scene: Untitled
 Entities:
   - Entity: 12837192831273
     TagComponent:
-      Tag: C Left Bottom
+      Tag: Orthographic Camera
     TransformComponent:
-      Translation: [-2, 1, -0.5]
-      Rotation: [1.57079637, 0, 0]
+      Translation: [3.5, 1.20000005, 0]
+      Rotation: [0.661479831, 0.530580103, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10.8999996
+        OrthographicNear: -16.2999992
+        OrthographicFar: 37.9000015
+      Primary: true
+      FixedAspectRatio: false
   - Entity: 12837192831273
     TagComponent:
-      Tag: C Top Bottom
+      Tag: C Bottom Bottom
     TransformComponent:
-      Translation: [0.75, 5, -0.5]
+      Translation: [0, -0.50000006, -0.5]
       Rotation: [1.57079637, 0, 0]
-      Scale: [3.75, 0.999987125, 0.999987125]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Left Bottom
-    TransformComponent:
-      Translation: [4, -0.5, -0.5]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Top Bottom
-    TransformComponent:
-      Translation: [6, 5, -0.5]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [5, 0.99999994, 0.99999994]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Top
-    TransformComponent:
-      Translation: [6, 5.5, 0]
-      Rotation: [0, 0, 0]
-      Scale: [5, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Left
-    TransformComponent:
-      Translation: [4, 2, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 5, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Bottom
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [5, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Left
-    TransformComponent:
-      Translation: [-2, 3.5, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 5, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Top
-    TransformComponent:
-      Translation: [0.75, 5.5, 0]
-      Rotation: [0, 0, 0]
-      Scale: [3.75, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Bottom Back
-    TransformComponent:
-      Translation: [0, 0, -1]
-      Rotation: [0, 0, 0]
-      Scale: [5, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Left Back
-    TransformComponent:
-      Translation: [-2, 3.5, -1]
-      Rotation: [0, 0, 0]
-      Scale: [1, 5, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Top Back
-    TransformComponent:
-      Translation: [0.75, 5.5, -1]
-      Rotation: [0, 0, 0]
-      Scale: [3.75, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Left Back
-    TransformComponent:
-      Translation: [4, 2, -1]
-      Rotation: [0, 0, 0]
-      Scale: [1, 5, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Top Back
-    TransformComponent:
-      Translation: [6, 5.5, -1]
-      Rotation: [0, 0, 0]
-      Scale: [5, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Bottom Top
-    TransformComponent:
-      Translation: [0, 0.5, -0.499949992]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [5, 0.999999881, 0.999999881]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Left Top
-    TransformComponent:
-      Translation: [-2, 6, -0.5]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Top Top
-    TransformComponent:
-      Translation: [0.75, 6, -0.5]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [3.75, 0.999993503, 0.999993503]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Left Top
-    TransformComponent:
-      Translation: [4, 4.5, -0.5]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Top Top
-    TransformComponent:
-      Translation: [6, 6, -0.499949992]
-      Rotation: [1.57079637, 0, 0]
-      Scale: [5, 0.999999702, 0.999999702]
+      Scale: [5, 0.999998033, 0.999998033]
     SpriteRendererComponent:
       Color: [1, 0.858823538, 0, 1]
       TexturePath: ""
   - Entity: 12837192831273
     TagComponent:
-      Tag: C Left Left
-    TransformComponent:
-      Translation: [-2.5, 3.5, -0.49999997]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [0.999994576, 5, 0.999994576]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Top Left
-    TransformComponent:
-      Translation: [-1.125, 5.5, -0.5]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [0.999996185, 1, 0.999996185]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Bottom Left
-    TransformComponent:
-      Translation: [-2.5, 0, -0.5]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: R Left Left
-    TransformComponent:
-      Translation: [3.5, 2, -0.5]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [0.999995232, 5, 0.999995232]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
       Tag: R Top Left
     TransformComponent:
-      Translation: [3.5, 5.5, -0.5]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [0.999978185, 1, 0.999978185]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Bottom RIght
-    TransformComponent:
-      Translation: [2.5, -2.75292389e-09, -0.499950051]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [0.999998033, 1, 0.999998033]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Left Right
-    TransformComponent:
-      Translation: [-1.5, 3.5, -0.5]
-      Rotation: [0, 1.57079637, 0]
-      Scale: [0.999985814, 5, 0.999985814]
-    SpriteRendererComponent:
-      Color: [1, 0.858799994, 0, 1]
-      TexturePath: ""
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: C Top Left
-    TransformComponent:
-      Translation: [2.625, 5.5, -0.5]
+      Translation: [8.5, 5.5, -0.5]
       Rotation: [0, 1.57079637, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
@@ -282,9 +50,9 @@ Entities:
       TexturePath: ""
   - Entity: 12837192831273
     TagComponent:
-      Tag: R Top Left
+      Tag: C Top Left
     TransformComponent:
-      Translation: [8.5, 5.5, -0.5]
+      Translation: [2.625, 5.5, -0.5]
       Rotation: [0, 1.57079637, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
@@ -292,11 +60,261 @@ Entities:
       TexturePath: ""
   - Entity: 12837192831273
     TagComponent:
-      Tag: C Bottom Bottom
+      Tag: C Left Right
     TransformComponent:
-      Translation: [0, -0.50000006, -0.5]
+      Translation: [-1.5, 3.5, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999985814, 5, 0.999985814]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom RIght
+    TransformComponent:
+      Translation: [2.5, -2.75292389e-09, -0.499950051]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999998033, 1, 0.999998033]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Left
+    TransformComponent:
+      Translation: [3.5, 5.5, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999978185, 1, 0.999978185]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left Left
+    TransformComponent:
+      Translation: [3.5, 2, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999995232, 5, 0.999995232]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom Left
+    TransformComponent:
+      Translation: [-2.5, 0, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top Left
+    TransformComponent:
+      Translation: [-1.125, 5.5, -0.5]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999996185, 1, 0.999996185]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Left
+    TransformComponent:
+      Translation: [-2.5, 3.5, -0.49999997]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999994576, 5, 0.999994576]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Top
+    TransformComponent:
+      Translation: [6, 6, -0.499949992]
       Rotation: [1.57079637, 0, 0]
-      Scale: [5, 0.999998033, 0.999998033]
+      Scale: [5, 0.999999702, 0.999999702]
     SpriteRendererComponent:
       Color: [1, 0.858823538, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left Top
+    TransformComponent:
+      Translation: [4, 4.5, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top Top
+    TransformComponent:
+      Translation: [0.75, 6, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [3.75, 0.999993503, 0.999993503]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Top
+    TransformComponent:
+      Translation: [-2, 6, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom Top
+    TransformComponent:
+      Translation: [0, 0.5, -0.499949992]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [5, 0.999999881, 0.999999881]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Back
+    TransformComponent:
+      Translation: [6, 5.5, -1]
+      Rotation: [0, 0, 0]
+      Scale: [5, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left Back
+    TransformComponent:
+      Translation: [4, 2, -1]
+      Rotation: [0, 0, 0]
+      Scale: [1, 5, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top Back
+    TransformComponent:
+      Translation: [0.75, 5.5, -1]
+      Rotation: [0, 0, 0]
+      Scale: [3.75, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Back
+    TransformComponent:
+      Translation: [-2, 3.5, -1]
+      Rotation: [0, 0, 0]
+      Scale: [1, 5, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom Back
+    TransformComponent:
+      Translation: [0, 0, -1]
+      Rotation: [0, 0, 0]
+      Scale: [5, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top
+    TransformComponent:
+      Translation: [0.75, 5.5, 0]
+      Rotation: [0, 0, 0]
+      Scale: [3.75, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left
+    TransformComponent:
+      Translation: [-2, 3.5, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 5, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Bottom
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [5, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left
+    TransformComponent:
+      Translation: [4, 2, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 5, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top
+    TransformComponent:
+      Translation: [6, 5.5, 0]
+      Rotation: [0, 0, 0]
+      Scale: [5, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Top Bottom
+    TransformComponent:
+      Translation: [6, 5, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [5, 0.99999994, 0.99999994]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: R Left Bottom
+    TransformComponent:
+      Translation: [4, -0.5, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Top Bottom
+    TransformComponent:
+      Translation: [0.75, 5, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [3.75, 0.999987125, 0.999987125]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
+      TexturePath: ""
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: C Left Bottom
+    TransformComponent:
+      Translation: [-2, 1, -0.5]
+      Rotation: [1.57079637, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0.858799994, 0, 1]
       TexturePath: ""
